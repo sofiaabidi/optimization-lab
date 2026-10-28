@@ -1,6 +1,6 @@
 # Optimization Lab
 
-Reproducible workspace for Assignment 8, a ten-track optimization study. Track A's bounded quick profile is implemented and measured; B–F and H–J remain **NOT IMPLEMENTED**. Track G has not passed its required xv6 build/boot gate. See each track README and the coverage matrix for evidence status.
+Reproducible workspace for Assignment 8, a ten-track optimization study. Tracks A and B have implemented, measured bounded quick profiles; C–F and H–J remain **NOT IMPLEMENTED**. Track G has not passed its required xv6 build/boot gate. See each track README and the coverage matrix for evidence status.
 
 ## Quick start
 

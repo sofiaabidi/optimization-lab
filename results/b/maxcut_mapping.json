@@ -1,0 +1,72 @@
+{
+  "convention": "x in {0,1}; z=1-2x; minimize x^T Q x = constant + h.z + sum_{i<j} J_ij z_i z_j = -cut",
+  "ising_constant": -4.0,
+  "ising_couplings_upper": [
+    [
+      0.0,
+      0.5,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.75,
+      1.25
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.5
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "ising_fields": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "max_abs_qubo_minus_ising_error": 0.0,
+  "max_abs_qubo_plus_cut_error": 0.0,
+  "optimum": {
+    "bits": "1001",
+    "cut_value": 6.5,
+    "ising_energy": -6.5,
+    "qubo_energy": -6.5,
+    "qubo_minus_ising_error": 0.0,
+    "qubo_plus_cut_error": 0.0
+  },
+  "qubo_matrix": [
+    [
+      -3.0,
+      1.0,
+      2.0,
+      0.0
+    ],
+    [
+      1.0,
+      -5.0,
+      1.5,
+      2.5
+    ],
+    [
+      2.0,
+      1.5,
+      -4.5,
+      1.0
+    ],
+    [
+      0.0,
+      2.5,
+      1.0,
+      -3.5
+    ]
+  ]
+}

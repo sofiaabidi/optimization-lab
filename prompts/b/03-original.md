@@ -1,0 +1,5 @@
+# Prompt 03 — original
+
+Source: `prompts.md`, executed on 2026-10-28.
+
+> Implement Track B in plan.md §5. Use a seeded small 0/1 knapsack/selection benchmark, with baseline greedy and exact DP, branch-and-bound and open-source ILP; independent brute-force oracle for small n; constraints and objective verified. Create a separate tiny weighted Max-Cut instance with exact enumeration, explicit QUBO energy, QUBO-to-Ising x=(1-z)/2 conversion and exhaustive energy-equivalence tests (including constants/sign). Add a truly constrained binary example with quadratic constraint penalties and demonstrate when penalties enforce feasibility; don't imply plain Max-Cut needs constraints. Store the Max-Cut instance and mapping in a stable data/API format for Track C. Include feature-selection/combinatorial demo if taught, otherwise mark the syllabus decision open. Run quick data generation/tests; document runtime/optimality gaps and real results, update matrix and prompt-evidence placeholders (do NOT fabricate AI messages).

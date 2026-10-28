@@ -8,10 +8,10 @@ This list preserves every requirement stated in `plan.md` §5. Additional syllab
 | A | GD, SGD, mini-batch SGD, Momentum, NAG, AdaGrad, RMSProp, Adam, Newton, Gauss–Newton | `run_first_order`, `run_newton`, `gauss_newton_demo`; `results/a/raw.csv`, `histories.csv` | DONE (quick) |
 | A | Backprop finite-difference/autograd check and Fisher/diagonal-Hessian/HVP curvature approximation | `backpropagation_check`, `curvature_check`; `test_newton_gauss_newton_and_backprop_oracles`; `results/a/summary.json` | DONE (quick) |
 | A | Convex, strongly convex, nonconvex convergence; learning-rate, batch/noise and setting sensitivity | `landscape_examples`, `run_experiment`; `results/a/sensitivity.csv`, `trajectories.svg` | DONE (quick; full NOT RUN) |
-| B | Knapsack/selection via greedy, ILP, branch-and-bound and DP; enumeration oracle | — | NOT IMPLEMENTED |
-| B | Weighted Max-Cut enumeration, QUBO, Ising mapping and exhaustive energy equivalence | — | NOT IMPLEMENTED |
-| B | Constrained binary penalty-strength feasible/infeasible example | — | NOT IMPLEMENTED |
-| B | Feature selection or other taught combinatorial example (syllabus decision open) | — | NOT IMPLEMENTED |
+| B | Knapsack/selection via greedy, ILP, branch-and-bound and DP; enumeration oracle | `greedy_knapsack`, `milp_knapsack`, `branch_and_bound_knapsack`, `dynamic_programming_knapsack`; `tests/test_track_b.py`; `results/b/knapsack_raw.csv` | DONE (quick) |
+| B | Weighted Max-Cut enumeration, QUBO, Ising mapping and exhaustive energy equivalence | `tracks/b_discrete/maxcut_instance.json`; `maxcut_qubo`, `qubo_to_ising`, `enumerate_maxcut`; exhaustive test; `results/b/maxcut_energies.csv` | DONE (quick) |
+| B | Constrained binary penalty-strength feasible/infeasible example | `cardinality_penalty_demo`; focused test; `results/b/penalty_sweep.csv` | DONE (quick) |
+| B | Feature selection or other taught combinatorial example (syllabus decision open) | No authoritative syllabus evidence supplied | NOT IMPLEMENTED (syllabus decision open) |
 | C | B Max-Cut QAOA circuit, finite shots and exhaustive comparison | — | NOT IMPLEMENTED |
 | C | Small-Hamiltonian VQE, PQC/QNN and hybrid training loop | — | NOT IMPLEMENTED |
 | C | Parameter-shift, SPSA and quantum natural gradient with documented metric | — | NOT IMPLEMENTED |
