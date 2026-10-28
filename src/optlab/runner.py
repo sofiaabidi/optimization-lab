@@ -15,6 +15,10 @@ def run_track(track: Track, profile: str) -> ExperimentResult:
         from .track_b import run_experiment
 
         return run_experiment(profile)
+    if track.key == "c":
+        from .track_c import run_experiment
+
+        return run_experiment(profile)
     return ExperimentResult(
         track=track.key,
         profile=profile,

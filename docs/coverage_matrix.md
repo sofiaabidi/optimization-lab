@@ -12,10 +12,10 @@ This list preserves every requirement stated in `plan.md` §5. Additional syllab
 | B | Weighted Max-Cut enumeration, QUBO, Ising mapping and exhaustive energy equivalence | `tracks/b_discrete/maxcut_instance.json`; `maxcut_qubo`, `qubo_to_ising`, `enumerate_maxcut`; exhaustive test; `results/b/maxcut_energies.csv` | DONE (quick) |
 | B | Constrained binary penalty-strength feasible/infeasible example | `cardinality_penalty_demo`; focused test; `results/b/penalty_sweep.csv` | DONE (quick) |
 | B | Feature selection or other taught combinatorial example (syllabus decision open) | No authoritative syllabus evidence supplied | NOT IMPLEMENTED (syllabus decision open) |
-| C | B Max-Cut QAOA circuit, finite shots and exhaustive comparison | — | NOT IMPLEMENTED |
-| C | Small-Hamiltonian VQE, PQC/QNN and hybrid training loop | — | NOT IMPLEMENTED |
-| C | Parameter-shift, SPSA and quantum natural gradient with documented metric | — | NOT IMPLEMENTED |
-| C | Shot cost, simulator noise, barren-plateau illustration and embedding limitations | — | NOT IMPLEMENTED |
+| C | B Max-Cut QAOA circuit, finite shots and exhaustive comparison | `maxcut_hamiltonian`, `apply_qaoa`, `optimize_qaoa`; exhaustive basis test; `results/c/qaoa_optimization.csv`, `qaoa_shots.csv` | DONE (simulator quick) |
+| C | Small-Hamiltonian VQE, PQC/QNN and hybrid training loop | `vqe_hamiltonian`, `optimize_vqe`, `train_qnn`; focused tests; `results/c/optimizer_comparison.csv`, `qnn_history.csv` | DONE (simulator quick) |
+| C | Parameter-shift, SPSA and quantum natural gradient with documented metric | `parameter_shift_gradient`, `optimize_vqe`; finite-difference test; `results/c/optimizer_comparison.csv` | DONE (simulator quick) |
+| C | Shot cost, simulator noise, barren-plateau illustration and embedding limitations | `qaoa_shot_experiment`, `qaoa_noise_experiment`, `barren_plateau_experiment`; `results/c/qaoa_noise.csv`, `barren_plateau_summary.csv`, `summary.json` | DONE (simulator quick; full NOT RUN) |
 | D | Submodular coverage/facility objective, diminishing returns and greedy/exact comparison | — | NOT IMPLEMENTED |
 | D | Measured load balance, makespan, scheduling, work stealing, locality, synchronization and communication | — | NOT IMPLEMENTED |
 | D | Data, model and pipeline parallelism with actual/simulated distinction | — | NOT IMPLEMENTED |

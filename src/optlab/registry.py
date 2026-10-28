@@ -17,7 +17,7 @@ class Track:
 TRACKS: tuple[Track, ...] = (
     Track("a", "Continuous optimization", "tracks/a_continuous", RunStatus.DONE, "quick profile implemented; full profile not yet run"),
     Track("b", "Discrete optimization", "tracks/b_discrete", RunStatus.DONE, "quick profile implemented; full profile not yet run"),
-    Track("c", "Quantum optimization", "tracks/c_quantum_opt", RunStatus.NOT_IMPLEMENTED, "Prompt 04"),
+    Track("c", "Quantum optimization", "tracks/c_quantum_opt", RunStatus.DONE, "quick simulator profile implemented; full profile not yet run"),
     Track("d", "Parallel and distributed", "tracks/d_parallel_distributed", RunStatus.NOT_IMPLEMENTED, "Prompt 05"),
     Track("e", "EV charging", "tracks/e_ev_charging", RunStatus.NOT_IMPLEMENTED, "Prompt 06"),
     Track("f", "Compiler optimization", "tracks/f_compiler", RunStatus.NOT_IMPLEMENTED, "Prompt 07"),
