@@ -1,0 +1,11 @@
+factor,value,iterations,final_objective,converged
+learning_rate,0.005,80,1.5535099156930783,False
+learning_rate,0.05,80,0.3271299333985858,True
+learning_rate,0.5,80,0.32606849485222617,True
+learning_rate,2.5,16,2237631059872.383,False
+batch_size,1,80,0.3293339398592872,True
+batch_size,8,80,0.3299575160955812,True
+batch_size,32,80,0.3266414765165675,True
+label_noise_std,0.0,80,0.30644619287190183,True
+label_noise_std,0.2,80,0.32606849485225314,True
+label_noise_std,0.8,80,0.6161853575254344,True

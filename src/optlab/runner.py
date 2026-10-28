@@ -7,7 +7,10 @@ from .registry import TRACKS, Track
 
 
 def run_track(track: Track, profile: str) -> ExperimentResult:
-    """Return an honest placeholder until a track registers an implementation."""
+    if track.key == "a":
+        from .track_a import run_experiment
+
+        return run_experiment(profile)
     return ExperimentResult(
         track=track.key,
         profile=profile,

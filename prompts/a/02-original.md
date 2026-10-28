@@ -1,0 +1,5 @@
+# Prompt 02 — original
+
+Source: `prompts.md`, executed on 2026-10-28 after the user-required QEMU/RISC-V/GDB executable precheck passed.
+
+> Implement Track A as a focused reproducible numeric experiment using plan.md §5. Cover GD, SGD, mini-batch SGD, momentum, NAG, AdaGrad, RMSProp, Adam, Newton, and Gauss-Newton on mathematically suitable objectives; include loss/regularization, convex/strongly-convex/nonconvex landscapes, local/global minima and saddle examples, backprop gradient check, one explicit curvature approximation (Fisher/diagonal Hessian/HVP), learning-rate tuning and noisy objectives. Don't falsely compare incompatible methods on one objective: give common-task comparisons where valid and appropriate separate demonstrations otherwise. Use NumPy/SciPy/PyTorch only if useful; use fixed seeds, 3+ repeated stochastic runs where feasible, objective histories and wall times with units. Independently verify gradients and analytic optima. Save actual data/figures, track README, executable CLI integration, focused tests and coverage matrix links. Run bounded tests and quick experiment and mark full unrun if not executed. Report remaining gaps only.

@@ -1,6 +1,6 @@
 # Optimization Lab
 
-Reproducible workspace for Assignment 8, a ten-track optimization study. Phase 0 provides shared infrastructure only: tracks A–F and H–J are **NOT IMPLEMENTED**; G is **BLOCKED** because its QEMU/RISC-V toolchain is absent. No experiment results are claimed yet.
+Reproducible workspace for Assignment 8, a ten-track optimization study. Track A's bounded quick profile is implemented and measured; B–F and H–J remain **NOT IMPLEMENTED**. Track G has not passed its required xv6 build/boot gate. See each track README and the coverage matrix for evidence status.
 
 ## Quick start
 

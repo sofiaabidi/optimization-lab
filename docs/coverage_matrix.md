@@ -4,10 +4,10 @@ This list preserves every requirement stated in `plan.md` §5. Additional syllab
 
 | Track | Provisional requirement | Code / test / output evidence | Status |
 |---|---|---|---|
-| A | Loss + regularizer; parameters, objective, gradient, backward pass; continuous/discrete, convex/nonconvex, local/global minima, saddle examples | — | NOT IMPLEMENTED |
-| A | GD, SGD, mini-batch SGD, Momentum, NAG, AdaGrad, RMSProp, Adam, Newton, Gauss–Newton | — | NOT IMPLEMENTED |
-| A | Backprop finite-difference/autograd check and Fisher/diagonal-Hessian/HVP curvature approximation | — | NOT IMPLEMENTED |
-| A | Convex, strongly convex, nonconvex convergence; learning-rate, batch/noise and setting sensitivity | — | NOT IMPLEMENTED |
+| A | Loss + regularizer; parameters, objective, gradient, backward pass; continuous/discrete, convex/nonconvex, local/global minima, saddle examples | `src/optlab/track_a.py`; `tests/test_track_a.py`; `results/a/summary.json` | DONE (quick) |
+| A | GD, SGD, mini-batch SGD, Momentum, NAG, AdaGrad, RMSProp, Adam, Newton, Gauss–Newton | `run_first_order`, `run_newton`, `gauss_newton_demo`; `results/a/raw.csv`, `histories.csv` | DONE (quick) |
+| A | Backprop finite-difference/autograd check and Fisher/diagonal-Hessian/HVP curvature approximation | `backpropagation_check`, `curvature_check`; `test_newton_gauss_newton_and_backprop_oracles`; `results/a/summary.json` | DONE (quick) |
+| A | Convex, strongly convex, nonconvex convergence; learning-rate, batch/noise and setting sensitivity | `landscape_examples`, `run_experiment`; `results/a/sensitivity.csv`, `trajectories.svg` | DONE (quick; full NOT RUN) |
 | B | Knapsack/selection via greedy, ILP, branch-and-bound and DP; enumeration oracle | — | NOT IMPLEMENTED |
 | B | Weighted Max-Cut enumeration, QUBO, Ising mapping and exhaustive energy equivalence | — | NOT IMPLEMENTED |
 | B | Constrained binary penalty-strength feasible/infeasible example | — | NOT IMPLEMENTED |
