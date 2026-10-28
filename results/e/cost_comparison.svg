@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+<rect width="100%" height="100%" fill="white"/>
+<text x="320.0" y="25" text-anchor="middle">Track E electricity cost on fixed feasible case</text>
+<rect x="55.0" y="50.0" width="170.0" height="260.0" fill="#4472c4"/>
+<text x="140.0" y="330" text-anchor="middle">first available</text>
+<rect x="235.0" y="102.2" width="170.0" height="207.8" fill="#4472c4"/>
+<text x="320.0" y="330" text-anchor="middle">cheapest slot</text>
+<rect x="415.0" y="112.7" width="170.0" height="197.3" fill="#4472c4"/>
+<text x="500.0" y="330" text-anchor="middle">exact LP</text>
+</svg>

@@ -1,0 +1,5 @@
+# Prompt 06 — original
+
+Source: `prompts.md`, executed on 2026-10-28 with the user's explicit request for a complete measured Track E milestone.
+
+> Implement Track E exactly as specified by plan.md §2. Create documented deterministic synthetic campus EV arrival/departure/energy/price/capacity data, feasible and infeasible cases. Clearly define continuous charging-energy variables, objective, constraints and assumptions. Baseline first-available feasible scheduling; compare cheapest-feasible-slot heuristic and exact LP (or integer whole-slot ILP if justified). Explicitly detect infeasible cases, verify capacity/vehicle/deadline constraints independently, and validate optimizer objective against small brute-force instances if using integer slots. Compare electric cost, peak utilization, unmet energy, solution/runtime, fleet-size sensitivity under identical inputs and seeds; avoid hiding baseline infeasibility. Include strategy-selection table (types, constraints, problem size, optimality vs overhead, hardware, parallelism), actual raw data/plots, track report, CLI, tests, matrix. Run bounded quick tests and actual comparisons.

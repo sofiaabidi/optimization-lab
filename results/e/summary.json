@@ -1,0 +1,52 @@
+{
+  "benchmark_protocol": {
+    "comparison": "all methods receive the same immutable instance for each row group",
+    "quick_repeats": 5,
+    "timed_region": "scheduler/solver call only; instance generation and artifact I/O excluded"
+  },
+  "environment": {
+    "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "processor": "unknown",
+    "python": "3.11.18"
+  },
+  "fixed_feasible": {
+    "baseline_cost": 4.4799999999999995,
+    "baseline_peak_utilization": 1.0,
+    "cheapest_slot_cost": 3.58,
+    "exact_lp_cost": 3.4,
+    "exact_peak_utilization": 1.0,
+    "exact_saving_vs_baseline": 1.0799999999999996
+  },
+  "full_profile_status": "NOT RUN",
+  "infeasible_case": {
+    "cause": "EV-X requests 7 kWh in one slot with a 3 kW per-vehicle limit",
+    "exact_lp_status": "INFEASIBLE",
+    "solver_message": "The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)"
+  },
+  "limitations": [
+    "Inputs are deterministic synthetic campus scenarios, not operational charging records.",
+    "The greedy method respects local rate/window/capacity limits but can leave demand unmet even when a global feasible schedule exists.",
+    "The LP assumes divisible energy, known arrivals/departures and prices, constant within-slot power, and no charger assignment or battery tapering losses.",
+    "Peak load is a reported metric rather than an objective, so cost optimization need not improve it.",
+    "Sub-millisecond heuristic timings and short LP timings are sensitive to host load; raw repeats are retained."
+  ],
+  "model": {
+    "constraints": [
+      "x[v,t] is zero outside the vehicle arrival/departure window",
+      "0 <= x[v,t] <= vehicle max kW * slot hours",
+      "sum_v x[v,t] <= facility kW[t] * slot hours",
+      "sum_t x[v,t] = required vehicle energy"
+    ],
+    "decision_variable": "x[v,t] = continuous kWh delivered to vehicle v during one slot",
+    "objective": "minimize sum_t price[t] * sum_v x[v,t]"
+  },
+  "objective_oracle": {
+    "absolute_error": 0.0,
+    "grid_objective": 3.0,
+    "grid_step_kwh": 1.0,
+    "instance": "tiny_oracle",
+    "lp_objective": 3.0
+  },
+  "profile": "quick",
+  "seed": 2026
+}

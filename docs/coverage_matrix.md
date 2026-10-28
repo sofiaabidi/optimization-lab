@@ -21,9 +21,9 @@ This list preserves every requirement stated in `plan.md` §5. Additional syllab
 | D | Data, model and pipeline parallelism with actual/simulated distinction | `data_parallel_demo`, `model_parallel_demo`, `pipeline_parallel_demo`; PID/equivalence test; `results/d/parallel_patterns.csv` | DONE (local processes quick) |
 | D | Measured Amdahl/Gustafson interpretation | `parallel_interpretation`; measured repeats in `parallel_scaling.csv`; `summary.json` | DONE (interpretation only) |
 | D | FedAvg/centralized plus MGDA/GradNorm/equal-weight two-task comparisons | `centralized_training`, `fedavg_training`, `multitask_training`; focused tests; `results/d/fedavg.csv`, `multitask.csv` | DONE (sequential distributed simulation quick) |
-| E | EV variables, cost objective, constraints and feasible/infeasible deterministic cases | — | NOT IMPLEMENTED |
-| E | First-available baseline, cheapest-feasible heuristic and exact LP/ILP | — | NOT IMPLEMENTED |
-| E | Strategy selection; cost, latency, peak, unmet energy, scaling and sensitivity | — | NOT IMPLEMENTED |
+| E | EV variables, cost objective, constraints and feasible/infeasible deterministic cases | `ChargingInstance`, `Vehicle`, `verify_schedule`; `tests/test_track_e.py`; `results/e/vehicles.csv`, `slots.csv` | DONE (synthetic quick) |
+| E | First-available baseline, cheapest-feasible heuristic and exact LP/ILP | `first_available_schedule`, `cheapest_slot_schedule`, `exact_lp_schedule`; independent grid oracle; `results/e/comparison.csv` | DONE (continuous LP quick) |
+| E | Strategy selection; cost, latency, peak, unmet energy, scaling and sensitivity | `tracks/e_ev_charging/README.md`; `results/e/benchmark_raw.csv`, `fleet_scaling.csv`, `capacity_sensitivity.csv` | DONE (quick; full NOT RUN) |
 | F | Tiny compiler with behavioral-equivalence tests | — | NOT IMPLEMENTED |
 | F | Constant folding/propagation, dead-code elimination and common-subexpression elimination | — | NOT IMPLEMENTED |
 | F | Pass ordering/register allocation/scheduling optimization via greedy/DP/ILP | — | NOT IMPLEMENTED |
