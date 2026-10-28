@@ -24,10 +24,10 @@ This list preserves every requirement stated in `plan.md` §5. Additional syllab
 | E | EV variables, cost objective, constraints and feasible/infeasible deterministic cases | `ChargingInstance`, `Vehicle`, `verify_schedule`; `tests/test_track_e.py`; `results/e/vehicles.csv`, `slots.csv` | DONE (synthetic quick) |
 | E | First-available baseline, cheapest-feasible heuristic and exact LP/ILP | `first_available_schedule`, `cheapest_slot_schedule`, `exact_lp_schedule`; independent grid oracle; `results/e/comparison.csv` | DONE (continuous LP quick) |
 | E | Strategy selection; cost, latency, peak, unmet energy, scaling and sensitivity | `tracks/e_ev_charging/README.md`; `results/e/benchmark_raw.csv`, `fleet_scaling.csv`, `capacity_sensitivity.csv` | DONE (quick; full NOT RUN) |
-| F | Tiny compiler with behavioral-equivalence tests | — | NOT IMPLEMENTED |
-| F | Constant folding/propagation, dead-code elimination and common-subexpression elimination | — | NOT IMPLEMENTED |
-| F | Pass ordering/register allocation/scheduling optimization via greedy/DP/ILP | — | NOT IMPLEMENTED |
-| F | Instruction count, runtime, code size, compile time and semantic equivalence | — | NOT IMPLEMENTED |
+| F | Tiny compiler with behavioral-equivalence tests | Lexer/parser/AST/lowering/bytecode VM in `track_f.py`; `tests/test_track_f.py`; `results/f/equivalence.csv` | DONE (quick) |
+| F | Constant folding/propagation, dead-code elimination and common-subexpression elimination | Four pass functions; targeted change/equivalence tests; `results/f/pass_effects.csv`, `ir_snapshots.json` | DONE (quick) |
+| F | Pass ordering/register allocation/scheduling optimization via greedy/DP/ILP | `optimize_pass_order_dp`; separate training program; `results/f/pass_order_search.csv` | DONE (exact subset DP quick) |
+| F | Instruction count, runtime, code size, compile time and semantic equivalence | `results/f/benchmark.csv`, `benchmark_raw.csv`, `summary.json`; focused generated-program tests | DONE (Python VM quick; full NOT RUN) |
 | G | Pinned upstream xv6 provenance, toolchain and reproducible patch setup | — | BLOCKED |
 | G | First kernel feature plus distinct second full-credit feature | — | BLOCKED |
 | G | Baseline/patched QEMU on CPU, yield/I-O and fairness workloads | — | BLOCKED |

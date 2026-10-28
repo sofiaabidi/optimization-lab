@@ -1,0 +1,10 @@
+{
+  "benchmarks": {
+    "adverse_reassignment": "a = 2;\n        b = 3;\n        old = a + b;\n        a = 10;\n        new = a + b;\n        print old;\n        print new;",
+    "constant_chain": "a = 2 + 3;\n        b = a * 4;\n        dead = 99 * 2;\n        c = b + (2 + 3);\n        print c;",
+    "dead_overwrite": "value = 3 * 4;\n        unused = value + 100;\n        value = value + 2;\n        print value;",
+    "minimal_program": "answer = 42;\n        print answer;",
+    "repeated_expression": "a = 7;\n        b = 9;\n        x = (a + b) * 2;\n        y = (a + b) * 3;\n        print x + y;"
+  },
+  "training": "a = 100000;\nb = a + 300000;\nc = a + 300000;\nunused = c * 10;\nprint (b + c) * (b + c);"
+}

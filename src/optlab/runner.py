@@ -27,6 +27,10 @@ def run_track(track: Track, profile: str) -> ExperimentResult:
         from .track_e import run_experiment
 
         return run_experiment(profile)
+    if track.key == "f":
+        from .track_f import run_experiment
+
+        return run_experiment(profile)
     return ExperimentResult(
         track=track.key,
         profile=profile,

@@ -1,0 +1,16 @@
+program,strategy,pass_order,instruction_count,code_size_bytes,compile_median_seconds,execution_median_seconds,output,equivalent
+constant_chain,unoptimized,none,6,64,6.830000165791716e-05,1.4873333323824529e-06,[25],True
+constant_chain,fixed_order,constant_folding|constant_propagation|dead_code_elimination|common_subexpression_elimination,3,28,7.619999996677507e-05,7.233333296123116e-07,[25],True
+constant_chain,dp_order,common_subexpression_elimination|constant_propagation|constant_folding|dead_code_elimination,4,38,8.5299998318078e-05,9.443333328817971e-07,[25],True
+repeated_expression,unoptimized,none,8,84,7.059999916236848e-05,2.250333333601399e-06,[80],True
+repeated_expression,fixed_order,constant_folding|constant_propagation|dead_code_elimination|common_subexpression_elimination,5,53,8.789999992586672e-05,1.3200000042464428e-06,[80],True
+repeated_expression,dp_order,common_subexpression_elimination|constant_propagation|constant_folding|dead_code_elimination,5,54,8.929999967222102e-05,1.197333331219852e-06,[80],True
+dead_overwrite,unoptimized,none,4,65,4.549999903247226e-05,1.0350000047765207e-06,[14],True
+dead_overwrite,fixed_order,constant_folding|constant_propagation|dead_code_elimination|common_subexpression_elimination,2,27,5.710000004910398e-05,4.943333321231573e-07,[14],True
+dead_overwrite,dp_order,common_subexpression_elimination|constant_propagation|constant_folding|dead_code_elimination,3,45,6.479999865405262e-05,6.766666714005017e-07,[14],True
+adverse_reassignment,unoptimized,none,7,75,6.489999941550195e-05,1.525999996374594e-06,"[5, 13]",True
+adverse_reassignment,fixed_order,constant_folding|constant_propagation|dead_code_elimination|common_subexpression_elimination,4,45,8.690000140632037e-05,9.186666648020037e-07,"[5, 13]",True
+adverse_reassignment,dp_order,common_subexpression_elimination|constant_propagation|constant_folding|dead_code_elimination,4,45,9.080000018002465e-05,7.01000002057602e-07,"[5, 13]",True
+minimal_program,unoptimized,none,2,29,2.010000025620684e-05,3.973333332396578e-07,[42],True
+minimal_program,fixed_order,constant_folding|constant_propagation|dead_code_elimination|common_subexpression_elimination,1,9,2.6100000468431972e-05,2.076666654223421e-07,[42],True
+minimal_program,dp_order,common_subexpression_elimination|constant_propagation|constant_folding|dead_code_elimination,1,9,2.8899999961140566e-05,2.096666624614348e-07,[42],True

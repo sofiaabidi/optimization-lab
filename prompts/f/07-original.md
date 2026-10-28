@@ -1,0 +1,5 @@
+# Prompt 07 — original
+
+Source: `prompts.md`, executed on 2026-10-28 with the user's explicit request for the complete Track F milestone.
+
+> Implement Track F using a deliberately small pure deterministic expression/assignment language with lexer, parser, IR, evaluator/interpreter, and simple IR code generator; define semantics, overflow/arithmetic and side-effect policy explicitly. Add four safe optimization passes: constant folding, constant propagation, dead-code elimination and common-subexpression elimination. Build semantic-equivalence tests on fixtures and generated simple programs across original and transformed pipelines; ensure no undefined variables or altered outputs. Formulate compiler pass ordering as a discrete optimization problem with measurable instruction-count/runtime/codesize/compile-time objective, constraints and a greedy/DP selection vs fixed order; avoid tuning on test set. Save before/after IR, actual timing/counts, tests and README, including adverse cases. Update matrix and run focused tests.

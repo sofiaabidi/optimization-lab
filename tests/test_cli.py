@@ -15,9 +15,9 @@ def test_list_reports_every_track(capsys):
 
 
 def test_run_unimplemented_is_truthful(capsys):
-    assert main(["run", "--track", "f", "--profile", "quick"]) == 0
+    assert main(["run", "--track", "h", "--profile", "quick"]) == 0
     result = json.loads(capsys.readouterr().out)
-    assert result["track"] == "f"
+    assert result["track"] == "h"
     assert result["profile"] == "quick"
     assert result["status"] == "NOT IMPLEMENTED"
     assert result["duration_seconds"] is None

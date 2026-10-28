@@ -1,0 +1,183 @@
+{
+  "adverse_reassignment": {
+    "expected_output": [
+      5,
+      13
+    ],
+    "source": "a = 2;\n        b = 3;\n        old = a + b;\n        a = 10;\n        new = a + b;\n        print old;\n        print new;",
+    "strategies": {
+      "dp_order": {
+        "bytecode": "CONST old 5\nCONST new 13\nPRINT old\nPRINT new",
+        "optimized_ir": "CONST old 5\nCONST new 13\nPRINT old\nPRINT new",
+        "original_ir": "CONST a 2\nCONST b 3\nADD old a b\nCONST a 10\nADD new a b\nPRINT old\nPRINT new",
+        "pass_order": [
+          "common_subexpression_elimination",
+          "constant_propagation",
+          "constant_folding",
+          "dead_code_elimination"
+        ]
+      },
+      "fixed_order": {
+        "bytecode": "ADD old 2 3\nADD new 10 3\nPRINT old\nPRINT new",
+        "optimized_ir": "ADD old 2 3\nADD new 10 3\nPRINT old\nPRINT new",
+        "original_ir": "CONST a 2\nCONST b 3\nADD old a b\nCONST a 10\nADD new a b\nPRINT old\nPRINT new",
+        "pass_order": [
+          "constant_folding",
+          "constant_propagation",
+          "dead_code_elimination",
+          "common_subexpression_elimination"
+        ]
+      },
+      "unoptimized": {
+        "bytecode": "CONST a 2\nCONST b 3\nADD old a b\nCONST a 10\nADD new a b\nPRINT old\nPRINT new",
+        "optimized_ir": "CONST a 2\nCONST b 3\nADD old a b\nCONST a 10\nADD new a b\nPRINT old\nPRINT new",
+        "original_ir": "CONST a 2\nCONST b 3\nADD old a b\nCONST a 10\nADD new a b\nPRINT old\nPRINT new",
+        "pass_order": []
+      }
+    }
+  },
+  "constant_chain": {
+    "expected_output": [
+      25
+    ],
+    "source": "a = 2 + 3;\n        b = a * 4;\n        dead = 99 * 2;\n        c = b + (2 + 3);\n        print c;",
+    "strategies": {
+      "dp_order": {
+        "bytecode": "CONST a 5\nMUL b a 4\nADD c a b\nPRINT c",
+        "optimized_ir": "CONST a 5\nMUL b a 4\nADD c a b\nPRINT c",
+        "original_ir": "ADD a 2 3\nMUL b a 4\nMUL dead 99 2\nADD %0 2 3\nADD c b %0\nPRINT c",
+        "pass_order": [
+          "common_subexpression_elimination",
+          "constant_propagation",
+          "constant_folding",
+          "dead_code_elimination"
+        ]
+      },
+      "fixed_order": {
+        "bytecode": "MUL b 4 5\nADD c b 5\nPRINT c",
+        "optimized_ir": "MUL b 4 5\nADD c b 5\nPRINT c",
+        "original_ir": "ADD a 2 3\nMUL b a 4\nMUL dead 99 2\nADD %0 2 3\nADD c b %0\nPRINT c",
+        "pass_order": [
+          "constant_folding",
+          "constant_propagation",
+          "dead_code_elimination",
+          "common_subexpression_elimination"
+        ]
+      },
+      "unoptimized": {
+        "bytecode": "ADD a 2 3\nMUL b a 4\nMUL dead 99 2\nADD %0 2 3\nADD c b %0\nPRINT c",
+        "optimized_ir": "ADD a 2 3\nMUL b a 4\nMUL dead 99 2\nADD %0 2 3\nADD c b %0\nPRINT c",
+        "original_ir": "ADD a 2 3\nMUL b a 4\nMUL dead 99 2\nADD %0 2 3\nADD c b %0\nPRINT c",
+        "pass_order": []
+      }
+    }
+  },
+  "dead_overwrite": {
+    "expected_output": [
+      14
+    ],
+    "source": "value = 3 * 4;\n        unused = value + 100;\n        value = value + 2;\n        print value;",
+    "strategies": {
+      "dp_order": {
+        "bytecode": "CONST value 12\nADD value value 2\nPRINT value",
+        "optimized_ir": "CONST value 12\nADD value value 2\nPRINT value",
+        "original_ir": "MUL value 3 4\nADD unused value 100\nADD value value 2\nPRINT value",
+        "pass_order": [
+          "common_subexpression_elimination",
+          "constant_propagation",
+          "constant_folding",
+          "dead_code_elimination"
+        ]
+      },
+      "fixed_order": {
+        "bytecode": "ADD value 12 2\nPRINT value",
+        "optimized_ir": "ADD value 12 2\nPRINT value",
+        "original_ir": "MUL value 3 4\nADD unused value 100\nADD value value 2\nPRINT value",
+        "pass_order": [
+          "constant_folding",
+          "constant_propagation",
+          "dead_code_elimination",
+          "common_subexpression_elimination"
+        ]
+      },
+      "unoptimized": {
+        "bytecode": "MUL value 3 4\nADD unused value 100\nADD value value 2\nPRINT value",
+        "optimized_ir": "MUL value 3 4\nADD unused value 100\nADD value value 2\nPRINT value",
+        "original_ir": "MUL value 3 4\nADD unused value 100\nADD value value 2\nPRINT value",
+        "pass_order": []
+      }
+    }
+  },
+  "minimal_program": {
+    "expected_output": [
+      42
+    ],
+    "source": "answer = 42;\n        print answer;",
+    "strategies": {
+      "dp_order": {
+        "bytecode": "PRINT 42",
+        "optimized_ir": "PRINT 42",
+        "original_ir": "CONST answer 42\nPRINT answer",
+        "pass_order": [
+          "common_subexpression_elimination",
+          "constant_propagation",
+          "constant_folding",
+          "dead_code_elimination"
+        ]
+      },
+      "fixed_order": {
+        "bytecode": "PRINT 42",
+        "optimized_ir": "PRINT 42",
+        "original_ir": "CONST answer 42\nPRINT answer",
+        "pass_order": [
+          "constant_folding",
+          "constant_propagation",
+          "dead_code_elimination",
+          "common_subexpression_elimination"
+        ]
+      },
+      "unoptimized": {
+        "bytecode": "CONST answer 42\nPRINT answer",
+        "optimized_ir": "CONST answer 42\nPRINT answer",
+        "original_ir": "CONST answer 42\nPRINT answer",
+        "pass_order": []
+      }
+    }
+  },
+  "repeated_expression": {
+    "expected_output": [
+      80
+    ],
+    "source": "a = 7;\n        b = 9;\n        x = (a + b) * 2;\n        y = (a + b) * 3;\n        print x + y;",
+    "strategies": {
+      "dp_order": {
+        "bytecode": "CONST %0 16\nMUL x %0 2\nMUL y %0 3\nADD %2 x y\nPRINT %2",
+        "optimized_ir": "CONST %0 16\nMUL x %0 2\nMUL y %0 3\nADD %2 x y\nPRINT %2",
+        "original_ir": "CONST a 7\nCONST b 9\nADD %0 a b\nMUL x %0 2\nADD %1 a b\nMUL y %1 3\nADD %2 x y\nPRINT %2",
+        "pass_order": [
+          "common_subexpression_elimination",
+          "constant_propagation",
+          "constant_folding",
+          "dead_code_elimination"
+        ]
+      },
+      "fixed_order": {
+        "bytecode": "ADD %0 7 9\nMUL x %0 2\nMUL y %0 3\nADD %2 x y\nPRINT %2",
+        "optimized_ir": "ADD %0 7 9\nMUL x %0 2\nMUL y %0 3\nADD %2 x y\nPRINT %2",
+        "original_ir": "CONST a 7\nCONST b 9\nADD %0 a b\nMUL x %0 2\nADD %1 a b\nMUL y %1 3\nADD %2 x y\nPRINT %2",
+        "pass_order": [
+          "constant_folding",
+          "constant_propagation",
+          "dead_code_elimination",
+          "common_subexpression_elimination"
+        ]
+      },
+      "unoptimized": {
+        "bytecode": "CONST a 7\nCONST b 9\nADD %0 a b\nMUL x %0 2\nADD %1 a b\nMUL y %1 3\nADD %2 x y\nPRINT %2",
+        "optimized_ir": "CONST a 7\nCONST b 9\nADD %0 a b\nMUL x %0 2\nADD %1 a b\nMUL y %1 3\nADD %2 x y\nPRINT %2",
+        "original_ir": "CONST a 7\nCONST b 9\nADD %0 a b\nMUL x %0 2\nADD %1 a b\nMUL y %1 3\nADD %2 x y\nPRINT %2",
+        "pass_order": []
+      }
+    }
+  }
+}

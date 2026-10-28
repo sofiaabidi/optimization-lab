@@ -20,7 +20,7 @@ TRACKS: tuple[Track, ...] = (
     Track("c", "Quantum optimization", "tracks/c_quantum_opt", RunStatus.DONE, "quick simulator profile implemented; full profile not yet run"),
     Track("d", "Parallel and distributed", "tracks/d_parallel_distributed", RunStatus.DONE, "quick profile implemented; full profile not yet run"),
     Track("e", "EV charging", "tracks/e_ev_charging", RunStatus.DONE, "quick profile implemented; full profile not yet run"),
-    Track("f", "Compiler optimization", "tracks/f_compiler", RunStatus.NOT_IMPLEMENTED, "Prompt 07"),
+    Track("f", "Compiler optimization", "tracks/f_compiler", RunStatus.DONE, "quick profile implemented; full profile not yet run"),
     Track(
         "g",
         "xv6-riscv",
