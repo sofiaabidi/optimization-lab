@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "optimization-lab"
+version = "0.1.0"
+description = "Reproducible optimization experiments for Assignment 8"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<9"]
+ml = []
+quantum = []
+database = []
+
+[project.scripts]
+optlab = "optlab.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+testpaths = ["tests"]
+markers = [
+  "slow: opt-in long-running experiment",
+  "external: requires an external toolchain or service",
+]

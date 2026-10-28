@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+
+# Local environments, credentials, and bulk outputs
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+external/
+build/
+dist/
+results/**/*.db
+results/**/*.sqlite*
+results/**/large/
+
+# Captured private conversation exports must be reviewed before tracking.
+prompts/**/*-private.*
