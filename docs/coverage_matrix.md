@@ -1,6 +1,6 @@
 # Provisional Chapter 6 coverage matrix
 
-The specific Chapter 6 course deck is **missing**. This list comes only from `plan.md` §5 and cannot establish final taught-method coverage. Every item is `NOT IMPLEMENTED`; text or a placeholder is not executable evidence.
+This list preserves every requirement stated in `plan.md` §5. Additional syllabus-specific methods are still uncertain because no authoritative taught-method inventory has been supplied; that uncertainty is not an environment blocker. Every item is `NOT IMPLEMENTED`; text or a placeholder is not executable evidence.
 
 | Track | Provisional requirement | Code / test / output evidence | Status |
 |---|---|---|---|

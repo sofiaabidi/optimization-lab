@@ -1,3 +1,3 @@
 # I — Quantum algorithms and QML
 
-Status: **NOT IMPLEMENTED**. Prompt 10 depends on the actual Chapter 6 syllabus and a compatible simulator environment. No named-algorithm or QML result is claimed.
+Status: **NOT IMPLEMENTED**. The PennyLane simulator environment is validated; assignment-named algorithms remain required and any additional syllabus-specific coverage remains transparently uncertain. No named-algorithm or QML result is claimed.

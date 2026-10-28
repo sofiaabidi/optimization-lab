@@ -4,13 +4,13 @@ Reproducible workspace for Assignment 8, a ten-track optimization study. Phase 0
 
 ## Quick start
 
-Python 3.11 is the target. The current WSL2 host has Python 3.14.4, which can run the scaffold, but a Python 3.11 virtual environment is recommended before scientific dependencies are added.
+Python 3.11 is the target. `uv` provisions it without modifying Ubuntu's system Python. VS Code is configured to select `.venv/bin/python`.
 
 ```bash
-python3.11 -m venv .venv
+uv python install 3.11
+uv venv --python 3.11 .venv
 source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install -e '.[dev]'
+uv sync --all-extras --locked
 python -m optlab list
 pytest -q -m 'not slow and not external'
 ```
@@ -33,12 +33,11 @@ python -m optlab run --all --profile quick
 - `prompts/`: evidence workflow and track-specific records; never fabricate missing transcripts.
 - `reports/`: technical-report and demonstration templates.
 
-## Environment blockers
+## Current environment constraints
 
-- The specific Chapter 6 course deck is missing. The matrix is provisional until it is supplied.
 - `qemu-system-riscv64` and a RISC-V cross-compiler are missing, so Track G cannot run.
 - Exact Codex model ID is unavailable from the repository/session interface and remains `unknown`.
-- No quantum packages are installed during Phase 0.
+- Coverage named directly by the assignment is preserved. Additional syllabus-specific methods remain transparently uncertain; this is a coverage question, not an environment blocker.
 
 See [docs/environment.md](docs/environment.md) for the observed Prompt 00 facts and remedies.
 

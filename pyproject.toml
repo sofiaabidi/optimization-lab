@@ -11,9 +11,14 @@ requires-python = ">=3.11"
 dependencies = []
 
 [project.optional-dependencies]
-dev = ["pytest>=8,<9"]
-ml = []
-quantum = []
+dev = ["pytest==8.4.2"]
+scientific = [
+  "matplotlib==3.10.7",
+  "numpy==2.3.5",
+  "scipy==1.16.3",
+]
+ml = ["torch==2.10.0"]
+quantum = ["pennylane==0.45.1"]
 database = []
 
 [project.scripts]
@@ -29,3 +34,11 @@ markers = [
   "slow: opt-in long-running experiment",
   "external: requires an external toolchain or service",
 ]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }

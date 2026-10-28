@@ -23,4 +23,4 @@ exit 0; ten JSON records with the same truthful statuses
 8 passed in 0.05s
 ```
 
-Uncovered blockers: Python 3.11 is not the active interpreter (3.14.4 was used); the Chapter 6 deck is absent; QEMU RISC-V and a RISC-V cross-compiler are absent; exact Codex model ID and the planning assistant model are unknown. The actual response/export and human-review confirmation still need to be supplied from the chat UI.
+At that historical Phase 0 gate, Python 3.11 was not active, QEMU RISC-V and a RISC-V cross-compiler were absent, and the authoritative syllabus-specific method inventory had not been supplied. Phase 0.5 later resolved Python and dependency setup and reclassified syllabus uncertainty as a coverage question rather than an environment blocker. Exact Codex/planning model IDs remain unknown; the actual response/export and human-review confirmation still need to be supplied from the chat UI.
