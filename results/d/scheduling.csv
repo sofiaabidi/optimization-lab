@@ -1,0 +1,3 @@
+policy,workers,wall_seconds,makespan_seconds,mean_worker_compute_seconds,load_imbalance_max_over_mean,distinct_worker_pids,checksum,interpretation
+static_contiguous_chunks,4,0.2932947549998062,0.2922219550000591,0.10856832150034279,2.6915950340001937,4,9819743212,"real process-pool timing; dynamic queue is a work-stealing analogue, not a per-worker deque implementation"
+dynamic_shared_queue,4,0.1544738229995346,0.15178132499931962,0.1395507560000624,1.0876424417167023,4,9819743212,"real process-pool timing; dynamic queue is a work-stealing analogue, not a per-worker deque implementation"

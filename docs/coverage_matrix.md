@@ -16,11 +16,11 @@ This list preserves every requirement stated in `plan.md` §5. Additional syllab
 | C | Small-Hamiltonian VQE, PQC/QNN and hybrid training loop | `vqe_hamiltonian`, `optimize_vqe`, `train_qnn`; focused tests; `results/c/optimizer_comparison.csv`, `qnn_history.csv` | DONE (simulator quick) |
 | C | Parameter-shift, SPSA and quantum natural gradient with documented metric | `parameter_shift_gradient`, `optimize_vqe`; finite-difference test; `results/c/optimizer_comparison.csv` | DONE (simulator quick) |
 | C | Shot cost, simulator noise, barren-plateau illustration and embedding limitations | `qaoa_shot_experiment`, `qaoa_noise_experiment`, `barren_plateau_experiment`; `results/c/qaoa_noise.csv`, `barren_plateau_summary.csv`, `summary.json` | DONE (simulator quick; full NOT RUN) |
-| D | Submodular coverage/facility objective, diminishing returns and greedy/exact comparison | — | NOT IMPLEMENTED |
-| D | Measured load balance, makespan, scheduling, work stealing, locality, synchronization and communication | — | NOT IMPLEMENTED |
-| D | Data, model and pipeline parallelism with actual/simulated distinction | — | NOT IMPLEMENTED |
-| D | Measured Amdahl/Gustafson interpretation | — | NOT IMPLEMENTED |
-| D | FedAvg/centralized plus MGDA/GradNorm/equal-weight two-task comparisons | — | NOT IMPLEMENTED |
+| D | Submodular coverage/facility objective, diminishing returns and greedy/exact comparison | `coverage_value`, `verify_diminishing_returns`, greedy/exhaustive oracles; `tests/test_track_d.py`; `results/d/summary.json` | DONE (quick) |
+| D | Measured load balance, makespan, scheduling, work stealing, locality, synchronization and communication | `measure_scaling`, `measure_scheduling`, `measure_locality`, `measure_synchronization`, `measure_communication`; `results/d/*.csv` | DONE (local measured quick; shared-queue analogue disclosed) |
+| D | Data, model and pipeline parallelism with actual/simulated distinction | `data_parallel_demo`, `model_parallel_demo`, `pipeline_parallel_demo`; PID/equivalence test; `results/d/parallel_patterns.csv` | DONE (local processes quick) |
+| D | Measured Amdahl/Gustafson interpretation | `parallel_interpretation`; measured repeats in `parallel_scaling.csv`; `summary.json` | DONE (interpretation only) |
+| D | FedAvg/centralized plus MGDA/GradNorm/equal-weight two-task comparisons | `centralized_training`, `fedavg_training`, `multitask_training`; focused tests; `results/d/fedavg.csv`, `multitask.csv` | DONE (sequential distributed simulation quick) |
 | E | EV variables, cost objective, constraints and feasible/infeasible deterministic cases | — | NOT IMPLEMENTED |
 | E | First-available baseline, cheapest-feasible heuristic and exact LP/ILP | — | NOT IMPLEMENTED |
 | E | Strategy selection; cost, latency, peak, unmet energy, scaling and sensitivity | — | NOT IMPLEMENTED |
