@@ -4,7 +4,7 @@ Observed on 2026-10-28. These facts come from the commands below; no packages we
 
 | Item | Observed state | Consequence |
 |---|---|---|
-| OS | WSL2 Linux, kernel `6.18.54.1-microsoft-standard-WSL2`, x86_64 | Suitable host style for xv6 once tools exist |
+| OS | Ubuntu 26.04 LTS on WSL2, kernel `6.18.54.1-microsoft-standard-WSL2`, x86_64 | Suitable host style for xv6 once tools exist |
 | Python | 3.14.4 | Scaffold works; create a Python 3.11 environment for the planned pinned stack |
 | Git | `main` tracking `origin/main`, clean before Phase 0 | Repository initialized |
 | CPU | Intel i5-10500H, 6 cores / 12 logical CPUs | Adequate for bounded CPU experiments |
@@ -30,7 +30,14 @@ find docs -maxdepth 2 -type f
 
 ## Remedies and minimal first run
 
-On Ubuntu/WSL2, first refresh package metadata and verify package names for the installed Ubuntu release. The usual xv6 prerequisites are QEMU system emulation, a RISC-V cross-toolchain, `make`, and `gdb-multiarch`; use the pinned upstream xv6 instructions when Track G begins. Do not mark G unblocked until these commands succeed:
+Ubuntu 26.04's configured repositories were checked with `apt-cache policy`: `qemu-system-misc`, `gcc-riscv64-unknown-elf`, `binutils-riscv64-unknown-elf`, and `gdb-multiarch` have candidates; `make` is already installed. Install the missing tools with:
+
+```bash
+sudo apt update
+sudo apt install qemu-system-misc gcc-riscv64-unknown-elf binutils-riscv64-unknown-elf gdb-multiarch
+```
+
+Use the pinned upstream xv6 instructions when Track G begins. Do not mark G unblocked until these commands succeed:
 
 ```bash
 qemu-system-riscv64 --version
