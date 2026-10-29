@@ -1,0 +1,7 @@
+method,subset,cycle,query_count,elapsed_seconds,queries_per_second
+sqlite_default,none,0,100,0.24345710099998996,410.74998260167456
+sqlite_default,none,1,100,0.24647470200000043,405.7211518608503
+sqlite_default,none,2,100,0.25903820100000985,386.0434469277224
+conditional_greedy,idx_course_department+idx_enrollment_course_term+idx_student_advisor_status,0,100,0.03860839999998689,2590.1099242660657
+conditional_greedy,idx_course_department+idx_enrollment_course_term+idx_student_advisor_status,1,100,0.036892200000011144,2710.600072643263
+conditional_greedy,idx_course_department+idx_enrollment_course_term+idx_student_advisor_status,2,100,0.03715690000001359,2691.290177597254

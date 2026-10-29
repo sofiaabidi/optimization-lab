@@ -32,9 +32,9 @@ This list preserves every requirement stated in `plan.md` §5. Additional syllab
 | G | First kernel feature plus distinct second full-credit feature | Strict-priority scheduler/`setpriority`; dispatch/tick accounting/`getpstats`; literal kernel patch | DONE (real kernel quick) |
 | G | Baseline/patched QEMU on CPU, yield/I-O and fairness workloads | `schedbench.c` in harness patch; `results/g/*benchmark.log`, `benchmark.csv`, `comparison.csv` | DONE (QEMU, 3 repeats) |
 | G | `usertests`, per-change smoke tests, logs and literal patch | Three boot/usertest logs end `ALL TESTS PASSED`; complete upstream-relative patch | DONE (baseline + each kernel change) |
-| H | Seeded SQLite dataset, schema/workload, plans and repeatable measurement | — | NOT IMPLEMENTED |
-| H | Storage-budget index-set optimization with baseline, greedy and exact DP/ILP | — | NOT IMPLEMENTED |
-| H | Plans, latency, throughput, storage, build cost and result equality | — | NOT IMPLEMENTED |
+| H | Seeded SQLite dataset, schema/workload, plans and repeatable measurement | `track_h.py`; `dataset_manifest.json`; `schema.sql`; `workload.sql`; 64 real subsets | DONE (SQLite quick) |
+| H | Storage-budget index-set optimization with baseline, greedy and exact DP/ILP | Conditional measured greedy; exact one-hot subset ILP; exhaustive oracle; `subset_measurements.csv` | DONE (interaction-aware quick) |
+| H | Plans, latency, throughput, storage, build cost and result equality | `plans.json`; `latency_raw.csv`; `throughput_raw.csv`; `strategy_comparison.csv`; focused tests | DONE (all 64 checksum-equal; full NOT RUN) |
 | I | Taught algorithms; provisional DJ, BV, Grover, QFT, QPE, scoped Shor, annealing, QAOA/VQE | — | NOT IMPLEMENTED |
 | I | At least two hand-built circuits with analytic checks | — | NOT IMPLEMENTED |
 | I | Quantum kernel and variational classifier/QNN against fair classical baselines | — | NOT IMPLEMENTED |

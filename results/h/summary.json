@@ -1,0 +1,63 @@
+{
+  "all_subset_results_equal": true,
+  "baseline": {
+    "build_seconds": 0.0,
+    "index_count": 0,
+    "indexes": "",
+    "latency_derived_weighted_queries_per_second": 362.46067301742715,
+    "storage_bytes": 0,
+    "subset": "none",
+    "weighted_latency_seconds": 0.27589199999965786
+  },
+  "dataset_generation_seconds": 0.20831640299996934,
+  "date": "2026-10-29",
+  "environment": {
+    "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "processor": "unknown",
+    "python": "3.11.18"
+  },
+  "exact_ilp": {
+    "build_seconds": 0.043636601000002884,
+    "index_count": 3,
+    "indexes": "idx_course_department;idx_enrollment_course_term;idx_student_advisor_status",
+    "latency_derived_weighted_queries_per_second": 3267.653498097499,
+    "storage_bytes": 1953792,
+    "subset": "idx_course_department+idx_enrollment_course_term+idx_student_advisor_status",
+    "weighted_latency_seconds": 0.030602999999302938
+  },
+  "full_profile_status": "NOT RUN",
+  "greedy": {
+    "build_seconds": 0.043636601000002884,
+    "index_count": 3,
+    "indexes": "idx_course_department;idx_enrollment_course_term;idx_student_advisor_status",
+    "latency_derived_weighted_queries_per_second": 3267.653498097499,
+    "storage_bytes": 1953792,
+    "subset": "idx_course_department+idx_enrollment_course_term+idx_student_advisor_status",
+    "weighted_latency_seconds": 0.030602999999302938
+  },
+  "ilp_formulation": {
+    "constraints": [
+      "sum_S z_S = 1",
+      "sum_S measured_storage_bytes(S) * z_S <= budget"
+    ],
+    "interaction_handling": "each complete subset is measured, so storage and latency interactions are retained",
+    "objective": "minimize sum_S measured_weighted_latency(S) * z_S",
+    "variables": "binary z_S for each measured candidate-index subset S; x_i is derived from membership"
+  },
+  "limitations": [
+    "The deterministic campus data are synthetic and do not contain production data skew or concurrent writes.",
+    "Warm-cache single-client latency on one machine does not predict multi-client production throughput.",
+    "The exact one-hot ILP is practical only because six candidates produce 64 measured subsets.",
+    "SQLite page allocation is measured per complete subset; it is not assumed additive across indexes.",
+    "Timing differences near timer/system-noise scale should not be treated as stable wins without more repeats."
+  ],
+  "measured_single_client_queries_per_second": {
+    "conditional_greedy": 2691.290177597254,
+    "exact_measured_subset_ilp": 2691.290177597254,
+    "sqlite_default": 405.7211518608503
+  },
+  "profile": "quick",
+  "sqlite_version": "3.53.1",
+  "storage_budget_bytes": 2500000,
+  "subset_count": 64
+}

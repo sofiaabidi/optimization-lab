@@ -1,0 +1,83 @@
+{
+  "automatic_index": true,
+  "candidate_indexes": [
+    {
+      "columns": [
+        "student_id",
+        "term",
+        "course_id",
+        "grade"
+      ],
+      "name": "idx_enrollment_student_term",
+      "sql": "CREATE INDEX idx_enrollment_student_term ON enrollments (student_id, term, course_id, grade)",
+      "table": "enrollments"
+    },
+    {
+      "columns": [
+        "course_id",
+        "term",
+        "student_id",
+        "grade"
+      ],
+      "name": "idx_enrollment_course_term",
+      "sql": "CREATE INDEX idx_enrollment_course_term ON enrollments (course_id, term, student_id, grade)",
+      "table": "enrollments"
+    },
+    {
+      "columns": [
+        "advisor_id",
+        "status",
+        "last_name"
+      ],
+      "name": "idx_student_advisor_status",
+      "sql": "CREATE INDEX idx_student_advisor_status ON students (advisor_id, status, last_name)",
+      "table": "students"
+    },
+    {
+      "columns": [
+        "department_id",
+        "code"
+      ],
+      "name": "idx_course_department",
+      "sql": "CREATE INDEX idx_course_department ON courses (department_id, code)",
+      "table": "courses"
+    },
+    {
+      "columns": [
+        "term",
+        "grade",
+        "student_id"
+      ],
+      "name": "idx_enrollment_risk",
+      "sql": "CREATE INDEX idx_enrollment_risk ON enrollments (term, grade, student_id)",
+      "table": "enrollments"
+    },
+    {
+      "columns": [
+        "campus",
+        "id"
+      ],
+      "name": "idx_student_campus",
+      "sql": "CREATE INDEX idx_student_campus ON students (campus, id)",
+      "table": "students"
+    }
+  ],
+  "database_bytes_without_added_indexes": 2842624,
+  "enrollments_per_student": 6,
+  "journal_mode": "DELETE",
+  "parameter_cases_per_query": 3,
+  "row_counts": {
+    "courses": 240,
+    "departments": 12,
+    "enrollments": 60000,
+    "students": 10000
+  },
+  "seed": 2026,
+  "sqlite_version": "3.53.1",
+  "storage_budget_bytes": 2500000,
+  "synchronous": "OFF for reproducible local build/benchmark; no durability claim",
+  "throughput_cycles": 3,
+  "throughput_queries_per_cycle": 100,
+  "timed_repeats_per_case": 5,
+  "warmup": "one untimed execution per query parameter case and database copy"
+}

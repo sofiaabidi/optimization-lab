@@ -1,6 +1,6 @@
 # Optimization Lab
 
-Reproducible workspace for Assignment 8, a ten-track optimization study. Tracks A–G have implemented, measured bounded quick profiles; H–J remain **NOT IMPLEMENTED**. Track C is simulator-only and makes no quantum-advantage claim. Track D distinguishes real local processes from sequential distributed simulation. Track E uses deterministic synthetic campus inputs and preserves infeasible and non-improving cases. Track F implements a small educational compiler and reports when a DP-selected pass order does not generalize. Track G modifies a pinned real xv6-riscv kernel and preserves actual QEMU boot, usertest, benchmark, and patch evidence. See each track README and the coverage matrix for evidence status.
+Reproducible workspace for Assignment 8, a ten-track optimization study. Tracks A–H have implemented, measured bounded quick profiles; I–J remain **NOT IMPLEMENTED**. Track C is simulator-only and makes no quantum-advantage claim. Track D distinguishes real local processes from sequential distributed simulation. Track E uses deterministic synthetic campus inputs and preserves infeasible and non-improving cases. Track F implements a small educational compiler and reports when a DP-selected pass order does not generalize. Track G modifies a pinned real xv6-riscv kernel and preserves actual QEMU boot, usertest, benchmark, and patch evidence. Track H measures real SQLite index subsets and reports when greedy matches the exact ILP. See each track README and the coverage matrix for evidence status.
 
 ## Quick start
 
