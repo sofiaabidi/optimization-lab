@@ -53,7 +53,15 @@ def _validate_d(data: dict[str, Any]) -> int:
     _require(submodular["diminishing_returns"]["passed"], "diminishing returns failed")
     _require(submodular["greedy_value"] <= submodular["exact_value"], "greedy exceeds exact oracle")
     _require(data["fedavg"]["same_split_for_all_methods"], "FedAvg comparison split differs")
-    return 3
+    static, stealing = data["work_stealing"]["results"]
+    _require(static["stolen_tasks"] == 0, "static deque baseline recorded stolen tasks")
+    _require(stealing["stolen_tasks"] > 0, "deque work-stealing run recorded no steals")
+    _require(
+        all(row["every_task_once"] and row["checksum_matches"] for row in (static, stealing)),
+        "deque scheduling lost, duplicated, or corrupted work",
+    )
+    _require(stealing["owner_end"] == "right" and stealing["thief_end"] == "left", "invalid deque ends")
+    return 7
 
 
 def _validate_e(data: dict[str, Any]) -> int:

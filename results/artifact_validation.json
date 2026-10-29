@@ -20,7 +20,7 @@
       "track": "C"
     },
     {
-      "checks": 5,
+      "checks": 9,
       "detail": "artifact invariants satisfied",
       "status": "PASS",
       "track": "D"

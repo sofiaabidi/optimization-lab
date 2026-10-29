@@ -7,6 +7,7 @@ from optlab.track_d import (
     fedavg_training,
     greedy_coverage,
     make_federated_data,
+    measure_work_stealing,
     mgda_coefficient,
     model_parallel_demo,
     multitask_training,
@@ -34,6 +35,21 @@ def test_real_parallel_patterns_preserve_results_and_use_distinct_processes():
         assert result["actually_parallel"] is True
         assert len(result["worker_pids"]) == 2
         assert result["max_abs_error"] < 1e-10
+
+
+def test_deque_work_stealing_executes_every_task_once_and_records_real_steals():
+    rows = measure_work_stealing(workers=3, tasks=[80_000] * 3 + [2_000] * 6)
+    static, stealing = rows
+    assert static["policy"] == "per_worker_deques_static"
+    assert static["stolen_tasks"] == 0
+    assert stealing["policy"] == "per_worker_deques_with_stealing"
+    assert stealing["stolen_tasks"] > 0
+    for row in rows:
+        assert row["every_task_once"] is True
+        assert row["checksum_matches"] is True
+        assert row["distinct_worker_pids"] == 3
+    assert stealing["owner_end"] == "right"
+    assert stealing["thief_end"] == "left"
 
 
 def test_fedavg_and_centralized_share_data_and_improve_initial_loss():

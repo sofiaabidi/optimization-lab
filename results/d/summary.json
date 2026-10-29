@@ -14,7 +14,7 @@
     "fedavg_multitask": "sequential local simulation of distributed optimization; communication bytes are analytical payload counts, not network measurements",
     "scaling_scheduling_data_model_pipeline": "real local processes with distinct PIDs",
     "synchronization": "real Python threads; shared lock versus local reduction",
-    "work_stealing": "dynamic shared process queue measured as a work-stealing analogue; no decentralized deque claimed"
+    "work_stealing": "real local processes use one logical deque per worker; owners pop right and idle workers steal left"
   },
   "fedavg": {
     "clients": 4,
@@ -103,7 +103,7 @@
   "limitations": [
     "Short local timings are sensitive to OS scheduling, CPU frequency, BLAS behavior and process overhead.",
     "A speedup below one is a valid measured outcome, not corrected or hidden.",
-    "ProcessPool's dynamic shared queue is not a full work-stealing runtime implementation.",
+    "The separate deque demonstration implements task stealing with fixed shared-memory buffers and locks; it is educational, not a production lock-free runtime.",
     "FedAvg runs sequential client updates and counts payload bytes; it does not measure a real network.",
     "The two-task linear model is educational and does not establish general MGDA/GradNorm superiority."
   ],
@@ -257,5 +257,43 @@
     ],
     "greedy_value": 10,
     "guarantee": "The 1-1/e greedy guarantee applies because this objective is normalized, monotone, submodular and constrained only by cardinality."
+  },
+  "work_stealing": {
+    "implementation": "one locked logical deque per worker; owners pop right and idle workers steal left",
+    "results": [
+      {
+        "checksum_matches": true,
+        "distinct_worker_pids": 4,
+        "every_task_once": true,
+        "load_imbalance_max_over_mean": 2.1447851339480257,
+        "makespan_compute_seconds": 0.3240395000002536,
+        "mean_worker_compute_seconds": 0.15108250000025691,
+        "owner_end": "right",
+        "policy": "per_worker_deques_static",
+        "stolen_tasks": 0,
+        "tasks": 16,
+        "thief_end": "disabled",
+        "wall_seconds": 0.32577420000006896,
+        "worker_task_counts": "{\"0\": 4, \"1\": 4, \"2\": 4, \"3\": 4}",
+        "workers": 4
+      },
+      {
+        "checksum_matches": true,
+        "distinct_worker_pids": 4,
+        "every_task_once": true,
+        "load_imbalance_max_over_mean": 1.187112141204112,
+        "makespan_compute_seconds": 0.14612840000017968,
+        "mean_worker_compute_seconds": 0.12309570000013537,
+        "owner_end": "right",
+        "policy": "per_worker_deques_with_stealing",
+        "stolen_tasks": 3,
+        "tasks": 16,
+        "thief_end": "left",
+        "wall_seconds": 0.14767200000005687,
+        "worker_task_counts": "{\"0\": 1, \"1\": 5, \"2\": 5, \"3\": 5}",
+        "workers": 4
+      }
+    ],
+    "same_initial_skewed_assignment": true
   }
 }

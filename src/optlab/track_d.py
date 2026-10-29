@@ -85,10 +85,15 @@ def verify_diminishing_returns(candidates: tuple[frozenset[int], ...] | None = N
 
 def _cpu_task(iterations: int) -> tuple[int, float, int, int]:
     started = perf_counter()
+    accumulator = _cpu_checksum(iterations)
+    return accumulator, perf_counter() - started, os.getpid(), iterations
+
+
+def _cpu_checksum(iterations: int) -> int:
     accumulator = 0
     for value in range(iterations):
         accumulator = (accumulator + (value * value + 17 * value + 23) % 104729) % 1_000_000_007
-    return accumulator, perf_counter() - started, os.getpid(), iterations
+    return accumulator
 
 
 def measure_scaling(worker_counts: tuple[int, ...] = (1, 2, 4), repeats: int = 3, task_count: int = 24, iterations: int = 120_000) -> list[dict[str, Any]]:
@@ -145,6 +150,135 @@ def measure_scheduling(workers: int = 4) -> list[dict[str, Any]]:
             }
         )
     return rows
+
+
+def _deque_worker(
+    worker: int,
+    tasks: list[int],
+    deque_buffers: list[Any],
+    left_indices: list[Any],
+    right_indices: list[Any],
+    locks: list[Any],
+    allow_stealing: bool,
+    ready_queue: Any,
+    start_event: Any,
+    output_queue: Any,
+) -> None:
+    ready_queue.put(worker)
+    start_event.wait()
+    completed: list[int] = []
+    checksum = 0
+    compute_seconds = 0.0
+    stolen = 0
+    while True:
+        task = None
+        with locks[worker]:
+            if left_indices[worker].value < right_indices[worker].value:
+                right_indices[worker].value -= 1
+                task = deque_buffers[worker][right_indices[worker].value]
+        if task is None and allow_stealing:
+            for offset in range(1, len(deque_buffers)):
+                victim = (worker + offset) % len(deque_buffers)
+                with locks[victim]:
+                    if left_indices[victim].value < right_indices[victim].value:
+                        task = deque_buffers[victim][left_indices[victim].value]
+                        left_indices[victim].value += 1
+                if task is not None:
+                    stolen += 1
+                    break
+        if task is None:
+            break
+        task_id = task
+        iterations = tasks[task_id]
+        value, duration, _, _ = _cpu_task(iterations)
+        completed.append(task_id)
+        checksum += value
+        compute_seconds += duration
+    output_queue.put(
+        {
+            "worker": worker,
+            "pid": os.getpid(),
+            "tasks_executed": len(completed),
+            "stolen_tasks": stolen,
+            "task_ids": completed,
+            "checksum": checksum,
+            "compute_seconds": compute_seconds,
+        }
+    )
+
+
+def _run_deque_schedule(tasks: list[int], workers: int, allow_stealing: bool) -> dict[str, Any]:
+    if workers < 2 or len(tasks) < workers:
+        raise ValueError("deque scheduling requires at least two workers and one task per worker")
+    context = get_context("fork")
+    assignments = [list(map(int, chunk)) for chunk in np.array_split(np.arange(len(tasks)), workers)]
+    deque_buffers = [context.RawArray("i", assignment) for assignment in assignments]
+    left_indices = [context.RawValue("i", 0) for _ in range(workers)]
+    right_indices = [context.RawValue("i", len(assignment)) for assignment in assignments]
+    locks = [context.Lock() for _ in range(workers)]
+    ready_queue = context.Queue()
+    output_queue = context.Queue()
+    start_event = context.Event()
+    processes = [
+        context.Process(
+            target=_deque_worker,
+            args=(
+                worker,
+                tasks,
+                deque_buffers,
+                left_indices,
+                right_indices,
+                locks,
+                allow_stealing,
+                ready_queue,
+                start_event,
+                output_queue,
+            ),
+        )
+        for worker in range(workers)
+    ]
+    for process in processes:
+        process.start()
+    for _ in processes:
+        ready_queue.get(timeout=10)
+    started = perf_counter()
+    start_event.set()
+    details = [output_queue.get(timeout=30) for _ in processes]
+    wall_seconds = perf_counter() - started
+    for process in processes:
+        process.join(timeout=10)
+        if process.exitcode != 0:
+            raise RuntimeError(f"deque worker exited with code {process.exitcode}")
+    completed_ids = [task_id for detail in details for task_id in detail["task_ids"]]
+    expected_checksum = sum(_cpu_checksum(iterations) for iterations in tasks)
+    loads = [float(detail["compute_seconds"]) for detail in details]
+    return {
+        "policy": "per_worker_deques_with_stealing" if allow_stealing else "per_worker_deques_static",
+        "workers": workers,
+        "tasks": len(tasks),
+        "wall_seconds": wall_seconds,
+        "makespan_compute_seconds": max(loads),
+        "mean_worker_compute_seconds": float(np.mean(loads)),
+        "load_imbalance_max_over_mean": max(loads) / float(np.mean(loads)),
+        "stolen_tasks": sum(int(detail["stolen_tasks"]) for detail in details),
+        "distinct_worker_pids": len({int(detail["pid"]) for detail in details}),
+        "every_task_once": sorted(completed_ids) == list(range(len(tasks))),
+        "checksum_matches": sum(int(detail["checksum"]) for detail in details) == expected_checksum,
+        "owner_end": "right",
+        "thief_end": "left" if allow_stealing else "disabled",
+        "worker_task_counts": json.dumps(
+            {int(detail["worker"]): int(detail["tasks_executed"]) for detail in details},
+            sort_keys=True,
+        ),
+    }
+
+
+def measure_work_stealing(workers: int = 4, tasks: list[int] | None = None) -> list[dict[str, Any]]:
+    tasks = tasks or ([300_000] * workers + [35_000] * (workers * 3))
+    return [
+        _run_deque_schedule(tasks, workers, allow_stealing=False),
+        _run_deque_schedule(tasks, workers, allow_stealing=True),
+    ]
 
 
 def measure_synchronization(workers: int = 4, increments: int = 25_000) -> list[dict[str, Any]]:
@@ -566,6 +700,7 @@ def run_experiment(profile: str = "quick", output_dir: Path | None = None) -> Ex
     iterations = 120_000 if profile == "quick" else 500_000
     scaling = measure_scaling(repeats=repeats, iterations=iterations)
     scheduling = measure_scheduling()
+    work_stealing = measure_work_stealing()
     synchronization = measure_synchronization()
     communication = measure_communication()
     locality = measure_locality(repeats=repeats)
@@ -603,6 +738,11 @@ def run_experiment(profile: str = "quick", output_dir: Path | None = None) -> Ex
         "submodular": submodular,
         "parallel_interpretation": interpretation,
         "parallel_patterns": patterns,
+        "work_stealing": {
+            "implementation": "one locked logical deque per worker; owners pop right and idle workers steal left",
+            "same_initial_skewed_assignment": True,
+            "results": work_stealing,
+        },
         "fedavg": {
             "clients": 4,
             "train_samples": len(federated_data["x_train"]),
@@ -617,7 +757,7 @@ def run_experiment(profile: str = "quick", output_dir: Path | None = None) -> Ex
         "execution_labels": {
             "scaling_scheduling_data_model_pipeline": "real local processes with distinct PIDs",
             "synchronization": "real Python threads; shared lock versus local reduction",
-            "work_stealing": "dynamic shared process queue measured as a work-stealing analogue; no decentralized deque claimed",
+            "work_stealing": "real local processes use one logical deque per worker; owners pop right and idle workers steal left",
             "amdahl_gustafson": "analytical interpretation of measured median speedup only",
             "fedavg_multitask": "sequential local simulation of distributed optimization; communication bytes are analytical payload counts, not network measurements",
         },
@@ -625,7 +765,7 @@ def run_experiment(profile: str = "quick", output_dir: Path | None = None) -> Ex
         "limitations": [
             "Short local timings are sensitive to OS scheduling, CPU frequency, BLAS behavior and process overhead.",
             "A speedup below one is a valid measured outcome, not corrected or hidden.",
-            "ProcessPool's dynamic shared queue is not a full work-stealing runtime implementation.",
+            "The separate deque demonstration implements task stealing with fixed shared-memory buffers and locks; it is educational, not a production lock-free runtime.",
             "FedAvg runs sequential client updates and counts payload bytes; it does not measure a real network.",
             "The two-task linear model is educational and does not establish general MGDA/GradNorm superiority.",
         ],
@@ -633,6 +773,7 @@ def run_experiment(profile: str = "quick", output_dir: Path | None = None) -> Ex
 
     _write_csv(output_dir / "parallel_scaling.csv", scaling)
     _write_csv(output_dir / "scheduling.csv", scheduling)
+    _write_csv(output_dir / "work_stealing.csv", work_stealing)
     _write_csv(output_dir / "synchronization.csv", synchronization)
     _write_csv(output_dir / "communication.csv", communication)
     _write_csv(output_dir / "locality.csv", locality)

@@ -2,7 +2,7 @@ track,status,checks,detail
 A,PASS,4,artifact invariants satisfied
 B,PASS,5,artifact invariants satisfied
 C,PASS,5,artifact invariants satisfied
-D,PASS,5,artifact invariants satisfied
+D,PASS,9,artifact invariants satisfied
 E,PASS,5,artifact invariants satisfied
 F,PASS,5,artifact invariants satisfied
 G,PASS,6,artifact invariants satisfied

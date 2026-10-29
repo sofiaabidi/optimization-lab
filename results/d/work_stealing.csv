@@ -1,0 +1,3 @@
+policy,workers,tasks,wall_seconds,makespan_compute_seconds,mean_worker_compute_seconds,load_imbalance_max_over_mean,stolen_tasks,distinct_worker_pids,every_task_once,checksum_matches,owner_end,thief_end,worker_task_counts
+per_worker_deques_static,4,16,0.32577420000006896,0.3240395000002536,0.15108250000025691,2.1447851339480257,0,4,True,True,right,disabled,"{""0"": 4, ""1"": 4, ""2"": 4, ""3"": 4}"
+per_worker_deques_with_stealing,4,16,0.14767200000005687,0.14612840000017968,0.12309570000013537,1.187112141204112,3,4,True,True,right,left,"{""0"": 1, ""1"": 5, ""2"": 5, ""3"": 5}"
