@@ -1,0 +1,35 @@
+..F.                                                                     [100%]
+=================================== FAILURES ===================================
+_______ test_greedy_is_conditional_and_exact_ilp_matches_feasible_oracle _______
+
+    def test_greedy_is_conditional_and_exact_ilp_matches_feasible_oracle():
+        def row(indexes, cost, objective):
+            return {
+                "subset": "+".join(indexes) if indexes else "none",
+                "indexes": tuple(indexes),
+                "storage_bytes": cost,
+                "weighted_latency_seconds": objective,
+            }
+    
+        measurements = [
+            row((), 0, 10.0),
+            row(("a",), 4, 7.0),
+            row(("b",), 4, 8.0),
+            row(("c",), 5, 9.0),
+            row(("a", "b"), 8, 6.5),
+            row(("a", "c"), 9, 5.0),
+            row(("b", "c"), 9, 3.0),
+            row(("a", "b", "c"), 13, 2.0),
+        ]
+        greedy = greedy_select(measurements, budget_bytes=9)
+        exact = exact_subset_ilp(measurements, budget_bytes=9)
+>       assert greedy["subset"] == "a+c"
+E       AssertionError: assert 'none' == 'a+c'
+E         
+E         - a+c
+E         + none
+
+tests/test_track_h.py:75: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_track_h.py::test_greedy_is_conditional_and_exact_ilp_matches_feasible_oracle
+1 failed, 3 passed in 0.61s

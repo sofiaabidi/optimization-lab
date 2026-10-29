@@ -1,0 +1,16 @@
+program,strategy,ast_output,original_ir_output,optimized_ir_output,bytecode_output,equivalent
+constant_chain,unoptimized,[25],[25],[25],[25],True
+constant_chain,fixed_order,[25],[25],[25],[25],True
+constant_chain,dp_order,[25],[25],[25],[25],True
+repeated_expression,unoptimized,[80],[80],[80],[80],True
+repeated_expression,fixed_order,[80],[80],[80],[80],True
+repeated_expression,dp_order,[80],[80],[80],[80],True
+dead_overwrite,unoptimized,[14],[14],[14],[14],True
+dead_overwrite,fixed_order,[14],[14],[14],[14],True
+dead_overwrite,dp_order,[14],[14],[14],[14],True
+adverse_reassignment,unoptimized,"[5, 13]","[5, 13]","[5, 13]","[5, 13]",True
+adverse_reassignment,fixed_order,"[5, 13]","[5, 13]","[5, 13]","[5, 13]",True
+adverse_reassignment,dp_order,"[5, 13]","[5, 13]","[5, 13]","[5, 13]",True
+minimal_program,unoptimized,[42],[42],[42],[42],True
+minimal_program,fixed_order,[42],[42],[42],[42],True
+minimal_program,dp_order,[42],[42],[42],[42],True

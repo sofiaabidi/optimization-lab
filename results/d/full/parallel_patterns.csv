@@ -1,0 +1,4 @@
+pattern,serial_seconds,parallel_seconds,max_abs_error,worker_pids,actually_parallel,communication
+data_parallel,9.060000002136803e-05,0.002414199999975608,2.6645352591003757e-15,"[37, 38]",True,row shards sent to processes; gradients and loss sums returned and reduced
+model_parallel,2.4100000018734136e-05,0.0020150999998804764,1.7763568394002505e-15,"[41, 42]",True,feature/parameter blocks sent to processes; partial predictions returned and summed
+pipeline_parallel,0.9326240360001066,0.5725478220001605,0.0,"[45, 46]",True,"two live process stages connected by queues; process startup excluded, queue transfer included"

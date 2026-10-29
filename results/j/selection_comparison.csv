@@ -1,0 +1,13 @@
+budget_fraction,budget_seconds,method,selected_tests,predicted_test_seconds,budget_feasible,weighted_coverage_objective,covered_items,detected_injected_faults,undetected_injected_faults,selection_overhead_seconds,actual_wall_seconds,return_code,passed,log
+0.25,0.7651150387498262,alphabetical_prefix,10,0.04415499899994302,True,14.0,14,0,6,6.800000051043753e-06,0.9685268380000025,0,True,results/j/execution_logs/025-alphabetical_prefix.log
+0.25,0.7651150387498262,greedy_weighted_maximum_coverage,51,0.6972715029994561,True,98.0,74,6,0,0.0011834009999347472,3.792934960000025,0,True,results/j/execution_logs/025-greedy_weighted_maximum_coverage.log
+0.25,0.7651150387498262,exact_maximum_coverage_ilp,51,0.6972715029994561,True,98.0,74,6,0,0.008976202999974703,3.8394725379999954,0,True,results/j/execution_logs/025-exact_maximum_coverage_ilp.log
+0.5,1.5302300774996525,alphabetical_prefix,10,0.04415499899994302,True,14.0,14,0,6,1.1499999914121872e-05,0.9019896379999182,0,True,results/j/execution_logs/050-alphabetical_prefix.log
+0.5,1.5302300774996525,greedy_weighted_maximum_coverage,53,1.295955659999322,True,100.0,76,6,0,0.001022400000010748,4.304133202000003,0,True,results/j/execution_logs/050-greedy_weighted_maximum_coverage.log
+0.5,1.5302300774996525,exact_maximum_coverage_ilp,53,1.295955659999322,True,100.0,76,6,0,0.0049791010000035385,4.460563720999971,0,True,results/j/execution_logs/050-exact_maximum_coverage_ilp.log
+0.75,2.2953451162494787,alphabetical_prefix,40,2.260984918999611,True,80.0,60,5,1,7.700000082877523e-06,5.820731440000031,0,True,results/j/execution_logs/075-alphabetical_prefix.log
+0.75,2.2953451162494787,greedy_weighted_maximum_coverage,53,1.295955659999322,True,100.0,76,6,0,0.0011837010000590453,4.459333048999952,0,True,results/j/execution_logs/075-greedy_weighted_maximum_coverage.log
+0.75,2.2953451162494787,exact_maximum_coverage_ilp,53,1.295955659999322,True,100.0,76,6,0,0.004322199999933218,4.018937238000035,0,True,results/j/execution_logs/075-exact_maximum_coverage_ilp.log
+1.0,3.060460154999305,alphabetical_prefix,54,3.060460154999305,True,101.0,77,6,0,9.099999942918657e-06,7.107637382999997,0,True,results/j/execution_logs/100-alphabetical_prefix.log
+1.0,3.060460154999305,greedy_weighted_maximum_coverage,54,3.060460154999305,True,101.0,77,6,0,0.0014555999999856795,6.541444407999961,0,True,results/j/execution_logs/100-greedy_weighted_maximum_coverage.log
+1.0,3.060460154999305,exact_maximum_coverage_ilp,54,3.060460154999305,True,101.0,77,6,0,0.003235799999970368,6.7079670379999925,0,True,results/j/execution_logs/100-exact_maximum_coverage_ilp.log

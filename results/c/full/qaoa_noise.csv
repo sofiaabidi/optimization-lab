@@ -1,0 +1,4 @@
+depolarizing_probability_per_wire_layer,energy,expectation_cut,optimal_probability,duration_seconds,simulator
+0.0,-6.142389259266215,6.142389259266215,0.49076472753660905,0.06642169099995954,default.mixed analytic density matrix
+0.01,-5.993743243486669,5.993743243486669,0.4620398346463709,0.036513495000008334,default.mixed analytic density matrix
+0.03,-5.721571065930746,5.721571065930746,0.410428602794739,0.035703495000007024,default.mixed analytic density matrix

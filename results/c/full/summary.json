@@ -1,0 +1,188 @@
+{
+  "annealer_embedding_limitation": "The logical Max-Cut graph contains triangle 0-1-2. A four-site path hardware graph has no triangle, so direct one-logical-to-one-physical placement is impossible; at least one logical variable needs a multi-qubit chain and a chain-strength penalty. This consumes extra qubits and can distort the QUBO energy scale.",
+  "barren_plateau_summary": [
+    {
+      "depth": 1,
+      "duration_seconds": 0.09496830300008696,
+      "gradient_mean": 0.1531854792317041,
+      "gradient_variance": 0.257558965342763,
+      "mean_absolute_gradient": 0.4430491108964012,
+      "qubits": 2,
+      "trials": 20
+    },
+    {
+      "depth": 3,
+      "duration_seconds": 0.2704047100000935,
+      "gradient_mean": -0.06719155333565492,
+      "gradient_variance": 0.1219354072209771,
+      "mean_absolute_gradient": 0.2744379039545736,
+      "qubits": 2,
+      "trials": 20
+    },
+    {
+      "depth": 5,
+      "duration_seconds": 0.409281614000065,
+      "gradient_mean": -0.03594848351890499,
+      "gradient_variance": 0.11962168383259203,
+      "mean_absolute_gradient": 0.26125482191017396,
+      "qubits": 2,
+      "trials": 20
+    },
+    {
+      "depth": 1,
+      "duration_seconds": 0.19570150699996702,
+      "gradient_mean": 0.015570573934548049,
+      "gradient_variance": 0.08171179269176639,
+      "mean_absolute_gradient": 0.18974826407668582,
+      "qubits": 4,
+      "trials": 20
+    },
+    {
+      "depth": 3,
+      "duration_seconds": 0.5743422200000623,
+      "gradient_mean": 0.0013532986134360714,
+      "gradient_variance": 0.08460689892315922,
+      "mean_absolute_gradient": 0.17569495464609203,
+      "qubits": 4,
+      "trials": 20
+    },
+    {
+      "depth": 5,
+      "duration_seconds": 0.856043930000169,
+      "gradient_mean": -0.03705504165398877,
+      "gradient_variance": 0.022476416969338445,
+      "mean_absolute_gradient": 0.11968475828661514,
+      "qubits": 4,
+      "trials": 20
+    },
+    {
+      "depth": 1,
+      "duration_seconds": 0.2832489100001112,
+      "gradient_mean": -0.007838139854948505,
+      "gradient_variance": 0.010597570614171783,
+      "mean_absolute_gradient": 0.06392395301557843,
+      "qubits": 6,
+      "trials": 20
+    },
+    {
+      "depth": 3,
+      "duration_seconds": 0.7336121260000255,
+      "gradient_mean": -0.01920652490982831,
+      "gradient_variance": 0.0071953565416484734,
+      "mean_absolute_gradient": 0.06409280927279536,
+      "qubits": 6,
+      "trials": 20
+    },
+    {
+      "depth": 5,
+      "duration_seconds": 1.2742494439999064,
+      "gradient_mean": 0.018907642151751648,
+      "gradient_variance": 0.011263847146587102,
+      "mean_absolute_gradient": 0.08021954646845163,
+      "qubits": 6,
+      "trials": 20
+    }
+  ],
+  "environment": {
+    "pennylane": "0.45.1",
+    "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "processor": "unknown",
+    "python": "3.11.18",
+    "simulator": "PennyLane default.qubit/default.mixed"
+  },
+  "full_profile_status": "DONE",
+  "limitations": [
+    "All results are local CPU simulations; no quantum hardware was used.",
+    "The four-node QAOA result and two-qubit VQE cannot establish quantum advantage.",
+    "The depolarizing channel is a plausible synthetic noise model, not calibration from a device.",
+    "The barren-plateau sweep is a finite-size illustration; non-monotone sample variance is possible.",
+    "QNG uses a documented diagonal Fubini-Study approximation rather than the full metric tensor."
+  ],
+  "profile": "full",
+  "qaoa": {
+    "classical_optimum_cut": 6.5,
+    "duration_seconds": 0.9891714570001113,
+    "energy": -6.142389259266215,
+    "evaluations": 160,
+    "expectation_cut": 6.142389259266215,
+    "layers": 2,
+    "optimal_bitstrings": [
+      "0110",
+      "1001"
+    ],
+    "optimal_sample_probability": 0.490764727536609,
+    "optimizer": "COBYLA",
+    "optimizer_message": "Return from COBYLA because the trust region radius reaches its lower bound.",
+    "optimizer_success": true,
+    "parameters": [
+      [
+        0.7116890415233882,
+        1.4617606955501248
+      ],
+      [
+        0.55756337691386,
+        0.6364952113327113
+      ]
+    ]
+  },
+  "qnn": {
+    "accuracy": 1.0,
+    "circuit_executions": 7200,
+    "description": "one-qubit PQC plus trainable classical scale and bias",
+    "duration_seconds": 9.166495866999867,
+    "loss_final": 0.06131218803628352,
+    "loss_initial": 0.08429281540031686,
+    "parameters": [
+      1.223572126403222,
+      0.061042800697815716,
+      1.1582919068400925,
+      -3.120692662947181e-06
+    ],
+    "steps": 200
+  },
+  "seed": 2026,
+  "vqe_optimizer_comparison": [
+    {
+      "circuit_evaluations": 296,
+      "duration_seconds": 0.4840561589999197,
+      "energy": -1.7262545395382989,
+      "energy_error": 1.311062490794157e-05,
+      "exact_ground_energy": -1.7262676501632068,
+      "iterations": 60,
+      "method": "parameter_shift",
+      "metric": null,
+      "parameters": [
+        -0.1746636403704889,
+        -0.00616746356584467
+      ]
+    },
+    {
+      "circuit_evaluations": 298,
+      "duration_seconds": 0.4561581999998907,
+      "energy": -1.7254966141595698,
+      "energy_error": 0.0007710360036370378,
+      "exact_ground_energy": -1.7262676501632068,
+      "iterations": 100,
+      "method": "spsa",
+      "metric": null,
+      "parameters": [
+        -0.16475272850195527,
+        -0.044581906804563864
+      ]
+    },
+    {
+      "circuit_evaluations": 296,
+      "duration_seconds": 0.387536898999997,
+      "energy": -1.7262540765028809,
+      "energy_error": 1.3573660325949533e-05,
+      "exact_ground_energy": -1.7262676501632068,
+      "iterations": 60,
+      "method": "qng",
+      "metric": "diagonal Fubini-Study 0.25 I plus 1e-3 damping",
+      "parameters": [
+        -0.17466312794355657,
+        -0.006275427268077218
+      ]
+    }
+  ]
+}

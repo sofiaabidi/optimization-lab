@@ -1,0 +1,13 @@
+capacity_factor,scenario,fleet_size,method,status,feasible,cost,unmet_energy_kwh,peak_kw,peak_utilization,max_constraint_violation_kwh,median_runtime_seconds
+0.5,capacity_0.50,4,first_available,PARTIAL_INFEASIBLE,False,4.1,3.0,3.0,1.0,0.0,0.0001999999999497959
+0.5,capacity_0.50,4,cheapest_feasible_slot,PARTIAL_INFEASIBLE,False,3.74,4.0,3.0,1.0,0.0,0.00018580000005385955
+0.5,capacity_0.50,4,exact_lp,INFEASIBLE,False,,,,,,0.0016412500000342334
+0.75,capacity_0.75,4,first_available,FEASIBLE,True,4.48,0.0,4.5,1.0,0.0,0.0002035000001114895
+0.75,capacity_0.75,4,cheapest_feasible_slot,PARTIAL_INFEASIBLE,False,4.02,0.5,4.5,1.0,0.0,0.0001997499999788488
+0.75,capacity_0.75,4,exact_lp,OPTIMAL,True,4.12,0.0,4.5,1.0,0.0,0.0020691499998974905
+1.0,capacity_1.00,4,first_available,FEASIBLE,True,4.4799999999999995,0.0,6.0,1.0,0.0,0.00017219999995177204
+1.0,capacity_1.00,4,cheapest_feasible_slot,FEASIBLE,True,3.58,0.0,6.0,1.0,0.0,0.00018880000004628528
+1.0,capacity_1.00,4,exact_lp,OPTIMAL,True,3.4,0.0,6.0,1.0,0.0,0.001874199999974735
+1.25,capacity_1.25,4,first_available,FEASIBLE,True,4.4799999999999995,0.0,6.0,0.8,0.0,0.0002016500000081578
+1.25,capacity_1.25,4,cheapest_feasible_slot,FEASIBLE,True,3.25,0.0,7.5,1.0,0.0,0.00018685000009099895
+1.25,capacity_1.25,4,exact_lp,OPTIMAL,True,3.25,0.0,7.5,1.0,0.0,0.0021935500001291075

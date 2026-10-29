@@ -1,0 +1,15 @@
+..F....                                                                  [100%]
+=================================== FAILURES ===================================
+__________ test_compiled_shor_order_finding_is_unitary_and_factors_15 __________
+
+    def test_compiled_shor_order_finding_is_unitary_and_factors_15():
+        matrix = modular_multiplication_matrix(2, 15, 4)
+        assert np.allclose(matrix.conj().T @ matrix, np.eye(16))
+        result = shor_15_demo()
+>       assert result["recovered_order"] == 4
+E       assert 8 == 4
+
+tests/test_track_i.py:52: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_track_i.py::test_compiled_shor_order_finding_is_unitary_and_factors_15
+1 failed, 6 passed in 2.89s

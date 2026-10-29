@@ -1,0 +1,151 @@
+{
+  "analytic_optimum": [
+    1.3173146632856618,
+    -1.812125349674318,
+    0.7096211809161457
+  ],
+  "analytic_optimum_objective": 0.3260684948522262,
+  "curvature": {
+    "empirical_fisher_diagonal": [
+      5.247113398341905,
+      6.797600881112653,
+      5.8094888207481965
+    ],
+    "hessian_diagonal": [
+      1.0896853396961563,
+      1.2841589440088594,
+      1.3373961772195
+    ],
+    "hvp_max_abs_error": 3.0839286679906763e-10,
+    "note": "Empirical Fisher diagonal is a positive curvature approximation; it is not asserted equal to the Hessian."
+  },
+  "dataset": {
+    "features": 3,
+    "label_noise_std": 0.2,
+    "regularization": 0.1,
+    "samples": 96
+  },
+  "environment": {
+    "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "processor": "unknown",
+    "python": "3.11.18"
+  },
+  "full_profile_status": "DONE",
+  "gauss_newton": {
+    "duration_seconds": 0.0011537000000316766,
+    "history": [
+      0.14915498021092435,
+      0.02001581096009357,
+      0.00038321045442236295,
+      8.70302095955299e-08,
+      4.4056602145421095e-15,
+      1.0797533640212599e-29,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "method": "gauss_newton",
+    "parameter_error_l2": 0.0,
+    "parameters": [
+      2.0,
+      -0.8
+    ],
+    "true_parameters": [
+      2.0,
+      -0.8
+    ]
+  },
+  "gradient_checks": {
+    "loss": 2.0152946655596704,
+    "manual_vs_autograd_max_abs": 4.440892098500626e-16,
+    "manual_vs_finite_difference_max_abs": 1.0181377962936722e-10
+  },
+  "landscapes": {
+    "continuous_vs_discrete": {
+      "continuous_optimum": 2.3,
+      "integer_optimum_by_enumeration": 2,
+      "objective": "(x - 2.3)^2"
+    },
+    "convex_not_strongly_convex": {
+      "gd_final_objective": 0.0034998120217263565,
+      "gd_final_x": 0.24322666199100446,
+      "gd_start_objective": 5.0625,
+      "gd_steps": 100,
+      "hessian_at_optimum": 0.0,
+      "objective": "x^4"
+    },
+    "nonconvex_gd_from_negative": [
+      -1.0241203002150505,
+      -0.20244043434482245
+    ],
+    "nonconvex_gd_from_positive": [
+      0.973994353231278,
+      0.19743415285827653
+    ],
+    "nonconvex_stationary_points": [
+      {
+        "scope": "global",
+        "type": "minimum",
+        "value": -0.20244043434482245,
+        "x": -1.0241203002150505
+      },
+      {
+        "type": "maximum",
+        "value": 1.005006281486546,
+        "x": 0.050125946983772554
+      },
+      {
+        "scope": "local",
+        "type": "minimum",
+        "value": 0.19743415285827653,
+        "x": 0.973994353231278
+      }
+    ],
+    "saddle": {
+      "gradient": [
+        0.0,
+        0.0
+      ],
+      "hessian_eigenvalues": [
+        -2.0,
+        2.0
+      ],
+      "objective": "x^2-y^2",
+      "point": [
+        0.0,
+        0.0
+      ]
+    },
+    "strongly_convex": {
+      "ridge_hessian_min_eigenvalue": 0.8993328866460523
+    }
+  },
+  "limitations": [
+    "Tiny synthetic CPU problem; timings do not predict large-model performance.",
+    "Gauss-Newton uses a separate nonlinear least-squares objective and is not ranked against ridge methods.",
+    "Empirical Fisher diagonal is demonstrated only as an approximation."
+  ],
+  "profile": "full",
+  "seed": 2026,
+  "stochastic_repeats": 10,
+  "stochastic_summary": {
+    "mini_batch_sgd": {
+      "final_objective_max": 0.3273321024435569,
+      "final_objective_mean": 0.3264280977168168,
+      "final_objective_min": 0.3261141394226234,
+      "final_objective_std": 0.0003642977133679027,
+      "repeats": 10
+    },
+    "sgd": {
+      "final_objective_max": 0.32985046715057487,
+      "final_objective_mean": 0.3273084345676649,
+      "final_objective_min": 0.32627004818432737,
+      "final_objective_std": 0.001049898311932515,
+      "repeats": 10
+    }
+  }
+}

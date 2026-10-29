@@ -1,0 +1,7 @@
+scenario,fleet_size,method,status,feasible,cost,unmet_energy_kwh,peak_kw,peak_utilization,max_constraint_violation_kwh,median_runtime_seconds
+campus_feasible,4,first_available,FEASIBLE,True,4.4799999999999995,0.0,6.0,1.0,0.0,0.0001442500000621294
+campus_feasible,4,cheapest_feasible_slot,FEASIBLE,True,3.58,0.0,6.0,1.0,0.0,0.00016839999989315402
+campus_feasible,4,exact_lp,OPTIMAL,True,3.4,0.0,6.0,1.0,0.0,0.001961049999977149
+campus_infeasible,5,first_available,PARTIAL_INFEASIBLE,False,5.14,4.0,6.0,1.0,0.0,0.00017530000002352608
+campus_infeasible,5,cheapest_feasible_slot,PARTIAL_INFEASIBLE,False,4.24,4.0,6.0,1.0,0.0,0.00016649999997753184
+campus_infeasible,5,exact_lp,INFEASIBLE,False,,,,,,0.001165549999996074

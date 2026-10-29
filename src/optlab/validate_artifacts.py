@@ -163,7 +163,11 @@ def write_validation(rows: list[ValidationRow], output_dir: Path) -> None:
         encoding="utf-8",
     )
     with (output_dir / "artifact_validation.csv").open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=("track", "status", "checks", "detail"))
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=("track", "status", "checks", "detail"),
+            lineterminator="\n",
+        )
         writer.writeheader()
         writer.writerows(asdict(row) for row in rows)
 

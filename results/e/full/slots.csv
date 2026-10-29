@@ -1,0 +1,13 @@
+scenario,slot,price_per_kwh,facility_kw
+campus_feasible,0,0.36,6.0
+campus_feasible,1,0.3,6.0
+campus_feasible,2,0.12,6.0
+campus_feasible,3,0.1,6.0
+campus_feasible,4,0.22,6.0
+campus_feasible,5,0.4,6.0
+campus_infeasible,0,0.36,6.0
+campus_infeasible,1,0.3,6.0
+campus_infeasible,2,0.12,6.0
+campus_infeasible,3,0.1,6.0
+campus_infeasible,4,0.22,6.0
+campus_infeasible,5,0.4,6.0

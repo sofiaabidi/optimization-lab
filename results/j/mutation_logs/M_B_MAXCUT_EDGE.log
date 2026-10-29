@@ -1,0 +1,30 @@
+.FF.                                                                     [100%]
+=================================== FAILURES ===================================
+_______________ test_maxcut_qubo_and_ising_match_every_bitstring _______________
+
+    def test_maxcut_qubo_and_ising_match_every_bitstring():
+        instance = load_maxcut_instance()
+        matrix = maxcut_qubo(instance)
+        constant, fields, couplings = qubo_to_ising(matrix)
+        for bits in itertools.product((0, 1), repeat=instance["nodes"]):
+            cut = cut_value(bits, instance)
+            qubo = qubo_energy(bits, matrix)
+            ising = ising_energy(bits, constant, fields, couplings)
+>           assert qubo == -cut
+E           assert 0.0 == -8.0
+
+tests/test_track_b.py:43: AssertionError
+______________ test_enumerated_maxcut_optimum_and_mapping_errors _______________
+
+    def test_enumerated_maxcut_optimum_and_mapping_errors():
+        rows, mapping = enumerate_maxcut(load_maxcut_instance())
+        assert len(rows) == 16
+        assert mapping["optimum"]["cut_value"] == max(row["cut_value"] for row in rows)
+>       assert mapping["max_abs_qubo_plus_cut_error"] < 1e-12
+E       assert 8.0 < 1e-12
+
+tests/test_track_b.py:51: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_track_b.py::test_maxcut_qubo_and_ising_match_every_bitstring
+FAILED tests/test_track_b.py::test_enumerated_maxcut_optimum_and_mapping_errors
+2 failed, 2 passed in 0.49s

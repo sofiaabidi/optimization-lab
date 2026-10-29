@@ -1,0 +1,35 @@
+F..F.                                                                    [100%]
+=================================== FAILURES ===================================
+___ test_all_methods_are_independently_feasible_and_optimized_costs_improve ____
+
+    def test_all_methods_are_independently_feasible_and_optimized_costs_improve():
+        instance = make_feasible_instance()
+        baseline = first_available_schedule(instance)
+        heuristic = cheapest_slot_schedule(instance)
+        exact = exact_lp_schedule(instance)
+        for result in (baseline, heuristic, exact):
+            assert result.schedule_kwh is not None
+>           assert verify_schedule(instance, result.schedule_kwh).feasible
+E           AssertionError: assert False
+E            +  where False = ScheduleCheck(feasible=False, unmet_energy_kwh=0.0, peak_kw=6.0, peak_utilization=1.0, max_capacity_violation_kwh=6.0, max_vehicle_rate_violation_kwh=0.0, max_window_violation_kwh=0.0, max_energy_error_kwh=0.0).feasible
+E            +    where ScheduleCheck(feasible=False, unmet_energy_kwh=0.0, peak_kw=6.0, peak_utilization=1.0, max_capacity_violation_kwh=6.0, max_vehicle_rate_violation_kwh=0.0, max_window_violation_kwh=0.0, max_energy_error_kwh=0.0) = verify_schedule(ChargingInstance(name='campus_feasible', prices_per_kwh=array([0.36, 0.3 , 0.12, 0.1 , 0.22, 0.4 ]), facility_kw=array..., Vehicle(vehicle_id='EV-D', arrival_slot=2, departure_slot=6, energy_kwh=5.0, max_kw=2.0)), slot_hours=1.0, seed=2026), array([[2., 2., 0., 0., 0., 0.],\n       [2., 2., 2., 0., 0., 0.],\n       [0., 2., 2., 1., 0., 0.],\n       [0., 0., 2., 2., 1., 0.]]))
+E            +      where array([[2., 2., 0., 0., 0., 0.],\n       [2., 2., 2., 0., 0., 0.],\n       [0., 2., 2., 1., 0., 0.],\n       [0., 0., 2., 2., 1., 0.]]) = ScheduleResult(method='first_available', status='PARTIAL_INFEASIBLE', schedule_kwh=array([[2., 2., 0., 0., 0., 0.],\n  ...0.]]), runtime_seconds=0.00037989999998444546, solver_message='deterministic arrival-order first-available allocation').schedule_kwh
+
+tests/test_track_e.py:24: AssertionError
+____________ test_lp_objective_matches_independent_tiny_grid_oracle ____________
+
+    def test_lp_objective_matches_independent_tiny_grid_oracle():
+        instance = tiny_oracle_instance()
+        result = exact_lp_schedule(instance)
+        assert result.schedule_kwh is not None
+>       assert verify_schedule(instance, result.schedule_kwh).feasible
+E       AssertionError: assert False
+E        +  where False = ScheduleCheck(feasible=False, unmet_energy_kwh=0.0, peak_kw=1.0, peak_utilization=1.0, max_capacity_violation_kwh=1.0, max_vehicle_rate_violation_kwh=0.0, max_window_violation_kwh=0.0, max_energy_error_kwh=0.0).feasible
+E        +    where ScheduleCheck(feasible=False, unmet_energy_kwh=0.0, peak_kw=1.0, peak_utilization=1.0, max_capacity_violation_kwh=1.0, max_vehicle_rate_violation_kwh=0.0, max_window_violation_kwh=0.0, max_energy_error_kwh=0.0) = verify_schedule(ChargingInstance(name='tiny_oracle', prices_per_kwh=array([3., 1., 2.]), facility_kw=array([1., 1., 1.]), vehicles=(Ve....0), Vehicle(vehicle_id='B', arrival_slot=1, departure_slot=3, energy_kwh=1.0, max_kw=1.0)), slot_hours=1.0, seed=2026), array([[0., 1., 0.],\n       [0., 0., 1.]]))
+E        +      where array([[0., 1., 0.],\n       [0., 0., 1.]]) = ScheduleResult(method='exact_lp', status='INVALID_SOLUTION', schedule_kwh=array([[0., 1., 0.],\n       [0., 0., 1.]]), runtime_seconds=0.003210800000033487, solver_message='Optimization terminated successfully. (HiGHS Status 7: Optimal)').schedule_kwh
+
+tests/test_track_e.py:64: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_track_e.py::test_all_methods_are_independently_feasible_and_optimized_costs_improve
+FAILED tests/test_track_e.py::test_lp_objective_matches_independent_tiny_grid_oracle
+2 failed, 3 passed in 0.96s

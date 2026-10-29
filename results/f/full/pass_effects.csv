@@ -1,0 +1,5 @@
+pass,before_instructions,after_instructions,before_code_bytes,after_code_bytes,changed,equivalent
+constant_folding,2,2,18,18,True,True
+constant_propagation,3,3,28,28,True,True
+dead_code_elimination,3,2,31,18,True,True
+common_subexpression_elimination,8,7,84,73,True,True

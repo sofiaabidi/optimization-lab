@@ -1,0 +1,36 @@
+F.F.                                                                     [100%]
+=================================== FAILURES ===================================
+___________________ test_ridge_gradient_and_analytic_optimum ___________________
+
+    def test_ridge_gradient_and_analytic_optimum():
+        problem = make_ridge_problem(samples=32)
+        point = np.array([0.3, -0.4, 0.2])
+>       assert np.max(np.abs(problem.gradient(point) - finite_difference_gradient(problem, point))) < 1e-8
+E       AssertionError: assert np.float64(0.080000000012725) < 1e-08
+E        +  where np.float64(0.080000000012725) = <function max at 0x74e126146a70>(array([0.06, 0.08, 0.04]))
+E        +    where <function max at 0x74e126146a70> = np.max
+E        +    and   array([0.06, 0.08, 0.04]) = <ufunc 'absolute'>((array([-1.00960675,  1.86093832, -0.37479609]) - array([-0.94960675,  1.78093832, -0.33479609])))
+E        +      where <ufunc 'absolute'> = np.abs
+E        +      and   array([-1.00960675,  1.86093832, -0.37479609]) = gradient(array([ 0.3, -0.4,  0.2]))
+E        +        where gradient = RidgeProblem(x=array([[-0.79312248,  0.24057128, -1.89632635],\n       [ 1.39577171,  0.63829474, -0.29204749],\n       ... 0.40780017,  3.29439743, -0.63637561,  2.67335624,  2.19949776,\n        3.48471504, -0.30727195]), regularization=0.1).gradient
+E        +      and   array([-0.94960675,  1.78093832, -0.33479609]) = finite_difference_gradient(RidgeProblem(x=array([[-0.79312248,  0.24057128, -1.89632635],\n       [ 1.39577171,  0.63829474, -0.29204749],\n       ... 0.40780017,  3.29439743, -0.63637561,  2.67335624,  2.19949776,\n        3.48471504, -0.30727195]), regularization=0.1), array([ 0.3, -0.4,  0.2]))
+
+tests/test_track_a.py:17: AssertionError
+________________ test_newton_gauss_newton_and_backprop_oracles _________________
+
+    def test_newton_gauss_newton_and_backprop_oracles():
+        problem = make_ridge_problem(samples=40)
+        newton = run_newton(problem)
+>       assert np.linalg.norm(newton.weights - problem.optimum) < 1e-10
+E       AssertionError: assert np.float64(0.5282393159047485) < 1e-10
+E        +  where np.float64(0.5282393159047485) = <function norm at 0x74e123d473b0>((array([ 1.73363383, -2.19013448,  0.82228293]) - array([ 1.3803789 , -1.82048839,  0.68958215])))
+E        +    where <function norm at 0x74e123d473b0> = <module 'numpy.linalg' from '/home/adnan/projects/optimization-lab/.venv/lib/python3.11/site-packages/numpy/linalg/__init__.py'>.norm
+E        +      where <module 'numpy.linalg' from '/home/adnan/projects/optimization-lab/.venv/lib/python3.11/site-packages/numpy/linalg/__init__.py'> = np.linalg
+E        +    and   array([ 1.73363383, -2.19013448,  0.82228293]) = OptimizerRun(method='newton', repeat=0, weights=array([ 1.73363383, -2.19013448,  0.82228293]), history=[3.45132388773... 0.3399937834902226, 0.4454649012271074, 0.48866514336640665], duration_seconds=0.00028550000001814624, converged=True).weights
+E        +    and   array([ 1.3803789 , -1.82048839,  0.68958215]) = RidgeProblem(x=array([[-0.79312248,  0.24057128, -1.89632635],\n       [ 1.39577171,  0.63829474, -0.29204749],\n       ... 2.15249655,  3.35143645,\n        0.47225139, -2.25669588, -4.57089907, -4.09713351, -0.25046581]), regularization=0.1).optimum
+
+tests/test_track_a.py:43: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_track_a.py::test_ridge_gradient_and_analytic_optimum - Asse...
+FAILED tests/test_track_a.py::test_newton_gauss_newton_and_backprop_oracles
+2 failed, 2 passed in 0.23s

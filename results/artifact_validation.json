@@ -1,0 +1,65 @@
+{
+  "status": "PASS",
+  "tracks": [
+    {
+      "checks": 4,
+      "detail": "artifact invariants satisfied",
+      "status": "PASS",
+      "track": "A"
+    },
+    {
+      "checks": 5,
+      "detail": "artifact invariants satisfied",
+      "status": "PASS",
+      "track": "B"
+    },
+    {
+      "checks": 5,
+      "detail": "artifact invariants satisfied",
+      "status": "PASS",
+      "track": "C"
+    },
+    {
+      "checks": 5,
+      "detail": "artifact invariants satisfied",
+      "status": "PASS",
+      "track": "D"
+    },
+    {
+      "checks": 5,
+      "detail": "artifact invariants satisfied",
+      "status": "PASS",
+      "track": "E"
+    },
+    {
+      "checks": 5,
+      "detail": "artifact invariants satisfied",
+      "status": "PASS",
+      "track": "F"
+    },
+    {
+      "checks": 6,
+      "detail": "artifact invariants satisfied",
+      "status": "PASS",
+      "track": "G"
+    },
+    {
+      "checks": 5,
+      "detail": "artifact invariants satisfied",
+      "status": "PASS",
+      "track": "H"
+    },
+    {
+      "checks": 4,
+      "detail": "artifact invariants satisfied",
+      "status": "PASS",
+      "track": "I"
+    },
+    {
+      "checks": 5,
+      "detail": "artifact invariants satisfied",
+      "status": "PASS",
+      "track": "J"
+    }
+  ]
+}

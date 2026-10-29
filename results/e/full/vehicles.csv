@@ -1,0 +1,10 @@
+scenario,vehicle_id,arrival_slot,departure_slot,energy_kwh,max_kw
+campus_feasible,EV-A,0,3,4.0,2.0
+campus_feasible,EV-B,0,4,6.0,2.0
+campus_feasible,EV-C,1,5,5.0,2.0
+campus_feasible,EV-D,2,6,5.0,2.0
+campus_infeasible,EV-A,0,3,4.0,2.0
+campus_infeasible,EV-B,0,4,6.0,2.0
+campus_infeasible,EV-C,1,5,5.0,2.0
+campus_infeasible,EV-D,2,6,5.0,2.0
+campus_infeasible,EV-X,4,5,7.0,3.0
