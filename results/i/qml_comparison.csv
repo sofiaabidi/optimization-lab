@@ -1,0 +1,5 @@
+model,test_accuracy,train_seconds,parameter_count,circuit_evaluations,simulator,training_steps
+quantum fidelity kernel ridge,0.8125,1.8672235219999607,0,660,default.qubit analytic,
+classical RBF kernel ridge,0.875,0.00017400000001543958,1,0,none,
+two-qubit variational classifier,0.875,20.301264721999985,5,6736,default.qubit analytic parameter-shift,35
+classical trigonometric logistic regression,0.9375,0.007277799999997114,6,0,none,29

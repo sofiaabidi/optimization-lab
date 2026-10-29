@@ -1,0 +1,22 @@
+algorithm,instance,repeat,seconds
+Deutsch-Jozsa,mask=000,0,0.00301140000004807
+Deutsch-Jozsa,mask=000,1,0.001942501000030461
+Deutsch-Jozsa,mask=000,2,0.003056501000003209
+Deutsch-Jozsa,mask=101,0,0.0025237010000296323
+Deutsch-Jozsa,mask=101,1,0.003052300000035757
+Deutsch-Jozsa,mask=101,2,0.002892301000031239
+Bernstein-Vazirani,secret=101,0,0.0024431009999830167
+Bernstein-Vazirani,secret=101,1,0.002022500000009586
+Bernstein-Vazirani,secret=101,2,0.004697102000022824
+Grover,"N=8,target=5",0,0.009627202999979545
+Grover,"N=8,target=5",1,0.0076755019999836804
+Grover,"N=8,target=5",2,0.008033701999977438
+Quantum Fourier Transform,3-qubit basis 5,0,0.0038646009999752096
+Quantum Fourier Transform,3-qubit basis 5,1,0.0030044009999983246
+Quantum Fourier Transform,3-qubit basis 5,2,0.003969600999994327
+Quantum Phase Estimation,phase=0.375,0,0.0063407009999991715
+Quantum Phase Estimation,phase=0.375,1,0.006071701999985635
+Quantum Phase Estimation,phase=0.375,2,0.0042623009999829264
+Shor compiled order finding,"N=15,a=2",0,0.007763001999990138
+Shor compiled order finding,"N=15,a=2",1,0.00787380200000598
+Shor compiled order finding,"N=15,a=2",2,0.0067957019999767

@@ -1,0 +1,5 @@
+depolarizing_probability_per_wire_iteration,target_probability,most_likely,duration_seconds,simulator
+0.0,0.945312499999996,5,0.018545999999957985,PennyLane default.mixed density matrix
+0.01,0.9067245561090075,5,0.017722701000025154,PennyLane default.mixed density matrix
+0.03,0.8341160145920955,5,0.01727379999999812,PennyLane default.mixed density matrix
+0.06,0.7358760130880891,5,0.023399899999958507,PennyLane default.mixed density matrix

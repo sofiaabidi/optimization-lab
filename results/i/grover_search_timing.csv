@@ -1,0 +1,41 @@
+method,repeat,wall_seconds
+Grover statevector simulation,0,0.011059402000000773
+classical ascending linear search,0,6.700000028558861e-06
+Grover statevector simulation,1,0.008424003000016
+classical ascending linear search,1,5.500000042957254e-06
+Grover statevector simulation,2,0.010546701999999186
+classical ascending linear search,2,7.29000000205815e-05
+Grover statevector simulation,3,0.00921930300000895
+classical ascending linear search,3,5.999999984851456e-06
+Grover statevector simulation,4,0.007001700999978766
+classical ascending linear search,4,6.699999971715442e-06
+Grover statevector simulation,5,0.008114802000022792
+classical ascending linear search,5,6.400000017947605e-06
+Grover statevector simulation,6,0.007119202000012592
+classical ascending linear search,6,5.8999999623665644e-06
+Grover statevector simulation,7,0.006997302000002037
+classical ascending linear search,7,6.900000016685226e-06
+Grover statevector simulation,8,0.006308402000001934
+classical ascending linear search,8,5.6999999742402e-06
+Grover statevector simulation,9,0.006981000999985554
+classical ascending linear search,9,5.7000000310836185e-06
+Grover statevector simulation,10,0.008214901999963331
+classical ascending linear search,10,1.0199999962878792e-05
+Grover statevector simulation,11,0.008672402999991391
+classical ascending linear search,11,6.799999994200334e-06
+Grover statevector simulation,12,0.007047901000021284
+classical ascending linear search,12,5.8999999623665644e-06
+Grover statevector simulation,13,0.007533102000024883
+classical ascending linear search,13,6.100000007336348e-06
+Grover statevector simulation,14,0.007422102000020914
+classical ascending linear search,14,6.299999995462713e-06
+Grover statevector simulation,15,0.009074101999999584
+classical ascending linear search,15,1.1200000017197453e-05
+Grover statevector simulation,16,0.0068822020000425255
+classical ascending linear search,16,5.6999999742402e-06
+Grover statevector simulation,17,0.006996201999982077
+classical ascending linear search,17,5.400000020472362e-06
+Grover statevector simulation,18,0.006598201999963749
+classical ascending linear search,18,5.199999975502578e-06
+Grover statevector simulation,19,0.006984300999988591
+classical ascending linear search,19,6.499999983589078e-06

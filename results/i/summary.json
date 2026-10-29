@@ -1,0 +1,110 @@
+{
+  "algorithm_correctness": {
+    "Bernstein-Vazirani:secret=101": true,
+    "Deutsch-Jozsa:mask=000": true,
+    "Deutsch-Jozsa:mask=101": true,
+    "Grover:N=8,target=5": true,
+    "Quantum Fourier Transform:3-qubit basis 5": true,
+    "Quantum Phase Estimation:phase=0.375": true,
+    "Shor compiled order finding:N=15,a=2": true
+  },
+  "annealing": {
+    "best_cut": 6.5,
+    "duration_seconds": 0.03722230099998569,
+    "exact_optimum": 6.5,
+    "method": "classical Metropolis simulated annealing",
+    "quantum_hardware": false,
+    "runs": 20,
+    "success_rate": 1.0,
+    "sweeps": 120
+  },
+  "date": "2026-10-29",
+  "environment": {
+    "hardware": "none",
+    "pennylane": "0.45.1",
+    "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "processor": "unknown",
+    "python": "3.11.18",
+    "simulators": [
+      "default.qubit statevector",
+      "default.mixed density matrix"
+    ]
+  },
+  "full_profile_status": "NOT RUN",
+  "grover_vs_classical": {
+    "classical_actual_queries": 6,
+    "classical_asymptotic_queries": "O(N)",
+    "classical_median_seconds": 6.2000000013995304e-06,
+    "classical_worst_case_queries": 8,
+    "database_size": 8,
+    "grover_asymptotic_queries": "O(sqrt(N))",
+    "grover_circuit_depth": 21,
+    "grover_gate_count": 43,
+    "grover_oracle_queries": 2,
+    "grover_simulator_median_seconds": 0.007270652000016753,
+    "grover_success_probability": 0.945312499999996,
+    "limitation": "statevector wall time includes simulator/tape overhead and is not quantum hardware runtime",
+    "target": 5
+  },
+  "limitations": [
+    "All quantum results are local CPU simulations; no hardware or quantum advantage is claimed.",
+    "The Shor circuit is a compiled N=15 order-finding demonstration, not scalable modular arithmetic.",
+    "The annealer is a classical Metropolis simulator, not a quantum annealer.",
+    "Grover statevector wall time includes simulator/tape overhead and is much slower than classical search here.",
+    "The depolarizing model is synthetic and not calibrated to hardware.",
+    "QML uses 24 training and 16 held-out synthetic points; accuracy is not a broad generalization result.",
+    "Quantum kernel overlaps use analytic statevector circuits; finite-shot kernel estimation is not run."
+  ],
+  "manual_circuits": [
+    "Deutsch-Jozsa",
+    "Deutsch-Jozsa",
+    "Bernstein-Vazirani",
+    "Grover",
+    "Quantum Fourier Transform",
+    "Quantum Phase Estimation"
+  ],
+  "profile": "quick",
+  "qml_comparison": [
+    {
+      "circuit_evaluations": 660,
+      "model": "quantum fidelity kernel ridge",
+      "parameter_count": 0,
+      "simulator": "default.qubit analytic",
+      "test_accuracy": 0.8125,
+      "train_seconds": 1.8672235219999607
+    },
+    {
+      "circuit_evaluations": 0,
+      "model": "classical RBF kernel ridge",
+      "parameter_count": 1,
+      "simulator": "none",
+      "test_accuracy": 0.875,
+      "train_seconds": 0.00017400000001543958
+    },
+    {
+      "circuit_evaluations": 6736,
+      "model": "two-qubit variational classifier",
+      "parameter_count": 5,
+      "simulator": "default.qubit analytic parameter-shift",
+      "test_accuracy": 0.875,
+      "train_seconds": 20.301264721999985,
+      "training_steps": 35
+    },
+    {
+      "circuit_evaluations": 0,
+      "model": "classical trigonometric logistic regression",
+      "parameter_count": 6,
+      "simulator": "none",
+      "test_accuracy": 0.9375,
+      "train_seconds": 0.007277799999997114,
+      "training_steps": 29
+    }
+  ],
+  "seed": 2026,
+  "syllabus_status": "The authoritative Chapter 6 deck is still absent; all algorithms explicitly listed by plan.md are implemented, but additional taught algorithms remain unreconciled.",
+  "track_c_cross_reference": {
+    "barren_plateau": "results/c/barren_plateau_summary.csv",
+    "qaoa": "src/optlab/track_c.py::apply_qaoa and results/c/qaoa_optimization.csv",
+    "vqe": "src/optlab/track_c.py::apply_vqe_ansatz and results/c/optimizer_comparison.csv"
+  }
+}

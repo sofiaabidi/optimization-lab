@@ -1,0 +1,8 @@
+algorithm,instance,expected,observed,success_probability,qubits,oracle_queries,manual_gate_construction,duration_seconds,gate_count,circuit_depth,gate_types_json,uniform_magnitude_max_error,recovered_order,phase_peaks,scope
+Deutsch-Jozsa,mask=000,constant,constant,0.9999999999999989,4,1,True,0.00301140000004807,8,2,"{""Hadamard"": 7, ""PauliX"": 1}",,,,
+Deutsch-Jozsa,mask=101,balanced,balanced,0.9999999999999989,4,1,True,0.002892301000031239,10,5,"{""CNOT"": 2, ""Hadamard"": 7, ""PauliX"": 1}",,,,
+Bernstein-Vazirani,secret=101,101,101,0.9999999999999989,4,1,True,0.0024431009999830167,10,5,"{""CNOT"": 2, ""Hadamard"": 7, ""PauliX"": 1}",,,,
+Grover,"N=8,target=5",5,5,0.945312499999996,3,2,True,0.008033701999977438,43,21,"{""Hadamard"": 23, ""MultiControlledX"": 4, ""PauliX"": 16}",,,,
+Quantum Fourier Transform,3-qubit basis 5,5,5,0.9999999999999991,3,0,True,0.0038646009999752096,8,7,"{""BasisState"": 1, ""ControlledPhaseShift"": 3, ""Hadamard"": 3, ""SWAP"": 1}",5.551115123125783e-17,,,
+Quantum Phase Estimation,phase=0.375,011,011,0.9999999999999991,4,7,True,0.006071701999985635,14,10,"{""ControlledPhaseShift"": 6, ""Hadamard"": 6, ""PauliX"": 1, ""SWAP"": 1}",,,,
+Shor compiled order finding,"N=15,a=2","3,5","3,5",0.49999999999999956,7,7,False,0.007763001999990138,14,10,"{""ControlledPhaseShift"": 3, ""ControlledQubitUnitary"": 3, ""Hadamard"": 6, ""PauliX"": 1, ""SWAP"": 1}",,4,"[0, 2, 4, 6]",compiled N=15 demonstration using explicit controlled modular-multiplication unitaries

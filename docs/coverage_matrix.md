@@ -35,10 +35,10 @@ This list preserves every requirement stated in `plan.md` §5. Additional syllab
 | H | Seeded SQLite dataset, schema/workload, plans and repeatable measurement | `track_h.py`; `dataset_manifest.json`; `schema.sql`; `workload.sql`; 64 real subsets | DONE (SQLite quick) |
 | H | Storage-budget index-set optimization with baseline, greedy and exact DP/ILP | Conditional measured greedy; exact one-hot subset ILP; exhaustive oracle; `subset_measurements.csv` | DONE (interaction-aware quick) |
 | H | Plans, latency, throughput, storage, build cost and result equality | `plans.json`; `latency_raw.csv`; `throughput_raw.csv`; `strategy_comparison.csv`; focused tests | DONE (all 64 checksum-equal; full NOT RUN) |
-| I | Taught algorithms; provisional DJ, BV, Grover, QFT, QPE, scoped Shor, annealing, QAOA/VQE | — | NOT IMPLEMENTED |
-| I | At least two hand-built circuits with analytic checks | — | NOT IMPLEMENTED |
-| I | Quantum kernel and variational classifier/QNN against fair classical baselines | — | NOT IMPLEMENTED |
-| I | Grover theoretical/measured comparison; noise and limitations | — | NOT IMPLEMENTED |
+| I | Taught algorithms; provisional DJ, BV, Grover, QFT, QPE, scoped Shor, annealing, QAOA/VQE | `track_i.py`; `algorithms.csv`; classical annealing; Track C cross-links | DONE (listed quick; syllabus reconciliation open) |
+| I | At least two hand-built circuits with analytic checks | Manual parity oracles, Grover and QFT/QPE; focused known-output tests | DONE (simulator quick) |
+| I | Quantum kernel and variational classifier/QNN against fair classical baselines | Same `qml_dataset.csv` splits; `qml_comparison.csv`; predictions and circuit counts | DONE (held-out synthetic quick) |
+| I | Grover theoretical/measured comparison; noise and limitations | `grover_search_timing.csv`, `grover_shots.csv`, `grover_noise.csv`; query/gate counts | DONE (simulator/noise quick; no advantage) |
 | J | Authentic maintained source LOC ≥1,000 and real suite/fault profiling | — | NOT IMPLEMENTED |
 | J | Test-choice variables, detection/coverage objective, time budget and constraints | — | NOT IMPLEMENTED |
 | J | Alphabetical/full baseline versus taught greedy or DP/knapsack method | — | NOT IMPLEMENTED |

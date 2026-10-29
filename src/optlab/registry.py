@@ -23,7 +23,7 @@ TRACKS: tuple[Track, ...] = (
     Track("f", "Compiler optimization", "tracks/f_compiler", RunStatus.DONE, "quick profile implemented; full profile not yet run"),
     Track("g", "xv6-riscv", "tracks/g_xv6", RunStatus.DONE, "real QEMU quick profile implemented; full profile not run"),
     Track("h", "DBMS optimization", "tracks/h_dbms", RunStatus.DONE, "real SQLite quick profile implemented; full profile not run"),
-    Track("i", "Quantum algorithms and QML", "tracks/i_quantum_qml", RunStatus.NOT_IMPLEMENTED, "Prompt 10"),
+    Track("i", "Quantum algorithms and QML", "tracks/i_quantum_qml", RunStatus.DONE, "quick simulator profile implemented; full profile not run"),
     Track("j", "Software-engineering optimization", "tracks/j_software_engineering", RunStatus.NOT_IMPLEMENTED, "Prompt 11"),
 )
 
