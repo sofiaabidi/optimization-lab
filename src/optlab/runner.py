@@ -43,6 +43,10 @@ def run_track(track: Track, profile: str) -> ExperimentResult:
         from .track_i import run_experiment
 
         return run_experiment(profile)
+    if track.key == "j":
+        from .track_j import run_experiment
+
+        return run_experiment(profile)
     return ExperimentResult(
         track=track.key,
         profile=profile,

@@ -15,16 +15,16 @@ class Track:
 
 
 TRACKS: tuple[Track, ...] = (
-    Track("a", "Continuous optimization", "tracks/a_continuous", RunStatus.DONE, "quick profile implemented; full profile not yet run"),
-    Track("b", "Discrete optimization", "tracks/b_discrete", RunStatus.DONE, "quick profile implemented; full profile not yet run"),
-    Track("c", "Quantum optimization", "tracks/c_quantum_opt", RunStatus.DONE, "quick simulator profile implemented; full profile not yet run"),
-    Track("d", "Parallel and distributed", "tracks/d_parallel_distributed", RunStatus.DONE, "quick profile implemented; full profile not yet run"),
-    Track("e", "EV charging", "tracks/e_ev_charging", RunStatus.DONE, "quick profile implemented; full profile not yet run"),
-    Track("f", "Compiler optimization", "tracks/f_compiler", RunStatus.DONE, "quick profile implemented; full profile not yet run"),
+    Track("a", "Continuous optimization", "tracks/a_continuous", RunStatus.DONE, "quick and full profiles implemented"),
+    Track("b", "Discrete optimization", "tracks/b_discrete", RunStatus.DONE, "quick and full profiles implemented"),
+    Track("c", "Quantum optimization", "tracks/c_quantum_opt", RunStatus.DONE, "quick and full simulator profiles implemented"),
+    Track("d", "Parallel and distributed", "tracks/d_parallel_distributed", RunStatus.DONE, "quick and full profiles implemented"),
+    Track("e", "EV charging", "tracks/e_ev_charging", RunStatus.DONE, "quick and full profiles implemented"),
+    Track("f", "Compiler optimization", "tracks/f_compiler", RunStatus.DONE, "quick and full profiles implemented"),
     Track("g", "xv6-riscv", "tracks/g_xv6", RunStatus.DONE, "real QEMU quick profile implemented; full profile not run"),
     Track("h", "DBMS optimization", "tracks/h_dbms", RunStatus.DONE, "real SQLite quick profile implemented; full profile not run"),
     Track("i", "Quantum algorithms and QML", "tracks/i_quantum_qml", RunStatus.DONE, "quick simulator profile implemented; full profile not run"),
-    Track("j", "Software-engineering optimization", "tracks/j_software_engineering", RunStatus.NOT_IMPLEMENTED, "Prompt 11"),
+    Track("j", "Software-engineering optimization", "tracks/j_software_engineering", RunStatus.DONE, "real pytest selection quick profile implemented; full profile not run"),
 )
 
 

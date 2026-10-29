@@ -10,15 +10,15 @@ def test_list_reports_every_track(capsys):
     output = capsys.readouterr().out
     for key in "ABCDEFGHIJ":
         assert key in output
-    assert "NOT IMPLEMENTED" in output
+    assert output.count("DONE") == 10
 
 
-def test_run_unimplemented_is_truthful(capsys):
-    assert main(["run", "--track", "j", "--profile", "quick"]) == 0
+def test_run_unexecuted_full_profile_is_truthful(capsys):
+    assert main(["run", "--track", "j", "--profile", "full"]) == 0
     result = json.loads(capsys.readouterr().out)
     assert result["track"] == "j"
-    assert result["profile"] == "quick"
-    assert result["status"] == "NOT IMPLEMENTED"
+    assert result["profile"] == "full"
+    assert result["status"] == "NOT RUN"
     assert result["duration_seconds"] is None
 
 
