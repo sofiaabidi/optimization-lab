@@ -28,10 +28,10 @@ This list preserves every requirement stated in `plan.md` §5. Additional syllab
 | F | Constant folding/propagation, dead-code elimination and common-subexpression elimination | Four pass functions; targeted change/equivalence tests; `results/f/pass_effects.csv`, `ir_snapshots.json` | DONE (quick) |
 | F | Pass ordering/register allocation/scheduling optimization via greedy/DP/ILP | `optimize_pass_order_dp`; separate training program; `results/f/pass_order_search.csv` | DONE (exact subset DP quick) |
 | F | Instruction count, runtime, code size, compile time and semantic equivalence | `results/f/benchmark.csv`, `benchmark_raw.csv`, `summary.json`; focused generated-program tests | DONE (Python VM quick; full NOT RUN) |
-| G | Pinned upstream xv6 provenance, toolchain and reproducible patch setup | — | BLOCKED |
-| G | First kernel feature plus distinct second full-credit feature | — | BLOCKED |
-| G | Baseline/patched QEMU on CPU, yield/I-O and fairness workloads | — | BLOCKED |
-| G | `usertests`, per-change smoke tests, logs and literal patch | — | BLOCKED |
+| G | Pinned upstream xv6 provenance, toolchain and reproducible patch setup | SHA `e93dab...`; `prepare_xv6.sh`; `patches/*.patch`; Track G README | DONE (real xv6) |
+| G | First kernel feature plus distinct second full-credit feature | Strict-priority scheduler/`setpriority`; dispatch/tick accounting/`getpstats`; literal kernel patch | DONE (real kernel quick) |
+| G | Baseline/patched QEMU on CPU, yield/I-O and fairness workloads | `schedbench.c` in harness patch; `results/g/*benchmark.log`, `benchmark.csv`, `comparison.csv` | DONE (QEMU, 3 repeats) |
+| G | `usertests`, per-change smoke tests, logs and literal patch | Three boot/usertest logs end `ALL TESTS PASSED`; complete upstream-relative patch | DONE (baseline + each kernel change) |
 | H | Seeded SQLite dataset, schema/workload, plans and repeatable measurement | — | NOT IMPLEMENTED |
 | H | Storage-budget index-set optimization with baseline, greedy and exact DP/ILP | — | NOT IMPLEMENTED |
 | H | Plans, latency, throughput, storage, build cost and result equality | — | NOT IMPLEMENTED |

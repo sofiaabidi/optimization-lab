@@ -1,0 +1,28 @@
+riscv64-unknown-elf-gcc -Wall -Werror -Wno-unknown-attributes -O -fno-omit-frame-pointer -ggdb -gdwarf-2 -ffile-prefix-map=/home/adnan/projects/optimization-lab/external/xv6-riscv-baseline=. -march=rv64gc -std=gnu99 -MD -mcmodel=medany -ffreestanding -fno-common -nostdlib -fno-delete-null-pointer-checks -fno-builtin-strncpy -fno-builtin-strncmp -fno-builtin-strlen -fno-builtin-memset -fno-builtin-memmove -fno-builtin-memcmp -fno-builtin-log -fno-builtin-bzero -fno-builtin-strchr -fno-builtin-exit -fno-builtin-malloc -fno-builtin-putc -fno-builtin-free -fno-builtin-memcpy -Wno-main -fno-builtin-printf -fno-builtin-fprintf -fno-builtin-vprintf -I. -fno-stack-protector -fno-pie -no-pie   -c -o user/schedbench.o user/schedbench.c
+riscv64-unknown-elf-ld -z max-page-size=4096 -T user/user.ld -o user/_schedbench user/schedbench.o user/ulib.o user/usys.o user/printf.o user/umalloc.o
+riscv64-unknown-elf-objdump -S user/_schedbench > user/schedbench.asm
+riscv64-unknown-elf-objdump -t user/_schedbench | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$/d' > user/schedbench.sym
+mkfs/mkfs fs.img README user/_cat user/_echo user/_forktest user/_grep user/_init user/_kill user/_ln user/_ls user/_mkdir user/_rm user/_sh user/_stressfs user/_usertests user/_grind user/_wc user/_zombie user/_logstress user/_forphan user/_dorphan user/_sync user/_schedbench 
+nmeta 47 (boot, super, log blocks 31, inode blocks 13, bitmap blocks 1) blocks 1953 total 2000
+balloc: first 1020 blocks have been allocated
+balloc: write bitmap block at sector 46
+qemu-system-riscv64 -machine virt -bios none -kernel kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=fs.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0
+
+xv6 kernel is booting
+
+init: starting sh
+$ schedbench 3
+3 schedbench: unknown sys call 23
+SCHEDBENCH scheduler=0 children=6 repeats=3
+RESULT workload=cpu repeat=0 scheduler=0 response=6 makespan=10 total=330000000 min=30000000 max=60000000 high_dispatches=0 high_runtime=0
+RESULT workload=mixed repeat=0 scheduler=0 response=18 makespan=18 total=157228291 min=7200000 max=33894400 high_dispatches=0 high_runtime=0
+RESULT workload=fairness repeat=0 scheduler=0 response=12 makespan=12 total=85348352 min=4653056 max=19496960 high_dispatches=0 high_runtime=0
+RESULT workload=cpu repeat=1 scheduler=0 response=6 makespan=10 total=330000000 min=30000000 max=60000000 high_dispatches=0 high_runtime=0
+RESULT workload=mixed repeat=1 scheduler=0 response=18 makespan=18 total=167558401 min=7200000 max=34922496 high_dispatches=0 high_runtime=0
+RESULT workload=fairness repeat=1 scheduler=0 response=12 makespan=12 total=120496131 min=11698176 max=22503425 high_dispatches=0 high_runtime=0
+RESULT workload=cpu repeat=2 scheduler=0 response=6 makespan=10 total=330000000 min=30000000 max=60000000 high_dispatches=0 high_runtime=0
+RESULT workload=mixed repeat=2 scheduler=0 response=18 makespan=18 total=170388738 min=7200000 max=36499456 high_dispatches=0 high_runtime=0
+RESULT workload=fairness repeat=2 scheduler=0 response=12 makespan=12 total=121360388 min=11857921 max=23826432 high_dispatches=0 high_runtime=0
+SCHEDBENCH PASS
+$ QEMU: Terminated
+

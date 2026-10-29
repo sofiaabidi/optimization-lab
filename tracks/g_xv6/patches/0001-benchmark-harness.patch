@@ -1,0 +1,236 @@
+diff --git a/Makefile b/Makefile
+index a26f3db..717503d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -151,6 +151,7 @@ UPROGS=\
+ 	$U/_forphan\
+ 	$U/_dorphan\
+ 	$U/_sync\
++	$U/_schedbench\
+ 
+ fs.img: mkfs/mkfs README $(UPROGS)
+ 	mkfs/mkfs fs.img README $(UPROGS)
+diff --git a/kernel/pstat.h b/kernel/pstat.h
+new file mode 100644
+index 0000000..a5e2224
+--- /dev/null
++++ b/kernel/pstat.h
+@@ -0,0 +1,6 @@
++struct pstat {
++  int pid;
++  int priority;
++  uint64 dispatches;
++  uint64 runtime_ticks;
++};
+diff --git a/kernel/syscall.h b/kernel/syscall.h
+index 5a4a39f..18f0f81 100644
+--- a/kernel/syscall.h
++++ b/kernel/syscall.h
+@@ -21,3 +21,5 @@
+ #define SYS_mkdir  20
+ #define SYS_close  21
+ #define SYS_sync   22
++#define SYS_setpriority 23
++#define SYS_getpstats 24
+diff --git a/user/schedbench.c b/user/schedbench.c
+new file mode 100644
+index 0000000..d02397f
+--- /dev/null
++++ b/user/schedbench.c
+@@ -0,0 +1,165 @@
++#include "kernel/types.h"
++#include "kernel/param.h"
++#include "kernel/pstat.h"
++#include "user/user.h"
++
++#define CHILDREN 6
++#define CPU_SHORT_ITERATIONS 30000000
++#define CPU_LONG_ITERATIONS 60000000
++#define MIXED_BUSY_ITERATIONS 1200000
++#define MIXED_ROUNDS 6
++#define TIMED_CHUNK 4096
++
++struct report {
++  uint64 work;
++  int finish_ticks;
++  struct pstat stats;
++};
++
++static int scheduler_supported;
++
++static uint64
++busy_work(uint64 iterations, uint64 seed)
++{
++  volatile uint64 value = seed | 1;
++  for (uint64 i = 0; i < iterations; i++)
++    value = value * 1664525 + 1013904223 + i;
++  return value;
++}
++
++static uint64
++work_until(int end_tick, uint64 seed)
++{
++  uint64 work = 0;
++  uint64 value = seed;
++  while (uptime() < end_tick) {
++    value ^= busy_work(TIMED_CHUNK, value + work);
++    work += TIMED_CHUNK;
++  }
++  return work + (value & 1);
++}
++
++static void
++write_report(int fd, struct report *report)
++{
++  if (scheduler_supported)
++    getpstats(getpid(), &report->stats);
++  else {
++    report->stats.pid = getpid();
++    report->stats.priority = -1;
++    report->stats.dispatches = 0;
++    report->stats.runtime_ticks = 0;
++  }
++  if (write(fd, report, sizeof(*report)) != sizeof(*report))
++    exit(2);
++  close(fd);
++  exit(0);
++}
++
++static void
++run_child(int workload, int index, int start_tick, int end_tick, int fd)
++{
++  struct report report;
++  memset(&report, 0, sizeof(report));
++
++  if (scheduler_supported) {
++    int priority = (workload == 2) ? 1 : ((index == 0) ? 0 : 3);
++    if (setpriority(getpid(), priority) < 0)
++      exit(3);
++  }
++
++  if (workload == 0) {
++    uint64 iterations = index == 0 ? CPU_SHORT_ITERATIONS : CPU_LONG_ITERATIONS;
++    busy_work(iterations, getpid());
++    report.work = iterations;
++  } else if (workload == 1 && index == 0) {
++    for (int round = 0; round < MIXED_ROUNDS; round++) {
++      busy_work(MIXED_BUSY_ITERATIONS, getpid() + round);
++      pause(1);
++      report.work += MIXED_BUSY_ITERATIONS;
++    }
++  } else {
++    report.work = work_until(end_tick, getpid());
++  }
++  report.finish_ticks = uptime() - start_tick;
++  write_report(fd, &report);
++}
++
++static void
++run_workload(int workload, int repeat)
++{
++  int pipes[CHILDREN][2];
++  int pids[CHILDREN];
++  struct report reports[CHILDREN];
++  int start_tick = uptime();
++  int end_tick = start_tick + (workload == 1 ? 15 : 12);
++
++  for (int index = 0; index < CHILDREN; index++) {
++    if (pipe(pipes[index]) < 0)
++      exit(4);
++    pids[index] = fork();
++    if (pids[index] < 0)
++      exit(5);
++    if (pids[index] == 0) {
++      close(pipes[index][0]);
++      run_child(workload, index, start_tick, end_tick, pipes[index][1]);
++    }
++    close(pipes[index][1]);
++  }
++
++  uint64 total = 0;
++  uint64 minimum = ~((uint64)0);
++  uint64 maximum = 0;
++  int makespan = 0;
++  for (int index = 0; index < CHILDREN; index++) {
++    if (read(pipes[index][0], &reports[index], sizeof(reports[index])) != sizeof(reports[index]))
++      exit(6);
++    close(pipes[index][0]);
++    total += reports[index].work;
++    if (reports[index].work < minimum)
++      minimum = reports[index].work;
++    if (reports[index].work > maximum)
++      maximum = reports[index].work;
++    if (reports[index].finish_ticks > makespan)
++      makespan = reports[index].finish_ticks;
++  }
++  for (int index = 0; index < CHILDREN; index++) {
++    int status = -1;
++    if (wait(&status) < 0 || status != 0)
++      exit(7);
++  }
++
++  char *name = workload == 0 ? "cpu" : (workload == 1 ? "mixed" : "fairness");
++  printf("RESULT workload=%s repeat=%d scheduler=%d response=%d makespan=%d total=%lu min=%lu max=%lu high_dispatches=%lu high_runtime=%lu\n",
++         name, repeat, scheduler_supported, reports[0].finish_ticks, makespan,
++         total, minimum, maximum, reports[0].stats.dispatches,
++         reports[0].stats.runtime_ticks);
++}
++
++int
++main(int argc, char **argv)
++{
++  int repeats = argc > 1 ? atoi(argv[1]) : 3;
++  if (repeats < 1 || repeats > 10) {
++    fprintf(2, "usage: schedbench [repeats 1..10]\n");
++    exit(1);
++  }
++
++  scheduler_supported = setpriority(getpid(), 1) == 0;
++  if (scheduler_supported) {
++    struct pstat stats;
++    if (getpstats(getpid(), &stats) < 0 || stats.priority != 1) {
++      fprintf(2, "scheduler accounting probe failed\n");
++      exit(1);
++    }
++  }
++  printf("SCHEDBENCH scheduler=%d children=%d repeats=%d\n",
++         scheduler_supported, CHILDREN, repeats);
++  for (int repeat = 0; repeat < repeats; repeat++) {
++    run_workload(0, repeat);
++    run_workload(1, repeat);
++    run_workload(2, repeat);
++  }
++  printf("SCHEDBENCH PASS\n");
++  exit(0);
++}
+diff --git a/user/user.h b/user/user.h
+index 29aad59..8e8c477 100644
+--- a/user/user.h
++++ b/user/user.h
+@@ -1,6 +1,7 @@
+ #define SBRK_ERROR ((char *)-1)
+ 
+ struct stat;
++struct pstat;
+ 
+ // system calls
+ int fork(void);
+@@ -25,6 +26,8 @@ char *sys_sbrk(int, int);
+ int pause(int);
+ int uptime(void);
+ int sync(void);
++int setpriority(int, int);
++int getpstats(int, struct pstat *);
+ 
+ // ulib.c
+ int stat(const char *, struct stat *);
+diff --git a/user/usys.pl b/user/usys.pl
+index 4d054e8..c5cf474 100755
+--- a/user/usys.pl
++++ b/user/usys.pl
+@@ -43,3 +43,5 @@ entry("sbrk");
+ entry("pause");
+ entry("uptime");
+ entry("sync");
++entry("setpriority");
++entry("getpstats");

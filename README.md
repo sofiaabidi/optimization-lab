@@ -1,6 +1,6 @@
 # Optimization Lab
 
-Reproducible workspace for Assignment 8, a ten-track optimization study. Tracks A–F have implemented, measured bounded quick profiles; H–J remain **NOT IMPLEMENTED**. Track C is simulator-only and makes no quantum-advantage claim. Track D distinguishes real local processes from sequential distributed simulation. Track E uses deterministic synthetic campus inputs and preserves infeasible and non-improving cases. Track F implements a small educational compiler and reports when a DP-selected pass order does not generalize. Track G has not passed its required xv6 build/boot gate. See each track README and the coverage matrix for evidence status.
+Reproducible workspace for Assignment 8, a ten-track optimization study. Tracks A–G have implemented, measured bounded quick profiles; H–J remain **NOT IMPLEMENTED**. Track C is simulator-only and makes no quantum-advantage claim. Track D distinguishes real local processes from sequential distributed simulation. Track E uses deterministic synthetic campus inputs and preserves infeasible and non-improving cases. Track F implements a small educational compiler and reports when a DP-selected pass order does not generalize. Track G modifies a pinned real xv6-riscv kernel and preserves actual QEMU boot, usertest, benchmark, and patch evidence. See each track README and the coverage matrix for evidence status.
 
 ## Quick start
 
@@ -22,7 +22,7 @@ python -m optlab run --track a --profile quick
 python -m optlab run --all --profile quick
 ```
 
-`full` is opt-in. It will not silently replace unavailable quantum or xv6 work with simulations. Each implemented track will write raw JSON/CSV beneath `results/<track>/` and link it from the corresponding README.
+`full` is opt-in. It will not silently replace unavailable quantum or external-kernel work with simulations. Each implemented track writes raw JSON/CSV beneath `results/<track>/` and links it from the corresponding README.
 
 ## Repository map
 
@@ -35,7 +35,7 @@ python -m optlab run --all --profile quick
 
 ## Current environment constraints
 
-- `qemu-system-riscv64` and a RISC-V cross-compiler are missing, so Track G cannot run.
+- Track G's QEMU/RISC-V toolchain is installed and its quick profile passed; physical RISC-V hardware and full scaling were not run.
 - Exact Codex model ID is unavailable from the repository/session interface and remains `unknown`.
 - Coverage named directly by the assignment is preserved. Additional syllabus-specific methods remain transparently uncertain; this is a coverage question, not an environment blocker.
 

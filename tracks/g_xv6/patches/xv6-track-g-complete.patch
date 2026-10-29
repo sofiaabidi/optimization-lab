@@ -1,0 +1,522 @@
+diff --git a/Makefile b/Makefile
+index a26f3db..717503d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -151,6 +151,7 @@ UPROGS=\
+ 	$U/_forphan\
+ 	$U/_dorphan\
+ 	$U/_sync\
++	$U/_schedbench\
+ 
+ fs.img: mkfs/mkfs README $(UPROGS)
+ 	mkfs/mkfs fs.img README $(UPROGS)
+diff --git a/kernel/defs.h b/kernel/defs.h
+index 0ae6896..e8bb729 100644
+--- a/kernel/defs.h
++++ b/kernel/defs.h
+@@ -87,6 +87,9 @@ void            proc_mapstacks(pagetable_t);
+ pagetable_t     proc_pagetable(struct proc *);
+ void            proc_freepagetable(pagetable_t, uint64);
+ int             kkill(int);
++int             ksetpriority(int, int);
++int             kgetpstats(int, uint64);
++void            accounttick(void);
+ int             killed(struct proc*);
+ void            setkilled(struct proc*);
+ struct cpu*     mycpu(void);
+diff --git a/kernel/proc.c b/kernel/proc.c
+index 31f23a3..bf61402 100644
+--- a/kernel/proc.c
++++ b/kernel/proc.c
+@@ -4,6 +4,7 @@
+ #include "riscv.h"
+ #include "spinlock.h"
+ #include "proc.h"
++#include "pstat.h"
+ #include "defs.h"
+ 
+ struct cpu cpus[NCPU];
+@@ -124,6 +125,9 @@ allocproc(void)
+ found:
+   p->pid = allocpid();
+   p->state = USED;
++  p->priority = 1;
++  p->dispatches = 0;
++  p->runtime_ticks = 0;
+ 
+   // Allocate a trapframe page.
+   if ((p->trapframe = (struct trapframe *)kalloc()) == 0) {
+@@ -167,6 +171,9 @@ freeproc(struct proc *p)
+   p->chan = 0;
+   p->killed = 0;
+   p->xstate = 0;
++  p->priority = 1;
++  p->dispatches = 0;
++  p->runtime_ticks = 0;
+   p->state = UNUSED;
+ }
+ 
+@@ -289,6 +296,10 @@ kfork(void)
+ 
+   safestrcpy(np->name, p->name, sizeof(p->name));
+ 
++  acquire(&p->lock);
++  np->priority = p->priority;
++  release(&p->lock);
++
+   pid = np->pid;
+ 
+   release(&np->lock);
+@@ -430,6 +441,7 @@ scheduler(void)
+ {
+   struct proc *p;
+   struct cpu *c = mycpu();
++  int last = -1;
+ 
+   c->proc = 0;
+   for (;;) {
+@@ -441,32 +453,105 @@ scheduler(void)
+     intr_on();
+     intr_off();
+ 
+-    int found = 0;
+-    for (p = proc; p < &proc[NPROC]; p++) {
++    int selected = -1;
++    int best_priority = 4;
++    for (int offset = 1; offset <= NPROC; offset++) {
++      int index = (last + offset) % NPROC;
++      p = &proc[index];
+       acquire(&p->lock);
+-      if (p->state == RUNNABLE) {
+-        // Switch to chosen process.  It is the process's job
+-        // to release its lock and then reacquire it
+-        // before jumping back to us.
+-        p->state = RUNNING;
+-        c->proc = p;
+-        swtch(&c->context, &p->context);
+-
+-        // Don't re-enable interrupts on release.
+-        mycpu()->intena = 0;
+-
+-        // Process is done running for now.
+-        // It should have changed its p->state before coming back.
+-        c->proc = 0;
+-        found = 1;
++      if (p->state == RUNNABLE && p->priority < best_priority) {
++        best_priority = p->priority;
++        selected = index;
+       }
+       release(&p->lock);
+     }
+-    if (found == 0) {
++
++    if (selected < 0) {
+       // nothing to run; stop running on this core until an interrupt.
+       asm volatile("wfi");
++      continue;
++    }
++
++    p = &proc[selected];
++    acquire(&p->lock);
++    if (p->state != RUNNABLE || p->priority != best_priority) {
++      release(&p->lock);
++      continue;
++    }
++
++    // Switch to the highest-priority runnable process. Round-robin scan
++    // order breaks ties without favoring a fixed process-table slot.
++    p->state = RUNNING;
++    p->dispatches++;
++    c->proc = p;
++    last = selected;
++    swtch(&c->context, &p->context);
++
++    // Don't re-enable interrupts on release.
++    mycpu()->intena = 0;
++
++    // Process is done running for now.
++    // It should have changed its p->state before coming back.
++    c->proc = 0;
++    release(&p->lock);
++  }
++}
++
++int
++ksetpriority(int pid, int priority)
++{
++  struct proc *p;
++
++  if (pid <= 0 || priority < 0 || priority > 3)
++    return -1;
++  for (p = proc; p < &proc[NPROC]; p++) {
++    acquire(&p->lock);
++    if (p->pid == pid && p->state != UNUSED) {
++      p->priority = priority;
++      release(&p->lock);
++      return 0;
++    }
++    release(&p->lock);
++  }
++  return -1;
++}
++
++void
++accounttick(void)
++{
++  struct proc *p = myproc();
++
++  if (p == 0)
++    return;
++  acquire(&p->lock);
++  if (p->state == RUNNING)
++    p->runtime_ticks++;
++  release(&p->lock);
++}
++
++int
++kgetpstats(int pid, uint64 address)
++{
++  struct proc *caller = myproc();
++  struct proc *p;
++  struct pstat stats;
++
++  if (pid == 0)
++    pid = caller->pid;
++  for (p = proc; p < &proc[NPROC]; p++) {
++    acquire(&p->lock);
++    if (p->pid == pid && p->state != UNUSED) {
++      stats.pid = p->pid;
++      stats.priority = p->priority;
++      stats.dispatches = p->dispatches;
++      stats.runtime_ticks = p->runtime_ticks;
++      release(&p->lock);
++      return copyout(caller->pagetable, caller->sz, address,
++                     (char *)&stats, sizeof(stats));
+     }
++    release(&p->lock);
+   }
++  return -1;
+ }
+ 
+ // Switch to scheduler.  Must hold only p->lock
+diff --git a/kernel/proc.h b/kernel/proc.h
+index 5603697..eedebfb 100644
+--- a/kernel/proc.h
++++ b/kernel/proc.h
+@@ -88,6 +88,9 @@ struct proc {
+   int killed;           // If non-zero, have been killed
+   int xstate;           // Exit status to be returned to parent's wait
+   int pid;              // Process ID
++  int priority;         // Scheduler priority: 0 is highest, 3 is lowest
++  uint64 dispatches;    // Number of times selected by scheduler
++  uint64 runtime_ticks; // Timer quanta consumed while running
+ 
+   // wait_lock must be held when using this:
+   struct proc *parent; // Parent process
+diff --git a/kernel/pstat.h b/kernel/pstat.h
+new file mode 100644
+index 0000000..a5e2224
+--- /dev/null
++++ b/kernel/pstat.h
+@@ -0,0 +1,6 @@
++struct pstat {
++  int pid;
++  int priority;
++  uint64 dispatches;
++  uint64 runtime_ticks;
++};
+diff --git a/kernel/syscall.c b/kernel/syscall.c
+index 1800f20..c852077 100644
+--- a/kernel/syscall.c
++++ b/kernel/syscall.c
+@@ -103,6 +103,8 @@ extern uint64 sys_link(void);
+ extern uint64 sys_mkdir(void);
+ extern uint64 sys_close(void);
+ extern uint64 sys_sync(void);
++extern uint64 sys_setpriority(void);
++extern uint64 sys_getpstats(void);
+ 
+ // An array mapping syscall numbers from syscall.h
+ // to the function that handles the system call.
+@@ -130,6 +132,8 @@ static uint64 (*syscalls[])(void) = {
+   [SYS_mkdir]   = sys_mkdir,
+   [SYS_close]   = sys_close,
+   [SYS_sync]    = sys_sync,
++  [SYS_setpriority] = sys_setpriority,
++  [SYS_getpstats] = sys_getpstats,
+   // clang-format on
+ };
+ 
+diff --git a/kernel/syscall.h b/kernel/syscall.h
+index 5a4a39f..18f0f81 100644
+--- a/kernel/syscall.h
++++ b/kernel/syscall.h
+@@ -21,3 +21,5 @@
+ #define SYS_mkdir  20
+ #define SYS_close  21
+ #define SYS_sync   22
++#define SYS_setpriority 23
++#define SYS_getpstats 24
+diff --git a/kernel/sysproc.c b/kernel/sysproc.c
+index cd25557..168b626 100644
+--- a/kernel/sysproc.c
++++ b/kernel/sysproc.c
+@@ -22,6 +22,28 @@ sys_getpid(void)
+   return myproc()->pid;
+ }
+ 
++uint64
++sys_setpriority(void)
++{
++  int pid;
++  int priority;
++
++  argint(0, &pid);
++  argint(1, &priority);
++  return ksetpriority(pid, priority);
++}
++
++uint64
++sys_getpstats(void)
++{
++  int pid;
++  uint64 address;
++
++  argint(0, &pid);
++  argaddr(1, &address);
++  return kgetpstats(pid, address);
++}
++
+ uint64
+ sys_fork(void)
+ {
+diff --git a/kernel/trap.c b/kernel/trap.c
+index 00e99bc..6869f29 100644
+--- a/kernel/trap.c
++++ b/kernel/trap.c
+@@ -82,8 +82,10 @@ usertrap(void)
+     kexit(-1);
+ 
+   // give up the CPU if this is a timer interrupt.
+-  if (which_dev == 2)
++  if (which_dev == 2) {
++    accounttick();
+     yield();
++  }
+ 
+   prepare_return();
+ 
+@@ -154,8 +156,10 @@ kerneltrap()
+   }
+ 
+   // give up the CPU if this is a timer interrupt.
+-  if (which_dev == 2 && myproc() != 0)
++  if (which_dev == 2 && myproc() != 0) {
++    accounttick();
+     yield();
++  }
+ 
+   // the yield() may have caused some traps to occur,
+   // so restore trap registers for use by kernelvec.S's sepc instruction.
+diff --git a/user/schedbench.c b/user/schedbench.c
+new file mode 100644
+index 0000000..d02397f
+--- /dev/null
++++ b/user/schedbench.c
+@@ -0,0 +1,165 @@
++#include "kernel/types.h"
++#include "kernel/param.h"
++#include "kernel/pstat.h"
++#include "user/user.h"
++
++#define CHILDREN 6
++#define CPU_SHORT_ITERATIONS 30000000
++#define CPU_LONG_ITERATIONS 60000000
++#define MIXED_BUSY_ITERATIONS 1200000
++#define MIXED_ROUNDS 6
++#define TIMED_CHUNK 4096
++
++struct report {
++  uint64 work;
++  int finish_ticks;
++  struct pstat stats;
++};
++
++static int scheduler_supported;
++
++static uint64
++busy_work(uint64 iterations, uint64 seed)
++{
++  volatile uint64 value = seed | 1;
++  for (uint64 i = 0; i < iterations; i++)
++    value = value * 1664525 + 1013904223 + i;
++  return value;
++}
++
++static uint64
++work_until(int end_tick, uint64 seed)
++{
++  uint64 work = 0;
++  uint64 value = seed;
++  while (uptime() < end_tick) {
++    value ^= busy_work(TIMED_CHUNK, value + work);
++    work += TIMED_CHUNK;
++  }
++  return work + (value & 1);
++}
++
++static void
++write_report(int fd, struct report *report)
++{
++  if (scheduler_supported)
++    getpstats(getpid(), &report->stats);
++  else {
++    report->stats.pid = getpid();
++    report->stats.priority = -1;
++    report->stats.dispatches = 0;
++    report->stats.runtime_ticks = 0;
++  }
++  if (write(fd, report, sizeof(*report)) != sizeof(*report))
++    exit(2);
++  close(fd);
++  exit(0);
++}
++
++static void
++run_child(int workload, int index, int start_tick, int end_tick, int fd)
++{
++  struct report report;
++  memset(&report, 0, sizeof(report));
++
++  if (scheduler_supported) {
++    int priority = (workload == 2) ? 1 : ((index == 0) ? 0 : 3);
++    if (setpriority(getpid(), priority) < 0)
++      exit(3);
++  }
++
++  if (workload == 0) {
++    uint64 iterations = index == 0 ? CPU_SHORT_ITERATIONS : CPU_LONG_ITERATIONS;
++    busy_work(iterations, getpid());
++    report.work = iterations;
++  } else if (workload == 1 && index == 0) {
++    for (int round = 0; round < MIXED_ROUNDS; round++) {
++      busy_work(MIXED_BUSY_ITERATIONS, getpid() + round);
++      pause(1);
++      report.work += MIXED_BUSY_ITERATIONS;
++    }
++  } else {
++    report.work = work_until(end_tick, getpid());
++  }
++  report.finish_ticks = uptime() - start_tick;
++  write_report(fd, &report);
++}
++
++static void
++run_workload(int workload, int repeat)
++{
++  int pipes[CHILDREN][2];
++  int pids[CHILDREN];
++  struct report reports[CHILDREN];
++  int start_tick = uptime();
++  int end_tick = start_tick + (workload == 1 ? 15 : 12);
++
++  for (int index = 0; index < CHILDREN; index++) {
++    if (pipe(pipes[index]) < 0)
++      exit(4);
++    pids[index] = fork();
++    if (pids[index] < 0)
++      exit(5);
++    if (pids[index] == 0) {
++      close(pipes[index][0]);
++      run_child(workload, index, start_tick, end_tick, pipes[index][1]);
++    }
++    close(pipes[index][1]);
++  }
++
++  uint64 total = 0;
++  uint64 minimum = ~((uint64)0);
++  uint64 maximum = 0;
++  int makespan = 0;
++  for (int index = 0; index < CHILDREN; index++) {
++    if (read(pipes[index][0], &reports[index], sizeof(reports[index])) != sizeof(reports[index]))
++      exit(6);
++    close(pipes[index][0]);
++    total += reports[index].work;
++    if (reports[index].work < minimum)
++      minimum = reports[index].work;
++    if (reports[index].work > maximum)
++      maximum = reports[index].work;
++    if (reports[index].finish_ticks > makespan)
++      makespan = reports[index].finish_ticks;
++  }
++  for (int index = 0; index < CHILDREN; index++) {
++    int status = -1;
++    if (wait(&status) < 0 || status != 0)
++      exit(7);
++  }
++
++  char *name = workload == 0 ? "cpu" : (workload == 1 ? "mixed" : "fairness");
++  printf("RESULT workload=%s repeat=%d scheduler=%d response=%d makespan=%d total=%lu min=%lu max=%lu high_dispatches=%lu high_runtime=%lu\n",
++         name, repeat, scheduler_supported, reports[0].finish_ticks, makespan,
++         total, minimum, maximum, reports[0].stats.dispatches,
++         reports[0].stats.runtime_ticks);
++}
++
++int
++main(int argc, char **argv)
++{
++  int repeats = argc > 1 ? atoi(argv[1]) : 3;
++  if (repeats < 1 || repeats > 10) {
++    fprintf(2, "usage: schedbench [repeats 1..10]\n");
++    exit(1);
++  }
++
++  scheduler_supported = setpriority(getpid(), 1) == 0;
++  if (scheduler_supported) {
++    struct pstat stats;
++    if (getpstats(getpid(), &stats) < 0 || stats.priority != 1) {
++      fprintf(2, "scheduler accounting probe failed\n");
++      exit(1);
++    }
++  }
++  printf("SCHEDBENCH scheduler=%d children=%d repeats=%d\n",
++         scheduler_supported, CHILDREN, repeats);
++  for (int repeat = 0; repeat < repeats; repeat++) {
++    run_workload(0, repeat);
++    run_workload(1, repeat);
++    run_workload(2, repeat);
++  }
++  printf("SCHEDBENCH PASS\n");
++  exit(0);
++}
+diff --git a/user/user.h b/user/user.h
+index 29aad59..8e8c477 100644
+--- a/user/user.h
++++ b/user/user.h
+@@ -1,6 +1,7 @@
+ #define SBRK_ERROR ((char *)-1)
+ 
+ struct stat;
++struct pstat;
+ 
+ // system calls
+ int fork(void);
+@@ -25,6 +26,8 @@ char *sys_sbrk(int, int);
+ int pause(int);
+ int uptime(void);
+ int sync(void);
++int setpriority(int, int);
++int getpstats(int, struct pstat *);
+ 
+ // ulib.c
+ int stat(const char *, struct stat *);
+diff --git a/user/usys.pl b/user/usys.pl
+index 4d054e8..c5cf474 100755
+--- a/user/usys.pl
++++ b/user/usys.pl
+@@ -43,3 +43,5 @@ entry("sbrk");
+ entry("pause");
+ entry("uptime");
+ entry("sync");
++entry("setpriority");
++entry("getpstats");

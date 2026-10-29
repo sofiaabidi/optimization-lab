@@ -1,0 +1,13 @@
+workload,metric,baseline,optimized,absolute_change,relative_change
+cpu,median_response_ticks,6.0,1.0,-5.0,-0.8333333333333334
+cpu,median_makespan_ticks,10.0,11.0,1.0,0.1
+cpu,median_throughput_work_per_tick,33000000.0,30000000.0,-3000000.0,-0.09090909090909091
+cpu,median_fairness_min_max,0.5,0.5,0.0,0.0
+mixed,median_response_ticks,18.0,6.0,-12.0,-0.6666666666666666
+mixed,median_makespan_ticks,18.0,15.0,-3.0,-0.16666666666666666
+mixed,median_throughput_work_per_tick,9308800.055555556,8647697.2,-661102.8555555567,-0.0710191272355244
+mixed,median_fairness_min_max,0.20617083040112597,0.25976244075386956,0.053591610352743596,0.25993788863572875
+fairness,median_response_ticks,12.0,12.0,0.0,0.0
+fairness,median_makespan_ticks,12.0,12.0,0.0,0.0
+fairness,median_throughput_work_per_tick,10041344.25,7289856.333333333,-2751487.916666667,-0.2740158935061575
+fairness,median_fairness_min_max,0.4976792580609636,0.6162215256071443,0.11854226754618069,0.2381900905576012

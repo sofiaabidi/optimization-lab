@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-29",
+  "environment": {
+    "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "processor": "unknown",
+    "python": "3.11.18"
+  },
+  "kernel_features": [
+    "strict priorities 0..3 with priority inheritance and per-CPU round-robin tie breaking",
+    "setpriority system call",
+    "dispatch/runtime-tick accounting exposed by getpstats system call"
+  ],
+  "key_results": {
+    "cpu_makespan_ticks_baseline": 10.0,
+    "cpu_makespan_ticks_optimized": 11.0,
+    "cpu_response_ticks_baseline": 6.0,
+    "cpu_response_ticks_optimized": 1.0,
+    "mixed_response_ticks_baseline": 18.0,
+    "mixed_response_ticks_optimized": 6.0
+  },
+  "limitations": [
+    "Strict priorities have no aging and can starve continuously runnable low-priority processes.",
+    "One-CPU benchmarks isolate scheduling policy but do not measure multicore scalability.",
+    "Global uptime ticks have 0.1-second resolution, and only three repeats were run.",
+    "Accounting runtime ticks count timer quanta, not hardware cycles or time spent between voluntary sleeps.",
+    "The optimized CPU makespan did not improve; latency gains trade against low-priority progress."
+  ],
+  "profile": "quick",
+  "provenance": {
+    "license": "MIT; upstream LICENSE retained in checkout",
+    "repository": "https://github.com/mit-pdos/xv6-riscv.git",
+    "upstream_sha": "e93dabeb98431235c6e1a101cb96c73c923fdbc4",
+    "upstream_subject": "tx_busy"
+  },
+  "toolchain": {
+    "binutils": "riscv64-unknown-elf-ld 2.45.50.20251209",
+    "gcc": "riscv64-unknown-elf-gcc 14.2.0",
+    "make": "GNU Make 4.4.1",
+    "qemu": "QEMU 10.2.1 (Ubuntu 1:10.2.1+ds-1ubuntu3.3)"
+  },
+  "verification": {
+    "accounting_change_boot_and_usertests": true,
+    "benchmark_baseline_pass": true,
+    "benchmark_cpus": 1,
+    "benchmark_optimized_pass": true,
+    "full_profile_status": "NOT RUN",
+    "priority_change_boot_and_usertests": true,
+    "qemu_boot_cpus": 3,
+    "upstream_baseline_boot_and_usertests": true
+  }
+}

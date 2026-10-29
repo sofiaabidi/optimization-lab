@@ -1,0 +1,19 @@
+qemu-system-riscv64 -machine virt -bios none -kernel kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=fs.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0
+
+xv6 kernel is booting
+
+init: starting sh
+$ schedbench 3
+SCHEDBENCH scheduler=1 children=6 repeats=3
+RESULT workload=cpu repeat=0 scheduler=1 response=1 makespan=10 total=330000000 min=30000000 max=60000000 high_dispatches=2 high_runtime=1
+RESULT workload=mixed repeat=0 scheduler=1 response=6 makespan=15 total=147639552 min=7200000 max=30928896 high_dispatches=7 high_runtime=0
+RESULT workload=fairness repeat=0 scheduler=1 response=12 makespan=12 total=112029700 min=13463553 max=20561921 high_dispatches=3 high_runtime=2
+RESULT workload=cpu repeat=1 scheduler=1 response=1 makespan=11 total=330000000 min=30000000 max=60000000 high_dispatches=2 high_runtime=1
+RESULT workload=mixed repeat=1 scheduler=1 response=6 makespan=15 total=129715458 min=7200000 max=27140096 high_dispatches=7 high_runtime=0
+RESULT workload=fairness repeat=1 scheduler=1 response=12 makespan=12 total=87478276 min=10207232 max=16564225 high_dispatches=3 high_runtime=2
+RESULT workload=cpu repeat=2 scheduler=1 response=2 makespan=14 total=330000000 min=30000000 max=60000000 high_dispatches=3 high_runtime=2
+RESULT workload=mixed repeat=2 scheduler=1 response=6 makespan=15 total=126647555 min=7200000 max=27717633 high_dispatches=7 high_runtime=0
+RESULT workload=fairness repeat=2 scheduler=1 response=12 makespan=12 total=70524931 min=5324800 max=15044608 high_dispatches=3 high_runtime=2
+SCHEDBENCH PASS
+$ QEMU: Terminated
+

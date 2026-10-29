@@ -1,0 +1,7 @@
+variant,workload,median_response_ticks,median_makespan_ticks,median_total_work,median_throughput_work_per_tick,median_fairness_min_max,median_high_dispatches,median_high_runtime_ticks
+baseline,cpu,6.0,10.0,330000000.0,33000000.0,0.5,0.0,0.0
+baseline,mixed,18.0,18.0,167558401.0,9308800.055555556,0.20617083040112597,0.0,0.0
+baseline,fairness,12.0,12.0,120496131.0,10041344.25,0.4976792580609636,0.0,0.0
+optimized,cpu,1.0,11.0,330000000.0,30000000.0,0.5,2.0,1.0
+optimized,mixed,6.0,15.0,129715458.0,8647697.2,0.25976244075386956,7.0,0.0
+optimized,fairness,12.0,12.0,87478276.0,7289856.333333333,0.6162215256071443,3.0,2.0

@@ -11,7 +11,6 @@ def test_list_reports_every_track(capsys):
     for key in "ABCDEFGHIJ":
         assert key in output
     assert "NOT IMPLEMENTED" in output
-    assert "BLOCKED" in output
 
 
 def test_run_unimplemented_is_truthful(capsys):

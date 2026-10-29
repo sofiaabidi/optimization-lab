@@ -1,3 +1,3 @@
 # Track G AI evidence
 
-Status: BLOCKED before implementation because QEMU RISC-V and a RISC-V cross-compiler are absent. Add actual prompt/response/revision/verification/commit evidence when work occurs.
+Status: Prompt 08 executed on 2026-10-29 after the required QEMU/RISC-V toolchain became available. Original request and verification are tracked. The final chat response/export and human review must still be captured by the student; they are not fabricated here.

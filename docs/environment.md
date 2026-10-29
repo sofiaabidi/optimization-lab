@@ -1,6 +1,6 @@
 # Development environment
 
-Validated on 2026-10-28 on Ubuntu 26.04 LTS under WSL2. System Python 3.14.4 was not modified or removed.
+Validated on 2026-10-28 and updated with the Track G kernel gate on 2026-10-29, on Ubuntu 26.04 LTS under WSL2. System Python 3.14.4 was not modified or removed.
 
 ## Python and project dependencies
 
@@ -39,12 +39,12 @@ Ubuntu 26.04 repository availability was inspected with `apt-cache policy` befor
 | Tool/package | Repository candidate or observed version | Status |
 |---|---|---|
 | `make` | 4.4.1-3 / GNU Make 4.4.1 | PASS — installed |
-| `qemu-system-misc` | 1:10.2.1+ds-1ubuntu3.3 | FAIL — sudo authentication required; not installed |
-| `gcc-riscv64-unknown-elf` | 14.2.0+19 | FAIL — sudo authentication required; not installed |
-| `binutils-riscv64-unknown-elf` | 2.45.50.20251209-1ubuntu1+7build1 | FAIL — sudo authentication required; not installed |
-| `gdb-multiarch` | 17.1-2ubuntu1 | FAIL — sudo authentication required; not installed |
+| `qemu-system-misc` | 1:10.2.1+ds-1ubuntu3.3 / QEMU 10.2.1 | PASS — installed |
+| `gcc-riscv64-unknown-elf` | 14.2.0+19 / GCC 14.2.0 | PASS — installed |
+| `binutils-riscv64-unknown-elf` | 2.45.50.20251209-1ubuntu1+7build1 / GNU ld 2.45.50.20251209 | PASS — installed |
+| `gdb-multiarch` | 17.1-2ubuntu1 / GDB 17.1 | PASS — installed |
 
-Run this once in an interactive WSL terminal:
+Installation command for this Ubuntu release (requires an interactive sudo session):
 
 ```bash
 sudo apt update
@@ -59,7 +59,7 @@ riscv64-unknown-elf-gcc --version
 gdb-multiarch --version
 ```
 
-Tool installation alone does not validate Track G. A pinned upstream xv6 checkout must still build, boot in QEMU, and run `usertests` during Prompt 08. Until the packages above are installed, G remains `BLOCKED`; the xv6 boot gate is `DEFERRED`.
+Tool installation alone did not validate Track G. Prompt 08 additionally built pinned upstream xv6, observed a real QEMU boot, and completed `usertests -q` for the untouched baseline and after each of two kernel changes. The exact provenance, commands, patches and logs are in [`tracks/g_xv6/README.md`](../tracks/g_xv6/README.md).
 
 ## Validation record
 
@@ -67,16 +67,16 @@ Tool installation alone does not validate Track G. A pinned upstream xv6 checkou
 |---|---|---|
 | Python version | PASS | `.venv/bin/python` is CPython 3.11.18 |
 | Editable package and CLI | PASS | `optlab 0.1.0`; `python -m optlab list` exits 0 with truthful scaffold statuses |
-| Fast pytest suite | PASS | 8 passed in 0.06 s |
+| Fast pytest suite | PASS | Phase 0.5: 8 passed in 0.06 s; Track G final suite recorded in `prompts/g/08-verification.md` |
 | Scientific imports and ILP | PASS | NumPy 2.3.5; SciPy 1.16.3; Matplotlib 3.10.7; one-variable integer MILP optimum verified as 1.0 |
 | ML/autograd | PASS | PyTorch 2.10.0+cpu; gradient of `x²` at 3 verified as 6; CUDA false |
 | Quantum simulator | PASS | PennyLane 0.45.1 `default.qubit`; `RY(π)` Pauli-Z expectation verified as -1.0 |
 | Database | PASS | stdlib SQLite 3.53.1; in-memory create/insert/aggregate verified |
 | GNU Make | PASS | 4.4.1 |
-| QEMU RISC-V executable | FAIL | `qemu-system-riscv64`: command not found |
-| RISC-V compiler executable | FAIL | `riscv64-unknown-elf-gcc`: command not found |
-| GDB multiarch executable | FAIL | `gdb-multiarch`: command not found |
-| xv6 build/boot/usertests | DEFERRED | belongs to Track G after tool installation and upstream pinning |
+| QEMU RISC-V executable | PASS | `/usr/bin/qemu-system-riscv64`, QEMU 10.2.1 |
+| RISC-V compiler and linker | PASS | GCC 14.2.0; GNU ld 2.45.50.20251209 |
+| GDB multiarch executable | PASS | GDB 17.1 |
+| xv6 build/boot/usertests | PASS | pinned upstream SHA `e93dabeb...`; actual three-hart QEMU boot and `ALL TESTS PASSED` for baseline, priority change and accounting change |
 
 The scientific and quantum smoke commands set `MPLCONFIGDIR=/tmp/optlab-matplotlib` because the automated sandbox cannot write the user's normal Matplotlib cache directory. This is a sandbox constraint, not a dependency failure.
 
