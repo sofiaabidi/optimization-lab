@@ -27,7 +27,7 @@ The objective is lower response time for explicitly important work. It is not a 
 
 ### Scheduler accounting syscall
 
-The distinct second feature records scheduler dispatches and timer quanta per process. `getpstats(pid, struct pstat *)` returns PID, priority, dispatch count, and runtime ticks through a checked user-space copy. Counters are initialized for each process and timer accounting occurs immediately before a timer-driven yield. This provides observable scheduler behavior rather than altering scheduling policy again.
+The distinct second kernel feature records scheduler dispatches and timer quanta per process. `getpstats(pid, struct pstat *)` returns PID, priority, dispatch count, and runtime ticks through a checked user-space copy. Counters are initialized for each process and timer accounting occurs immediately before a timer-driven yield. This is a diagnostic/observability feature, not a second performance optimization; the measured policy change is the priority scheduler.
 
 ## Real boot and stability gates
 

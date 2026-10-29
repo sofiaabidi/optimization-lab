@@ -1,6 +1,6 @@
 # A — Continuous optimization and foundations
 
-Status: **quick profile executed** on 2026-10-28. The full profile is implemented but **NOT RUN**.
+Status: **quick and full profiles executed**. The tables below preserve the original bounded quick measurements; the separate full artifacts are under [`results/a/full`](../../results/a/full/).
 
 ## Question and formulation
 
@@ -51,4 +51,4 @@ Artifacts: [`raw.csv`](../../results/a/raw.csv), [`histories.csv`](../../results
 
 ## Limitations
 
-This is a small synthetic CPU experiment. Fixed hyperparameters provide controlled trajectories, not exhaustive tuning. Stochastic results have only three quick-profile repeats. The noisy-label sweep changes the objective itself, so its absolute losses should not be read as optimizer rankings. The full profile remains unexecuted.
+This is a small synthetic CPU experiment. Fixed hyperparameters provide controlled trajectories, not exhaustive tuning. The quick stochastic results have three repeats; the full profile has ten. The noisy-label sweep changes the objective itself, so its absolute losses should not be read as optimizer rankings.

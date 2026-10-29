@@ -4,13 +4,13 @@ This is an implementation and evidence handoff, not the final technical report. 
 
 ## Verification snapshot
 
-- Full fast suite: **PASS**, 55 tests in 4.76 s with slow/external tests excluded.
-- Cross-track artifact validation: **PASS**, A–J; machine-readable output is `results/artifact_validation.json` and `.csv`.
+- Full fast suite: **PASS**, 56 tests in 4.81 s with slow/external tests excluded after the Track D audit.
+- Cross-track artifact validation: **PASS**, A–J with 53 declared invariants; machine-readable output is `results/artifact_validation.json` and `.csv`.
 - Full profiles: **PASS/DONE** for A–F. D completed and wrote all artifacts, but the outer shell did not retain a trustworthy total duration, so none is claimed.
 - Deferred profiles: G full external scaling, H full SQLite scale, I full quantum breadth/QML, and J full mutation/scaling are **NOT RUN**. Their CLIs were invoked and returned that status.
 - Registry/CLI smoke: **PASS**; all ten tracks report `DONE` for their implemented milestones.
 
-Track J's experiment profiled the then-current 54-test suite. The 55th test is the subsequently added A–J artifact-consistency test; this difference is preserved rather than retroactively changing the measured J run.
+Track J's experiment profiled the then-current 54-test suite. The 55th test was the subsequently added A–J artifact-consistency test, and the 56th is the later deque work-stealing correctness test. These historical differences are preserved rather than retroactively changing the measured J run.
 
 ## Track status and findings
 
@@ -19,7 +19,7 @@ Track J's experiment profiled the then-current 54-test suite. The 55th test is t
 | A | Continuous optimizers, curvature/backprop checks, stochastic repeats; quick and full DONE | Full analytic optimum objective `0.326068495`; manual/autograd and finite-difference gradients agree | Synthetic regression only; timing is host-specific |
 | B | Knapsack greedy/DP/B&B/MILP plus exhaustive oracle; Max-Cut QUBO/Ising equivalence; quick and full DONE | Full knapsack oracle value `194`; all exact methods agree; Max-Cut optimum `6.5` | Extra syllabus-only feature-selection item remains open |
 | C | Track-B QAOA, VQE optimizers, QNN, shots/noise/gradient variance; simulator quick and full DONE | Full QAOA expectation `6.142389 < 6.5` oracle; QNN accuracy `1.0` on its small task | Simulator/synthetic noise only; no quantum advantage or hardware claim |
-| D | Submodular oracle, real local process patterns, scaling, communication, FedAvg and multi-task methods; quick and full DONE | Full greedy coverage equals exact (`10`); small data/model parallel tasks lose to IPC while the measured pipeline overlaps work | FedAvg is sequential distributed simulation; one local host |
+| D | Submodular oracle, real local process patterns, scaling, communication, deque work stealing, FedAvg and multi-task methods; quick and full DONE | Full greedy coverage equals exact (`10`); in the later quick audit, deque stealing moved 3 tasks and reduced imbalance from `2.145` to `1.187` with exact-once/checksum correctness | Locked educational deques, not a production runtime; FedAvg is sequential distributed simulation; one local host |
 | E | Feasible campus model, baseline, cheapest-slot heuristic, exact LP, oracle and sensitivity; quick and full DONE | Full LP cost `3.40` vs baseline `4.48`; peak stayed at 100%, so cost improved but peak did not | Deterministic synthetic demand; continuous charging model |
 | F | Parser/IR/VM and four passes; exact subset-DP pass ordering; generated equivalence checks; quick and full DONE | Full fixed order: 15 instructions vs 27 unoptimized; DP order used 17 and did not generalize best; 400 generated programs remained equivalent | Educational language and Python VM timings |
 | G | Pinned xv6 baseline, priority scheduler, accounting syscall, literal patch; real QEMU boot/usertests and three-workload benchmark PASS | Important-job response improved 83.3% (CPU) and 66.7% (mixed), but CPU makespan and throughput worsened | No physical hardware, multicore scaling, aging, or full profile |
@@ -83,6 +83,6 @@ python -m optlab list
 - Per-track original prompts, revision notes, verification records and commit records live under `prompts/a` through `prompts/j`. The tracked revisions preserve genuine corrections; no missing transcript or screenshot has been invented.
 - The exact Codex model identifier is unavailable and remains `unknown`. Final chat exports/screenshots and student human-review notes still require manual capture.
 - `docs/failure_log.md` is not yet a complete three-case submission record: genuine development corrections exist in the C, H and I revision notes, but only I retained an exact failure message. Missing raw failure output must not be reconstructed.
-- The authoritative Chapter 6 taught-method inventory was not supplied. The explicitly assigned algorithms are preserved; the open B feature-selection item and additional I syllabus reconciliation remain identified in `docs/coverage_matrix.md`.
+- The supplied assignment baseline is fully mapped. The conditional B feature-selection item and any additional course-specific I algorithms remain pending confirmation in `docs/coverage_matrix.md`.
 - The requested final technical report was intentionally not produced. Physical quantum/RISC-V hardware, quantum advantage, xv6 full scaling, and G–J full profiles remain unverified.
 - GitHub Actions must rerun after these commits are pushed. No push is performed by this handoff.

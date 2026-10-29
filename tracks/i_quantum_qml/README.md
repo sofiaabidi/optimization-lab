@@ -1,6 +1,6 @@
 # I — Named quantum algorithms and QML
 
-Status: **quick simulator profile executed** on 2026-10-29. The full profile is **NOT RUN**. All quantum results use PennyLane 0.45.1 local CPU simulation; no quantum hardware or quantum advantage is claimed. The authoritative Chapter 6 deck remains unavailable, so every algorithm explicitly listed in `plan.md` is covered but additional syllabus-only algorithms cannot yet be reconciled.
+Status: **quick simulator profile executed** on 2026-10-29. The full profile is **NOT RUN**. All quantum results use PennyLane 0.45.1 local CPU simulation; no quantum hardware or quantum advantage is claimed. Every algorithm explicitly listed by the supplied assignment baseline is covered; any additional course-specific algorithms remain pending confirmation.
 
 ## Named circuit demonstrations
 
@@ -70,4 +70,4 @@ pytest -q tests/test_track_i.py
 
 ## Limitations
 
-All quantum work is simulator-only and classically tractable. The Shor unitary is compiled for 15, annealing is classical, and the depolarizing channel is synthetic. QML uses only 40 synthetic points and analytic overlap circuits; finite-shot kernel estimation is not run. Grover gate counts are high-level, not fault-tolerant resource estimates. PennyLane warns that device-constructor shots are deprecated, although the recorded finite-shot executions remain valid. Expensive statevector scaling, data loading, barren plateaus (measured in Track C), and the contrast with Track D's real multiprocessing all argue against interpreting these results as practical speedup. Additional taught algorithms remain unknown until the real Chapter 6 deck is supplied.
+All quantum work is simulator-only and classically tractable. The Shor unitary is compiled for 15, annealing is classical, and the depolarizing channel is synthetic. QML uses only 40 synthetic points and analytic overlap circuits; finite-shot kernel estimation is not run. Grover gate counts are high-level, not fault-tolerant resource estimates. PennyLane warns that device-constructor shots are deprecated, although the recorded finite-shot executions remain valid. Expensive statevector scaling, data loading, barren plateaus (measured in Track C), and the contrast with Track D's real multiprocessing all argue against interpreting these results as practical speedup. Conditional course-specific additions remain pending confirmation.

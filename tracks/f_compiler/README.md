@@ -1,6 +1,6 @@
 # F — Mini-compiler and safe optimization
 
-Status: **quick profile executed** on 2026-10-28. Full profile is **NOT RUN**. The implementation is dependency-light Python and uses a deliberately small language so every transformation can be inspected and checked.
+Status: **quick and full profiles executed**. The tables below preserve the quick run; separate full artifacts are under [`results/f/full`](../../results/f/full/). The implementation is dependency-light Python and uses a deliberately small language so every transformation can be inspected and checked.
 
 ## Language and compiler pipeline
 
@@ -74,4 +74,4 @@ Implementation: `src/optlab/track_f.py`. Inputs: [`programs.json`](../../results
 
 ## Limitations
 
-The language has no external input, branches, loops, functions, memory, division, or machine integer overflow. Generated code runs in a Python educational VM rather than native machine code. The five fixtures are small synthetic programs, and the learned order is sensitive to its training workload. Host scheduling noise is significant at microsecond scale; raw repeats are retained. Full profile was not run.
+The language has no external input, branches, loops, functions, memory, division, or machine integer overflow. Generated code runs in a Python educational VM rather than native machine code. The five fixtures are small synthetic programs, and the learned order is sensitive to its training workload. Host scheduling noise is significant at microsecond scale; raw repeats are retained.

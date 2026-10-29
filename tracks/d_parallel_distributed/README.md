@@ -1,6 +1,6 @@
 # D — Submodular, parallel, distributed, and multi-task optimization
 
-Status: **quick profile executed** on 2026-10-28. Full profile is **NOT RUN**. Measurements used Python 3.11.18 with `OMP_NUM_THREADS=OPENBLAS_NUM_THREADS=MKL_NUM_THREADS=1` on the documented WSL2 host.
+Status: **quick and full profiles executed**. The tables below preserve the original quick run; separate full artifacts are under [`results/d/full`](../../results/d/full/). The later technical audit added the measured deque work-stealing experiment to the primary quick evidence. Measurements used Python 3.11.18 with `OMP_NUM_THREADS=OPENBLAS_NUM_THREADS=MKL_NUM_THREADS=1` on the documented WSL2 host.
 
 ## Monotone submodular coverage
 
@@ -22,10 +22,21 @@ The 4-worker median implies an effective Amdahl parallel fraction `0.831` and a 
 
 ### Scheduling, makespan, locality, synchronization, communication
 
-- Coarse contiguous chunks took `0.2933 s`, with max/mean worker load `2.692`. Fine dynamic shared-queue scheduling took `0.1545 s`, with imbalance `1.088`, for the same checksum. This is a measured work-stealing analogue; Python's pool is not claimed to implement decentralized per-worker deques.
+- Coarse contiguous chunks took `0.2933 s`, with max/mean worker load `2.692`. Fine dynamic shared-queue scheduling took `0.1545 s`, with imbalance `1.088`, for the same checksum. This remains a shared-queue scheduling comparison, distinct from the deque experiment below.
 - Contiguous gather median was `0.00129 s`; random gather median was `0.00641 s` for equal element counts, illustrating locality cost.
 - Four threads incrementing under a shared lock took `0.02314 s`; thread-local counts plus reduction took `0.00395 s`, with identical result 100,000.
 - Twelve 64-byte process messages took `0.00370 s`; twelve 1 MiB messages took `0.03186 s` (`376.7 MiB/s` effective payload throughput). Worker computation was constant-time, so this measures local serialization/IPC rather than network latency.
+
+### Per-worker deque work stealing
+
+The audit implementation gives each of four real worker processes its own fixed shared-memory deque and lock. An owner pops from the right; an idle worker scans other deques and steals from the left. Static and stealing runs start from the same intentionally skewed 16-task allocation, and process startup is excluded from the timed region.
+
+| Policy | Wall time | Max/mean compute imbalance | Stolen tasks | Correctness |
+|---|---:|---:|---:|---|
+| Static per-worker deques | 0.3258 s | 2.145 | 0 | every task once; checksum match |
+| Per-worker deques with stealing | 0.1477 s | 1.187 | 3 | every task once; checksum match |
+
+This is a genuine deque-stealing demonstration, not a production lock-free runtime or a general speedup claim. Raw evidence is in [`work_stealing.csv`](../../results/d/work_stealing.csv), and the focused test verifies real steals, distinct worker PIDs, exact-once execution, checksums, and the owner/thief deque ends.
 
 ## Parallelism patterns
 
@@ -73,8 +84,8 @@ OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 \
   pytest -q tests/test_track_d.py
 ```
 
-Implementation: `src/optlab/track_d.py`. Summary: [`summary.json`](../../results/d/summary.json). Raw measurements: [`parallel_scaling.csv`](../../results/d/parallel_scaling.csv), [`scheduling.csv`](../../results/d/scheduling.csv), [`locality.csv`](../../results/d/locality.csv), [`synchronization.csv`](../../results/d/synchronization.csv), [`communication.csv`](../../results/d/communication.csv), [`parallel_patterns.csv`](../../results/d/parallel_patterns.csv), [`fedavg.csv`](../../results/d/fedavg.csv), and [`multitask.csv`](../../results/d/multitask.csv).
+Implementation: `src/optlab/track_d.py`. Summary: [`summary.json`](../../results/d/summary.json). Raw measurements: [`parallel_scaling.csv`](../../results/d/parallel_scaling.csv), [`scheduling.csv`](../../results/d/scheduling.csv), [`work_stealing.csv`](../../results/d/work_stealing.csv), [`locality.csv`](../../results/d/locality.csv), [`synchronization.csv`](../../results/d/synchronization.csv), [`communication.csv`](../../results/d/communication.csv), [`parallel_patterns.csv`](../../results/d/parallel_patterns.csv), [`fedavg.csv`](../../results/d/fedavg.csv), and [`multitask.csv`](../../results/d/multitask.csv).
 
 ## Limitations
 
-Short local timings vary with OS scheduling and CPU state; raw repeats are retained. ProcessPool's shared queue is only a work-stealing analogue. BLAS behavior is controlled by environment variables but hardware counters were not collected. FedAvg is sequential simulation with analytical payload counts, not a real distributed network. The multi-task model is educational. No full benchmark or scaling beyond four workers was run.
+Short local timings vary with OS scheduling and CPU state; raw repeats are retained. The shared ProcessPool queue remains only an analogue, while the separate locked shared-memory deque experiment performs actual steals but is still educational. BLAS behavior is controlled by environment variables but hardware counters were not collected. FedAvg is sequential simulation with analytical payload counts, not a real distributed network. The multi-task model is educational. Scaling beyond four workers was not run.

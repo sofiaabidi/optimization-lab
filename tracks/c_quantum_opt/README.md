@@ -1,6 +1,6 @@
 # C — Variational quantum optimization
 
-Status: **quick simulator profile executed** on 2026-10-28. The full profile is implemented but **NOT RUN**. Every result below is from PennyLane 0.45.1 local CPU simulation; no quantum hardware or quantum advantage is claimed.
+Status: **quick and full simulator profiles executed**. The tables below preserve the quick run; separate full artifacts are under [`results/c/full`](../../results/c/full/). Every result is from PennyLane 0.45.1 local CPU simulation; no quantum hardware or quantum advantage is claimed.
 
 ## QAOA on Track B's Max-Cut
 
@@ -70,5 +70,5 @@ Implementation: `src/optlab/track_c.py`. Summary: [`summary.json`](../../results
 - QAOA underperformed exact enumeration; no quantum advantage is supported.
 - The noise model is synthetic and the problem sizes are classically trivial.
 - QNG approximates rather than constructs the full quantum metric tensor.
-- Eight plateau trials per cell give a noisy finite-size estimate; full profile is `NOT RUN`.
+- Eight quick-profile plateau trials per cell give a noisy finite-size estimate; the full profile used the larger configured trial count but remains a finite-size simulation.
 - PennyLane emitted a deprecation warning for setting finite shots on device construction; execution and results were unaffected, but a future API migration will be needed.

@@ -1,12 +1,12 @@
 # Development environment
 
-Validated on 2026-10-28 and updated with the Track G kernel gate on 2026-10-29, on Ubuntu 26.04 LTS under WSL2. System Python 3.14.4 was not modified or removed.
+Validated on 2026-10-28, updated with the Track G kernel gate on 2026-10-29, and reconciled after the final Track D audit on the same Ubuntu 26.04 LTS WSL2 environment. System Python 3.14.4 was not modified or removed.
 
 ## Python and project dependencies
 
 The project uses `uv 0.13.6` and uv-managed CPython 3.11.18. VS Code selects `.venv/bin/python` through `.vscode/settings.json`. `uv.lock` records the complete resolution; direct project dependencies are intentionally split by use:
 
-| Group | Direct pinned packages | Planned use |
+| Group | Direct pinned packages | Repository use |
 |---|---|---|
 | `dev` | pytest 8.4.2 | Fast tests |
 | `scientific` | NumPy 2.3.5, SciPy 1.16.3, Matplotlib 3.10.7 | A/B/D/E/H/J numerics, SciPy LP/MILP, plots |
@@ -66,8 +66,9 @@ Tool installation alone did not validate Track G. Prompt 08 additionally built p
 | Check | Result | Observed evidence |
 |---|---|---|
 | Python version | PASS | `.venv/bin/python` is CPython 3.11.18 |
-| Editable package and CLI | PASS | `optlab 0.1.0`; `python -m optlab list` exits 0 with truthful scaffold statuses |
-| Fast pytest suite | PASS | Phase 0.5: 8 passed in 0.06 s; Track G final suite recorded in `prompts/g/08-verification.md` |
+| Editable package and CLI | PASS | `optlab 0.1.0`; `python -m optlab list` exits 0 and reports A–J `DONE` for their implemented milestones |
+| Fast pytest suite | PASS | 56 passed in 4.81 s after the final Track D technical audit; slow/external tests excluded |
+| Cross-track artifact validation | PASS | A–J passed 53 declared invariants; `results/artifact_validation.json` |
 | Scientific imports and ILP | PASS | NumPy 2.3.5; SciPy 1.16.3; Matplotlib 3.10.7; one-variable integer MILP optimum verified as 1.0 |
 | ML/autograd | PASS | PyTorch 2.10.0+cpu; gradient of `x²` at 3 verified as 6; CUDA false |
 | Quantum simulator | PASS | PennyLane 0.45.1 `default.qubit`; `RY(π)` Pauli-Z expectation verified as -1.0 |
@@ -82,4 +83,4 @@ The scientific and quantum smoke commands set `MPLCONFIGDIR=/tmp/optlab-matplotl
 
 ## Coverage note
 
-Every algorithm and requirement named by the assignment remains in `docs/coverage_matrix.md`. Additional syllabus-specific coverage is transparently uncertain until an authoritative taught-method inventory is supplied; this is not an environment blocker.
+Every explicitly supplied assignment requirement is mapped to executable evidence in `docs/coverage_matrix.md`. Conditional course-specific additions remain pending confirmation; this is not an environment blocker.

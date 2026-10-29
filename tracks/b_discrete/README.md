@@ -1,6 +1,6 @@
 # B — Discrete optimization, Max-Cut, and Ising
 
-Status: **quick profile executed** on 2026-10-28. The full profile is implemented but **NOT RUN**. Feature selection remains a syllabus decision open because no authoritative taught-method inventory has been supplied.
+Status: **quick and full profiles executed**. The tables below preserve the quick instance; separate full artifacts are under [`results/b/full`](../../results/b/full/). The assignment's conditional feature-selection item remains pending course-specific confirmation.
 
 ## Knapsack formulation
 
@@ -50,4 +50,4 @@ Implementation/API: `src/optlab/track_b.py`. Raw evidence: [`knapsack_raw.csv`](
 
 ## Limitations
 
-All correctness claims are for small deterministic instances that permit exhaustive checks. They do not establish large-instance runtime behavior. The full profile was not executed. Feature selection is not silently assumed taught or not taught; it remains unresolved pending authoritative course evidence.
+All correctness claims are for small deterministic instances that permit exhaustive checks. They do not establish large-instance runtime behavior. Feature selection is not silently assumed required or excluded; it remains pending course-specific confirmation.

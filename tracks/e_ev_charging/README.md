@@ -1,6 +1,6 @@
 # E — Campus EV charging allocation
 
-Status: **quick profile executed** on 2026-10-28. Full profile is **NOT RUN**. The study uses deterministic synthetic inputs and Python 3.11.18 on the documented WSL2 host; it does not claim results from a deployed charging system.
+Status: **quick and full profiles executed**. The tables below preserve the quick run; separate full artifacts are under [`results/e/full`](../../results/e/full/). The study uses deterministic synthetic inputs and Python 3.11.18 on the documented WSL2 host; it does not claim results from a deployed charging system.
 
 ## Process, variables, and assumptions
 
@@ -56,4 +56,4 @@ Implementation: `src/optlab/track_e.py`. Summary: [`summary.json`](../../results
 
 ## Limitations
 
-All data are synthetic and perfectly forecast. The LP omits charger assignment, nonlinear charging curves, losses, stochastic arrivals, demand charges, and robustness. Fleet capacity scales by a documented rule, so the timing study is algorithmic sensitivity rather than a forecast for one fixed campus. Short timings vary with host load; raw repeats are retained. Full-profile sizes were not run.
+All data are synthetic and perfectly forecast. The LP omits charger assignment, nonlinear charging curves, losses, stochastic arrivals, demand charges, and robustness. Fleet capacity scales by a documented rule, so the timing study is algorithmic sensitivity rather than a forecast for one fixed campus. Short timings vary with host load; raw repeats are retained.
