@@ -1,5 +1,18 @@
-# Independent two-tool comparison
+# AI Tool Comparison
 
-Status: **NOT RUN**. A second tool has not produced an independent answer, so no comparison is claimed.
+A standalone 0/1 knapsack problem was implemented
+independently using Codex (GPT-5.6 Medium) and
+Antigravity (Claude Sonnet 4.6 Thinking).
 
-Use one bounded task and freeze its prompt plus tests before either run. Record each real tool/model, transcript/export, elapsed time if measured, iterations, test output, incorrect claims, manual changes, and selected solution. A suitable later task is the Track B QUBO-to-Ising energy verifier. Keep the second output separate unless deliberately selected and reviewed.
+Both implementations used dynamic programming and
+passed their stated standard test cases.
+
+Codex handled the zero-capacity, zero-weight item
+edge case more completely. Antigravity generated
+a Python file and executed its tests.
+
+Both tasks were completed in one prompt iteration.
+Exact response times were not recorded.
+
+Evidence: prompts/tool_comparison/
+Detailed comparison: final technical report.
