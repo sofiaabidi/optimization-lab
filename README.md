@@ -70,12 +70,13 @@ Equivalent A–F commands and the external QEMU workflow are listed in [the fina
 - [Raw results and plots](results/)
 - [Source implementations](src/optlab/) and [fast tests](tests/)
 - [Development environment](docs/environment.md)
-- [AI evidence workflow](docs/evidence_workflow.md), [prompt records](prompts/) and [tool register](docs/ai_tools.md)
-- [Genuine correction log](docs/failure_log.md) and [two-tool comparison status](docs/tool_comparison.md)
-- [Technical-report template](reports/technical_report.md) and [demonstration script](reports/demo.md)
+- [AI evidence workflow](docs/evidence_workflow.md), [prompt records and screenshots](prompts/) and [tool register](docs/ai_tools.md)
+- [Genuine correction log](docs/failure_log.md) and [completed two-tool comparison](docs/tool_comparison.md)
+- [Final technical report](reports/Optimization_Techniques_Assignment8_Report_Final.pdf), [report index](reports/technical_report.md), and [short demonstration](docs/DEMO.md)
+- [Extended reproduction demonstration](reports/demo.md)
 
 ## Limitations and disclosure status
 
 Results come from small educational workloads on one WSL2 host. Timing is sensitive to process startup, caches and host load; simulator measurements are not hardware forecasts. Quantum advantage, physical RISC-V performance, production database behavior and production EV deployment are not claimed.
 
-The work was developed with Codex assistance; the exact model identifier was not exposed and remains `unknown`. Original prompts, revisions, verification notes and commit references are tracked. Sanitized response exports/screenshots, final student review, complete raw evidence for two of the three correction cases, and an actual independent second-tool comparison still require user-supplied evidence. Nothing in this repository substitutes fabricated records for those items.
+The A–J work was developed with Codex assistance; the exact model identifier for those repository sessions was not exposed and remains `unknown`. Original prompts, revisions, verification notes, commit references, and sanitized prompt/result screenshots are tracked. A separate bounded comparison records Codex GPT-5.6 Sol Medium and Antigravity with Claude Sonnet 4.6 Thinking. Explicit student review notes and complete raw failure output for the C and H correction cases remain incomplete; nothing is reconstructed to fill those gaps.

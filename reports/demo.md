@@ -1,4 +1,6 @@
-# Demonstration script
+# Extended demonstration script
+
+For the short submission demonstration focused on Track E, see [`docs/DEMO.md`](../docs/DEMO.md).
 
 This is a concise live-demonstration plan, not measured evidence by itself. Run from the repository root after `uv sync --all-extras --locked` and activation of `.venv`.
 

@@ -27,4 +27,4 @@ Three genuine development corrections occurred. They are not upgraded into stron
 - Re-test/evidence: `prompts/i/10-verification.md`; focused suite `7 passed in 3.10s`; successful artifacts under `results/i/`; implementation commit `ba6d9a5`.
 - Lesson: schema construction must inspect all heterogeneous records before opening a strict CSV writer.
 
-Final chat exports/screenshots and student review remain manual evidence tasks. The missing C/H raw failure output must not be reconstructed or fabricated.
+Prompt/result screenshots are now tracked. Explicit student review remains a manual evidence task, and the missing C/H raw failure output must not be reconstructed or fabricated.

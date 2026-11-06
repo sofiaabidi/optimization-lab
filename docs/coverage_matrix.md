@@ -104,7 +104,7 @@ This matrix uses the supplied Assignment 8 requirements in `plan.md` as its base
 | Reproducible Python environment and pinned dependency resolution | `pyproject.toml`, `uv.lock`, `docs/environment.md` | DONE |
 | A–J code, focused tests, raw CSV/JSON results, plots and per-track explanations | `src/optlab`, `tests`, `results`, `tracks` | DONE for supplied explicit experiments |
 | Fast integration suite and cross-track artifact validation | 56 passing tests; `src/optlab/validate_artifacts.py`; validation JSON/CSV | DONE |
-| Original AI prompts, revisions, verification and commit references | `prompts/planning`, `prompts/a` … `prompts/j` | PARTIAL — tracked records exist; final response exports/screenshots and student review are missing |
+| Original AI prompts, revisions, verification, commit references and screenshots | `prompts/setup`, `prompts/planning`, `prompts/a` … `prompts/j` | PARTIAL — tracked records and screenshots exist; explicit student review notes remain pending |
 | Three genuine AI-development failure records | `docs/failure_log.md` | PARTIAL — three corrections identified; C/H lack retained raw failure output |
-| Independent same-task two-tool comparison | `docs/tool_comparison.md` | NOT RUN — requires an actual second tool run |
-| Final technical report and polished live demonstration | `reports/technical_report.md`, `reports/demo.md` | PENDING — templates/evidence navigation only; final report intentionally not generated |
+| Independent same-task two-tool comparison | `docs/tool_comparison.md`; `prompts/tool_comparison/` screenshots | DONE — independent outputs compared; response times were not recorded |
+| Final technical report and polished live demonstration | Final report PDF; `reports/technical_report.md`; `docs/DEMO.md` | DONE — final artifacts tracked |

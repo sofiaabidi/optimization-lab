@@ -10,6 +10,6 @@ Only add evidence that actually occurred:
 - `*-commit.md`: related SHA added only after the commit exists;
 - optional sanitized response export/excerpt or reviewed screenshot supplied from the real session.
 
-The repository currently has original, revision, verification, and commit records for A–J. It does **not** have final response exports/screenshots or completed student review; those require user input. The exact Codex model ID remains `unknown` because it was not exposed. The independent second-tool comparison is `NOT RUN`, and the C/H correction cases lack retained raw failed output. Do not reconstruct any of these records retrospectively.
+The repository currently has original, revision, verification, commit, and sanitized prompt/result screenshot records for A–J, plus setup screenshots. Explicit student review notes remain pending. The exact Codex model ID for the A–J sessions remains `unknown` because it was not exposed. A separate bounded two-tool comparison is recorded with its displayed tool/model labels and screenshots. The C/H correction cases still lack retained raw failed output; do not reconstruct those records retrospectively.
 
 Before staging, run `git status --short` and inspect every new file. Never commit credentials, private conversation exports, local environments, or invented metadata. Use `[AI:Codex] ...` for substantially Codex-generated commits and `[MANUAL] ...` for student changes.

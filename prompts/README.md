@@ -5,6 +5,7 @@ These directories contain the actual prompt, revision, verification, and commit 
 | Scope | Records |
 |---|---|
 | Planning and environment | [`planning/`](planning/) |
+| Setup screenshots | [`setup/`](setup/) |
 | Track A — continuous | [`a/`](a/) |
 | Track B — discrete | [`b/`](b/) |
 | Track C — quantum optimization | [`c/`](c/) |
@@ -15,5 +16,6 @@ These directories contain the actual prompt, revision, verification, and commit 
 | Track H — SQLite | [`h/`](h/) |
 | Track I — quantum algorithms/QML | [`i/`](i/) |
 | Track J — test selection | [`j/`](j/) |
+| Independent tool comparison | [`tool_comparison/`](tool_comparison/) |
 
-Still requiring user-supplied evidence: sanitized final response exports/screenshots, student review, complete raw before/failure evidence for the C and H correction cases, and an actual independent second-tool run.
+Sanitized prompt/result screenshots are now tracked for setup and Tracks A–J, and independent Codex/Antigravity comparison screenshots are under `tool_comparison/`. Still requiring user-supplied evidence: explicit student review and complete raw before/failure evidence for the C and H correction cases.

@@ -80,9 +80,8 @@ python -m optlab list
 
 ## Evidence and unresolved assignment gaps
 
-- Per-track original prompts, revision notes, verification records and commit records live under `prompts/a` through `prompts/j`. The tracked revisions preserve genuine corrections; no missing transcript or screenshot has been invented.
-- The exact Codex model identifier is unavailable and remains `unknown`. Final chat exports/screenshots and student human-review notes still require manual capture.
+- Per-track original prompts, revision notes, verification records, commit records, and sanitized prompt/result screenshots live under `prompts/a` through `prompts/j`; setup screenshots are under `prompts/setup`. The tracked revisions preserve genuine corrections.
+- The exact Codex model identifier for the A–J sessions remains `unknown`. Explicit student human-review notes still require manual capture. The separate two-tool comparison records its displayed model labels and screenshots.
 - `docs/failure_log.md` is not yet a complete three-case submission record: genuine development corrections exist in the C, H and I revision notes, but only I retained an exact failure message. Missing raw failure output must not be reconstructed.
 - The supplied assignment baseline is fully mapped. The conditional B feature-selection item and any additional course-specific I algorithms remain pending confirmation in `docs/coverage_matrix.md`.
-- The requested final technical report was intentionally not produced. Physical quantum/RISC-V hardware, quantum advantage, xv6 full scaling, and G–J full profiles remain unverified.
-- GitHub Actions must rerun after these commits are pushed. No push is performed by this handoff.
+- The final technical report PDF and short demonstration are now tracked under `reports/` and `docs/DEMO.md`. Physical quantum/RISC-V hardware, quantum advantage, xv6 full scaling, and G–J full profiles remain unverified.
